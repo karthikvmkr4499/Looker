@@ -1,0 +1,119 @@
+view: contact_center_fake {
+  sql_table_name: "CSV"."CONTACT_CENTER_FAKE" ;;
+
+  dimension: abandon_rate {
+    type: number
+    sql: ${TABLE}."ABANDON_RATE" ;;
+  }
+  dimension: agent_time_spent {
+    type: number
+    sql: ${TABLE}."AGENT_TIME_SPENT" ;;
+  }
+  dimension: aht {
+    type: number
+    sql: ${TABLE}."AHT" ;;
+  }
+  dimension: category {
+    type: string
+    sql: ${TABLE}."CATEGORY" ;;
+  }
+  dimension: chats_spec_cat {
+    type: string
+    sql: ${TABLE}."CHATS_SPEC_CAT" ;;
+  }
+  dimension: contact_key {
+    type: number
+    sql: ${TABLE}."CONTACT_KEY" ;;
+  }
+  dimension_group: date {
+    type: time
+    timeframes: [raw, date, week, month, quarter, year]
+    convert_tz: no
+    datatype: date
+    sql: ${TABLE}."DATE" ;;
+  }
+  dimension: email_spec_cat {
+    type: string
+    sql: ${TABLE}."EMAIL_SPEC_CAT" ;;
+  }
+  dimension: escalation_spec_cat {
+    type: string
+    sql: ${TABLE}."ESCALATION_SPEC_CAT" ;;
+  }
+  dimension: service_level {
+    type: number
+    sql: ${TABLE}."SERVICE_LEVEL" ;;
+  }
+  dimension: total_agent_time_spent {
+    type: number
+    sql: ${TABLE}."TOTAL_AGENT_TIME_SPENT" ;;
+  }
+  dimension: volume {
+    type: number
+    sql: ${TABLE}."VOLUME" ;;
+  }
+  dimension: weighted_aht {
+    type: number
+    sql: ${TABLE}."WEIGHTED_AHT" ;;
+  }
+  measure: count {
+    type: count
+  }
+  measure: volume_ratio {
+    type: number
+    sql: ${TABLE}.Volume / SUM(${TABLE}.Volume) OVER () ;;
+    value_format_name: percent_2
+  }
+  dimension: top_3_drivers_by_volume {
+    type: string
+    sql: CASE
+            WHEN RANK() OVER (ORDER BY SUM(${TABLE}.Volume) DESC) <= 3 THEN MAX(${TABLE}.Driver) OVER ()
+            ELSE NULL
+         END ;;
+  }
+  measure: avg_agent_time_spent {
+    type: average
+    sql: ${TABLE}."total_agent_time_spent" ;;
+  }
+  measure: Lowest_Service_Level {
+    type: min
+    sql: ${TABLE}."SERVICE_LEVEL" ;;
+  }
+  measure: Percentage_of_Total_Volume_by_Platform {
+    type: number
+    sql: SUM(${TABLE}.Volume) / SUM(SUM(${TABLE}."${volume}" OVER (PARTITION BY ${TABLE}.Platform) ;;
+    value_format_name: percent_2
+  }
+
+  measure: abandon_rate_fixed_platform {
+    type: sum
+    sql: CASE
+            WHEN ${TABLE}.Value > 5 THEN ${TABLE}.Abandon_Rate
+            ELSE 0
+         END ;;
+  }
+  measure: E_volume_excluding_cat_email_spec {
+    type: string
+    sql: ${volume} ;;
+    filters: {
+      field: category
+      value: "NULL"
+    }
+    filters: {
+      field: email_spec_cat
+      value: "NULL"
+    }
+  }
+  measure: F_service_level{
+    type: sum
+    sql: CASE WHEN ${service_level} > 5 THEN ${service_level} ELSE 0 END ;;
+  }
+  measure: F_avg_volum_category {
+    type: number
+    sql: AVG(${volume}) OVER (PARTITION BY ${category}) ;;
+  }
+  measure: fixed_percentile_aht {
+    type: number
+    sql: PERCENTILE_CONT(0.01) WITHIN GROUP (ORDER BY ${aht}) OVER (PARTITION BY ${abandon_rate}) ;;
+  }
+  }
