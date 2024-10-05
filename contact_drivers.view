@@ -1,0 +1,31 @@
+view: contact_drivers {
+  sql_table_name: "CSV"."CONTACT_DRIVERS" ;;
+
+  dimension: contact_key {
+    type: number
+    sql: ${TABLE}."CONTACT_KEY" ;;
+  }
+  dimension: driver {
+    type: string
+    sql: ${TABLE}."DRIVER" ;;
+  }
+  dimension: value {
+    type: number
+    sql: ${TABLE}."VALUE" ;;
+  }
+  measure: count {
+    type: count
+  }
+  measure: E_avgvalue {
+    type: average
+    sql: CASE WHEN ${TABLE}."DRIVER" IS NOT NULL THEN NULL ELSE ${TABLE}."VALUE" END ;;
+    hidden: no
+  }
+  dimension: AHT_Greater_Than_200 {
+    type: string
+    sql: CASE
+            WHEN ${TABLE}.AHT > 200 THEN ${TABLE}.Driver
+            ELSE NULL
+         END ;;
+  }
+}
