@@ -1,0 +1,20 @@
+view: region {
+  sql_table_name: "CSV"."REGION" ;;
+
+  dimension: comment {
+    type: string
+    sql: ${TABLE}."COMMENT" ;;
+  }
+  dimension: name {
+    type: string
+    sql: ${TABLE}."NAME" ;;
+  }
+  dimension: regionkey {
+    type: string
+    sql: ${TABLE}."REGIONKEY" ;;
+  }
+  measure: count {
+    type: count
+    drill_fields: [name]
+  }
+}
