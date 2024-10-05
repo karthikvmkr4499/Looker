@@ -1,0 +1,62 @@
+view: order {
+  sql_table_name: "CSV"."ORDER" ;;
+
+  dimension: o_clerk {
+    type: string
+    sql: ${TABLE}."O_CLERK" ;;
+  }
+  dimension: o_comment {
+    type: string
+    sql: ${TABLE}."O_COMMENT" ;;
+  }
+  dimension: o_custkey {
+    type: number
+    sql: ${TABLE}."O_CUSTKEY" ;;
+  }
+  dimension: o_orderdate {
+    type: string
+    sql: ${TABLE}."O_ORDERDATE" ;;
+  }
+  dimension: o_orderkey {
+    type: number
+    sql: ${TABLE}."O_ORDERKEY" ;;
+  }
+  dimension: o_orderpriority {
+    type: string
+    sql: ${TABLE}."O_ORDERPRIORITY" ;;
+  }
+  dimension: o_orderstatus {
+    type: string
+    sql: ${TABLE}."O_ORDERSTATUS" ;;
+  }
+  dimension: o_shippriority {
+    type: number
+    sql: ${TABLE}."O_SHIPPRIORITY" ;;
+  }
+  dimension: o_totalprice {
+    type: number
+    sql: ${TABLE}."O_TOTALPRICE" ;;
+  }
+  measure: count {
+    type: count
+  }
+  measure: ratio_of_status {
+    type: number
+    sql: SUM(CASE WHEN ${TABLE}.O_Orderstatus = 'F' THEN 1 ELSE 0 END) / COUNT(${TABLE}.O_Orderstatus) ;;
+    value_format_name: percent_2  # Optional: format as percentage
+  }
+  measure: avg_price_per_unique_orderdate {
+    type: number
+    sql: SUM(${TABLE}.O_Totalprice) / COUNT(DISTINCT ${TABLE}.O_Orderdate) ;;
+    value_format_name: usd
+  }
+  dimension: order_status_label {
+    type: string
+    sql: CASE
+            WHEN ${TABLE}.O_Orderstatus = 'F' THEN 'Fulfilled'
+            WHEN ${TABLE}.O_Orderstatus = 'O' THEN 'Open'
+            ELSE 'Unknown'
+         END ;;
+  }
+
+}
