@@ -1,0 +1,54 @@
+# Define the database connection to be used for this model.
+connection: "Demo_report"
+
+# include all the views
+include: "/views/**/*.view.lkml"
+
+# Datagroups define a caching policy for an Explore. To learn more,
+# use the Quick Help panel on the right to see documentation.
+
+datagroup: Demo_report_default_datagroup {
+  # sql_trigger: SELECT MAX(id) FROM etl_log;;
+  max_cache_age: "1 hour"
+}
+
+persist_with: Demo_report_default_datagroup
+
+# Explores allow you to join together different views (database tables) based on the
+# relationships between fields. By joining a view into an Explore, you make those
+# fields available to users for data analysis.
+# Explores should be purpose-built for specific use cases.
+
+# To see the Explore you’re building, navigate to the Explore menu and select an Explore under "Demo Report"
+
+# To create more sophisticated Explores that involve multiple views, you can use the join parameter.
+# Typically, join parameters require that you define the join type, join relationship, and a sql_on clause.
+# Each joined view also needs to define a primary key.
+
+explore: customer {
+
+  join: lineitem {
+    sql_on: ${customer.c_nationkey} = ${lineitem.c_custkey} ;;
+    type: inner
+  }
+
+  join: order {
+    sql_on: ${customer.c_custkey} = ${order.o_custkey} ;;
+    type: left_outer
+  }
+
+  join: part {
+    sql_on: ${customer.c_nationkey} = ${part.p_partkey} ;;
+    type: inner
+  }
+
+  join: partsup {
+    sql_on: ${part.p_partkey} = ${partsup.ps_partkey} ;;
+    type: full_outer
+  }
+
+  join: supplier {
+    sql_on: ${customer.c_custkey} = ${supplier.s_suppkey} ;;
+    type: full_outer
+  }
+}
