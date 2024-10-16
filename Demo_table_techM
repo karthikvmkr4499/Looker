@@ -28,12 +28,12 @@ view: demo_table {
 
   measure: total_b_f_pl_to_bd_ {
     type: sum
-    sql: ${b_f_pl_to_bd_usd} ;;  
+    sql: ${b_f_pl_to_bd_usd} ;;
   }
-  
+
   measure: average_b_f_pl_to_bd_ {
     type: average
-    sql: ${b_f_pl_to_bd_usd} ;;  
+    sql: ${b_f_pl_to_bd_usd} ;;
   }
 
   dimension: b_f_pl_to_bd_perc {
@@ -223,15 +223,15 @@ view: demo_table {
     sql: '' ;;
   }
   dimension: FS_MT_N {
-    type: string  
+    type: string
     sql: ${TABLE}.f_smt ;;
   }
   dimension: FS_MT_SM {
-    type: string 
+    type: string
     sql: ${TABLE}.f_smt ;;
   }
   dimension: ML1S {
-    type: string 
+    type: string
     sql:
     CASE
       WHEN ${f_yr} = 2024 AND ${f_mt} >= 4 AND UPPER(${sl_sg_i_1_nm_s}) = 'RG' THEN
@@ -257,7 +257,7 @@ view: demo_table {
     END ;;
   }
   dimension: PN {
-    type: string 
+    type: string
     sql:
     CASE
       WHEN ${rl_f_mt_os} = 1 OR ${rl_f_mt_os} = -11 OR ${rl_f_mt_os} = 13 THEN 'YES'
@@ -265,7 +265,7 @@ view: demo_table {
     END ;;
   }
   dimension: PT {
-    type: string 
+    type: string
     sql:
     CASE
       WHEN ${rl_f_mt_os} = 0 OR ${rl_f_mt_os} = -12 OR ${rl_f_mt_os} = 12 THEN 'YES'
@@ -277,7 +277,7 @@ view: demo_table {
     sql: ${TABLE}.sl_sg_i_2_nm_s ;;
   }
   dimension: PT2 {
-    type: string  
+    type: string
     sql:
     CASE
       WHEN ${rl_f_q_os} = 0 OR ${rl_f_q_os} = -4 OR ${rl_f_q_os} = 4 THEN 'YES'
@@ -410,7 +410,7 @@ view: demo_table {
     END ;;
   }
   measure: PL_D {
-    type: number  
+    type: number
     sql: ${pl} / 1000 ;;
   }
   measure: QTD {
@@ -531,5 +531,5 @@ measure: Ytd {
     MIN(${PL_D}) ;;
     drill_fields: [yr, mt, r_ty]
   }
-  
+
 }
