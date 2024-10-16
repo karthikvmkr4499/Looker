@@ -20,8 +20,36 @@ view: demo_table {
     type: string
     sql: ${TABLE}."A_PRT" ;;
   }
-  # Dates and timestamps can be represented in Looker using a dimension group of type: time.
-  # Looker converts dates and timestamps to the specified timeframes within the dimension group.
+
+  dimension: b_f_pl_to_bd_usd {
+    type: number
+    sql: ${TABLE}."B_+_F_PL_to_BD_$" ;;
+  }
+
+  measure: total_b_f_pl_to_bd_ {
+    type: sum
+    sql: ${b__f_pl_to_bd_} ;;  
+  }
+  
+  measure: average_b_f_pl_to_bd_ {
+    type: average
+    sql: ${b__f_pl_to_bd_} ;;  
+  }
+
+  dimension: b_f_pl_to_bd_perc {
+    type: number
+    sql: ${TABLE}."B_+_F_PL_to_BD_%" ;;
+  }
+
+  dimension: bkd_last_yr {
+    type: number
+    sql: ${TABLE}."BKD_%_Last_YR" ;;
+  }
+
+  dimension: bkd_of_sly {
+    type: number
+    sql: ${TABLE}."BKD_%_of_SLY" ;;
+  }
 
   dimension: bkl_crdt {
     type: date
@@ -43,20 +71,6 @@ view: demo_table {
     sql: ${TABLE}."F_MT" ;;
   }
 
-  # A measure is a field that uses a SQL aggregate function. Here are defined sum and average
-  # measures for this dimension, but you can also add measures of many different aggregates.
-  # Click on the type parameter to see all the options in the Quick Help panel on the right.
-
-  measure: total_f_mt {
-    type: sum
-    sql: ${f_mt} ;;
-    }
-
-  measure: average_f_mt {
-    type: average
-    sql: ${f_mt} ;;
-    }
-
   dimension: f_pl {
     type: number
     sql: ${TABLE}."F_PL" ;;
@@ -73,7 +87,7 @@ view: demo_table {
   }
 
   dimension: f_yr {
-    type: date
+    type: number
     sql: ${TABLE}."F_YR" ;;
   }
 
@@ -85,6 +99,11 @@ view: demo_table {
   dimension: grs_r_am {
     type: number
     sql: ${TABLE}."GRS_R_AM" ;;
+  }
+
+  dimension: last_yr {
+    type: number
+    sql: ${TABLE}."LAST_YR" ;;
   }
 
   dimension: mc_ind_pl {
@@ -143,8 +162,7 @@ view: demo_table {
   }
 
   dimension: rl_f_yr_os {
-    type: date
-    datatype: date
+    type: number
     sql: ${TABLE}."RL_F_YR_OS" ;;
   }
 
@@ -168,9 +186,19 @@ view: demo_table {
     sql: ${TABLE}."SL_SG_I_2_NM_S" ;;
   }
 
+  dimension: sly {
+    type: number
+    sql: ${TABLE}."SLY" ;;
+  }
+
   dimension: ssg_lb {
     type: number
     sql: ${TABLE}."SSG_LB" ;;
+  }
+
+  dimension: ty_pc_vs_ly_pc {
+    type: number
+    sql: ${TABLE}."TY_PC_VS_LY_PC" ;;
   }
 
   dimension: un_pb_nm {
@@ -183,87 +211,76 @@ view: demo_table {
     sql: ${TABLE}."XD_FL" ;;
   }
 
-  dimension_group: yr {
-    type: time
-    timeframes: [raw, date, week, month, quarter, year]
-    convert_tz: no
-    datatype: date
+  dimension: yr {
+    type: number
     sql: ${TABLE}."YR" ;;
   }
   measure: count {
     type: count
   }
-  dimension: Current_WTD {
+  dimension: Blank {
     type: string
-    sql:
-    CASE
-      WHEN ${bkl_crdt} >= DATE_TRUNC(WEEK, CURRENT_DATE())
-      AND ${bkl_crdt} <= CURRENT_DATE()
-      THEN ${f_pl}
-    END ;;
+    sql: '' ;;
   }
   dimension: FS_MT_N {
-    type: string  # Adjust the type if it's a number, date, etc.
+    type: string  
     sql: ${TABLE}.f_smt ;;
   }
   dimension: FS_MT_SM {
-    type: string  # Adjust the type if it's a number, date, etc.
+    type: string 
     sql: ${TABLE}.f_smt ;;
   }
   dimension: ML1S {
-    type: string
+    type: string 
     sql:
     CASE
-      -- First case: F Yr = 2024, F Mt >= 4, and Sl Sg I 1 Nm S = 'RG'
       WHEN ${f_yr} = 2024 AND ${f_mt} >= 4 AND UPPER(${sl_sg_i_1_nm_s}) = 'RG' THEN
         CASE
-          WHEN NOT IS_NULL(${pt_pr_grp_nms}) AND UPPER(${pt_pr_grp_nms}) IN ('CR', 'TW', 'TWV', 'GC', 'NR', 'DRW') THEN 'QD'
-          WHEN NOT IS_NULL(${pt_pr_grp_nms}) AND UPPER(${pt_pr_grp_nms}) IN ('GE', 'HB') THEN 'VC'
-          WHEN IS_NULL(${pt_pr_grp_nms}) THEN 'UNCL'
-          WHEN NOT IS_NULL(${pt_pr_grp_nms}) AND UPPER(${pt_pr_grp_nms}) = 'TW' THEN 'TWT'
+          WHEN NOT ISNULL(${pt_pr_grp_nms}) AND UPPER(${pt_pr_grp_nms}) IN ('CR', 'TW', 'TWV', 'GC', 'NR', 'DRW') THEN 'QD'
+          WHEN NOT ISNULL(${pt_pr_grp_nms}) AND UPPER(${pt_pr_grp_nms}) IN ('GE', 'HB') THEN 'VC'
+          WHEN ISNULL(${pt_pr_grp_nms}) THEN 'UNCL'
+          WHEN NOT ISNULL(${pt_pr_grp_nms}) AND UPPER(${pt_pr_grp_nms}) = 'TW' THEN 'TWT'
           ELSE ${sl_sg_i_1_nm_s}
         END
 
-      -- Second case: Sl Sg I 1 Nm S = 'RD' and Pt Pr Grp Nms = 'TW'
-      WHEN UPPER(${sl_sg_i_1_nm_s}) = 'RD' AND NOT IS_NULL(${pt_pr_grp_nms}) AND UPPER(${pt_pr_grp_nms}) = 'TW' THEN 'TWT'
+      WHEN UPPER(${sl_sg_i_1_nm_s}) = 'RD' AND NOT ISNULL(${pt_pr_grp_nms}) AND UPPER(${pt_pr_grp_nms}) = 'TW' THEN
+        'TWT'
 
-      -- Third case: F Yr = 2023, F Mt >= 4, and Sl Sg I 1 Nm S = 'RG'
       WHEN ${f_yr} = 2023 AND ${f_mt} >= 4 AND UPPER(${sl_sg_i_1_nm_s}) = 'RG' THEN
         CASE
-          WHEN NOT IS_NULL(${pt_pr_grp_nms}) AND UPPER(${pt_pr_grp_nms}) IN ('CR', 'TW', 'TWV', 'GC', 'NR', 'DRW') THEN 'QD'
-          WHEN NOT IS_NULL(${pt_pr_grp_nms}) AND UPPER(${pt_pr_grp_nms}) IN ('GE', 'HB') THEN 'VC'
+          WHEN NOT ISNULL(${pt_pr_grp_nms}) AND UPPER(${pt_pr_grp_nms}) IN ('CR', 'TW', 'TWV', 'GC', 'NR', 'DRW') THEN 'QD'
+          WHEN NOT ISNULL(${pt_pr_grp_nms}) AND UPPER(${pt_pr_grp_nms}) IN ('GE', 'HB') THEN 'VC'
           ELSE ${sl_sg_i_1_nm_s}
         END
 
-      -- Default case: return Sl Sg I 1 Nm S
       ELSE ${sl_sg_i_1_nm_s}
-      END ;;
+    END ;;
   }
   dimension: PN {
-    type: string
+    type: string 
     sql:
     CASE
-      WHEN ${rl_f_mt_os} IN (1, -11, 13) THEN 'YES'
+      WHEN ${rl_f_mt_os} = 1 OR ${rl_f_mt_os} = -11 OR ${rl_f_mt_os} = 13 THEN 'YES'
       ELSE 'NO'
     END ;;
   }
   dimension: PT {
-    type: string
+    type: string 
     sql:
     CASE
-      WHEN ${rl_f_mt_os} IN (0, -12, 12) THEN 'YES'
+      WHEN ${rl_f_mt_os} = 0 OR ${rl_f_mt_os} = -12 OR ${rl_f_mt_os} = 12 THEN 'YES'
       ELSE 'NO'
     END ;;
   }
   dimension: PT_PR_GR {
-    type: string  # Change the type if it's not a string (e.g., number, date)
+    type: string
     sql: ${TABLE}.sl_sg_i_2_nm_s ;;
   }
   dimension: PT2 {
-    type: string
+    type: string  
     sql:
     CASE
-      WHEN ${rl_f_q_os} IN (0, -4, 4) THEN 'YES'
+      WHEN ${rl_f_q_os} = 0 OR ${rl_f_q_os} = -4 OR ${rl_f_q_os} = 4 THEN 'YES'
       ELSE 'NO'
     END ;;
   }
@@ -271,7 +288,7 @@ view: demo_table {
     type: string
     sql:
     CASE
-      WHEN ${rl_f_yr_os} IN (0, -1, 1) THEN 'YES'
+      WHEN ${rl_f_q_os} = 0 OR ${rl_f_q_os} = -1 OR ${rl_f_q_os} = 1 THEN 'YES'
       ELSE 'NO'
     END ;;
   }
@@ -285,7 +302,7 @@ view: demo_table {
   }
   dimension: R_PL_GRP {
     type: string
-    sql: ' ' ;;
+    sql: '' ;;
   }
   dimension: RDIM_M {
     type: string
@@ -293,42 +310,50 @@ view: demo_table {
     CASE
       WHEN ${sl_grp} = 'MCA' THEN NULL
       WHEN ${sl_grp} = 'CNT' THEN 'LLB'
-      ELSE NULL  -- Optional: specify a default case if needed
+      ELSE NULL
     END ;;
   }
   dimension: SD_FL {
-    type: yesno  # Use 'yesno' if you want the output as TRUE/FALSE
+    type: yesno
     sql:
     CASE
-      WHEN NOT ${un_pb_nm} IN ('ABC', 'DEF', 'GHI', 'JKL')
-           OR (${un_pb_nm} IN ('DEF', 'HIJ', 'NOP', 'KLM')
-           AND ${a_grp} IN ('CWH', 'TGG')) THEN TRUE
+      WHEN NOT ${un_pb_nm} IN ('ABC', 'DEF', 'GHI', 'JKL') THEN TRUE
+      WHEN ${un_pb_nm} IN ('DEF', 'HIJ', 'NOP', 'KLM') AND ${a_grp} IN ('CWH', 'TGG') THEN TRUE
       ELSE FALSE
     END ;;
   }
   dimension: SL_SG_G_NM_S_GRP {
     type: string
-    sql: ' ' ;;
+    sql: '' ;;
   }
   dimension: SND_PB_FL {
     type: string
-    sql: ' ' ;;
+    sql: '' ;;
   }
-  measure: B+F_PL {
+  measure: BF_PL {
     type: number
-    sql: SUM(${TBK_IFR}) + SUM(${FRF_CNT}) ;;
+    sql: (COALESCE(SUM(${TBK_IFR}), 0) + COALESCE(SUM(${FRF_CNT}), 0)) + 500 ;;
   }
-  measure: BK_SL_PL_to_BD_% {
+  measure: BK_SL_PL_to_BD_perc {
     type: number
-    sql: (CO${BKSL_PL}, 0) / NULLIF(SUM(${sb ty}), 0)) ;;
+    sql: (COALESCE(${BKSL_PL}, 0) / NULLIF(SUM(${SB_TY}), 0)) ;;
   }
-  measure: BK_SL_PL_to_BD_$ {
+  measure: BK_SL_PL_to_BD_usd {
     type: number
     sql: ${BKSL_PL} - SUM(${SB_TY}) ;;
   }
   measure: BKSL_PL {
     type: number
     sql: SUM(${TBK_IFR}) + SUM(${SL_PL}) ;;
+  }
+  measure: Current_WTD {
+    type: number
+    sql:
+    CASE
+      WHEN ${bkl_crdt} >= DATE_TRUNC(WEEK, CURRENT_DATE())
+      AND ${bkl_crdt} <= CURRENT_DATE()
+      THEN ${f_pl}
+    END ;;
   }
   measure: FRF_CNT {
     type: number
@@ -339,8 +364,17 @@ view: demo_table {
       ELSE 0
     END ;;
   }
-  measure: Last_LR_F {
-    type: number  # Change to dimension if necessary
+  measure: Full_Year {
+    type: number
+    sql:
+    CASE
+      WHEN EXTRACT(YEAR FROM ${bkl_crdt}) = EXTRACT(YEAR FROM CURRENT_DATE)
+           AND ${bkl_crdt} <= CURRENT_DATE THEN ${f_pl}
+      ELSE 0
+    END ;;
+  }
+  measure: Last_LR_F{
+    type: number
     sql:
     CASE
       WHEN ${rl_f_yr_os} = -1 THEN ${grs_r_am}
@@ -348,15 +382,27 @@ view: demo_table {
     END ;;
   }
   measure: LR_for_PC {
-    type: number  # Change to dimension if necessary
+    type: number
     sql:
     CASE
       WHEN ${rl_f_mt_os} > -1 THEN ${Last_LR_F}
-      ELSE NULL  -- Optional: specify a value if needed for the else case
+      ELSE NULL
     END ;;
   }
+  measure: MTD {
+    type: number
+    sql:
+      CASE
+        WHEN EXTRACT(YEAR FROM TO_DATE(${bkl_crdt}, 'YYYY-MM-DD')) = EXTRACT(YEAR FROM CURRENT_DATE)
+             AND EXTRACT(MONTH FROM TO_DATE(${bkl_crdt}, 'YYYY-MM-DD')) = EXTRACT(MONTH FROM CURRENT_DATE)
+             AND TO_DATE(${bkl_crdt}, 'YYYY-MM-DD') <= CURRENT_DATE
+        THEN ${f_pl}
+        ELSE 0
+      END ;;
+  }
+
   measure: Next {
-    type: number  # Change to dimension if needed
+    type: number
     sql:
     CASE
       WHEN ${rl_f_yr_os} = 1 THEN ${TBK}
@@ -364,52 +410,67 @@ view: demo_table {
     END ;;
   }
   measure: PL_D {
-    type: number  # Change to dimension if needed
+    type: number  
     sql: ${pl} / 1000 ;;
   }
+  measure: QTD {
+    type: number
+    sql:
+      CASE
+        WHEN EXTRACT(YEAR FROM TO_DATE(${bkl_crdt}, 'YYYY-MM-DD')) = EXTRACT(YEAR FROM CURRENT_DATE)
+             AND EXTRACT(QUARTER FROM TO_DATE(${bkl_crdt}, 'YYYY-MM-DD')) = EXTRACT(QUARTER FROM CURRENT_DATE)
+             AND TO_DATE(${bkl_crdt}, 'YYYY-MM-DD') <= CURRENT_DATE
+        THEN ${f_pl}
+        ELSE 0
+      END ;;
+  }
+
   measure: SB_TY {
-    type: number  # Change to dimension if needed
+    type: number
     sql:
     CASE
       WHEN ${rl_f_yr_os} = 0 THEN ${ssg_lb} / 1000
       ELSE 0
     END ;;
   }
-  measure: SL_BKD_%_of_BD {
-    type: number  # This can be changed to dimension if needed
+  measure: SL {
+    type: number
+    sql:
+    CASE
+      WHEN EXTRACT(YEAR FROM ${bkl_crdt}) = EXTRACT(YEAR FROM CURRENT_DATE) - 1
+           AND EXTRACT(MONTH FROM ${bkl_crdt}) <= EXTRACT(MONTH FROM CURRENT_DATE)
+      THEN ${f_pl}
+      ELSE 0
+    END ;;
+  }
+  measure: SL_BKD_perc_of_BD {
+    type: number
     sql:
     COALESCE(SUM(${Last_LR_F}), 0) / NULLIF(COALESCE(SUM(${ssg_lb}), 0), 0) ;;
   }
   measure: SL_BKD_BD {
-    type: number  # Change to dimension if needed
+    type: number
     sql: ${TBK_IFR} - ${SB_TY} ;;
   }
   measure: SL_LB_for_PC {
-    type: number  # Change to dimension if needed
+    type: number
     sql:
     CASE
       WHEN ${rl_f_mt_os} > -1 THEN ${ssg_lb}
-      ELSE NULL  # Returns NULL if the condition is not met
     END ;;
   }
-# Measure to calculate the difference between PL D and TBK IFR
-  measure: pl_d_minus_tbk_ifr {
-    type: number
-    sql: ${PL_D} - ${TBK_IFR} ;;
-  }
-# Main measure implementing the logic
   measure: SL_PL {
     type: number
     sql:
     CASE
-      WHEN MAX(${sl_sg_i_2_nm_s}) = 'DO' AND SUM(${PL_D}) > 0 THEN SUM(${pl_d_minus_tbk_ifr})
-      WHEN SUM(${pl_d_minus_tbk_ifr}) > 0 THEN SUM(${pl_d_minus_tbk_ifr})
+      WHEN MAX(${sl_sg_i_2_nm_s}) = 'DO' AND SUM(${PL_D}) > 0 THEN SUM(${PL_D}) - SUM(${TBK_IFR})
+      WHEN SUM(${PL_D}) - SUM(${TBK_IFR}) > 0 THEN SUM(${PL_D}) - SUM(${TBK_IFR})
       ELSE 0
-    END ;;
+    END + 1000 ;;
   }
   measure: TBK {
-    type: number  # Change to dimension if needed
-    sql: ${grs_r_am} / 1000 ;;
+    type: number
+    sql: (${grs_r_am} / 1000) + 1000 ;;
   }
   measure: TBK_IFR {
     type: number
@@ -419,7 +480,7 @@ view: demo_table {
       ELSE 0
     END ;;
   }
-  measure: TY_LR-FW_QS {
+  measure: TY_LR_FW_QS {
     type: number
     sql:
     CASE
@@ -435,4 +496,40 @@ view: demo_table {
       ELSE 0
     END ;;
   }
+measure: Ytd {
+
+  type: number
+  sql:
+    CASE
+      WHEN EXTRACT(YEAR FROM TO_DATE(${bkl_crdt}, 'YYYY-MM-DD')) = EXTRACT(YEAR FROM CURRENT_DATE)
+           AND TO_DATE(${bkl_crdt}, 'YYYY-MM-DD') <= CURRENT_DATE
+      THEN ${f_pl}
+      ELSE 0
+    END ;;
+}
+  measure: Condition_check {
+    type: yesno
+    sql:
+    CASE
+      WHEN (
+        (SELECT COUNT(DISTINCT ${SL_SG_G_NM_S_GRP}) FROM ${TABLE}) >= 7
+        AND (SELECT COUNT(DISTINCT ${a_grp}) FROM ${TABLE}) >= 31
+        AND (SELECT COUNT(DISTINCT ${gd}) FROM ${TABLE}) >= 23
+        AND (SELECT COUNT(DISTINCT ${f_aty_nm}) FROM ${TABLE}) >= 37
+        AND (SELECT COUNT(DISTINCT ${crtpt_grpows}) FROM ${TABLE}) >= 28
+        AND (SELECT COUNT(DISTINCT ${R_PL_GRP}) FROM ${TABLE}) >= 67
+        AND (SELECT COUNT(DISTINCT ${r_grp_sty}) FROM ${TABLE}) >= 5
+        AND (SELECT COUNT(DISTINCT ${a_prt}) FROM ${TABLE}) >= 2
+      )
+      THEN TRUE
+      ELSE FALSE
+    END ;;
+  }
+  measure: min_pl_d {
+    type: number
+    sql:
+    MIN(${PL_D}) ;;
+    drill_fields: [yr, mt, r_ty]
+  }
+  
 }
