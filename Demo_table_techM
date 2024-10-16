@@ -28,12 +28,12 @@ view: demo_table {
 
   measure: total_b_f_pl_to_bd_ {
     type: sum
-    sql: ${b__f_pl_to_bd_} ;;  
+    sql: ${b_f_pl_to_bd_usd} ;;  
   }
   
   measure: average_b_f_pl_to_bd_ {
     type: average
-    sql: ${b__f_pl_to_bd_} ;;  
+    sql: ${b_f_pl_to_bd_usd} ;;  
   }
 
   dimension: b_f_pl_to_bd_perc {
