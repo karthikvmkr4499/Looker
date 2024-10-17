@@ -6,9 +6,29 @@ include: "/views/*.view.lkml"                # include all views in the views/ f
 
 # # Select the views that should be a part of this model,
 # # and define the joins that connect them together.
-#
 explore: demo_table {}
 
+# Define the database connection to be used for this model.
+connection: "demo_conn"
+
+# include all the views
+include: "/views/**/*.view.lkml"
+
+
+# include all the views
+#include: "/*.explore.lkml"
+
+# Datagroups define a caching policy for an Explore. To learn more,
+# use the Quick Help panel on the right to see documentation.
+
+datagroup: demo_proj_default_datagroup {
+  # sql_trigger: SELECT MAX(id) FROM etl_log;;
+  max_cache_age: "1 hour"
+}
+
+persist_with: demo_proj_default_datagroup
+
+explore: demo_table {}
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 # The name of this view in Looker is "Demo Table"
