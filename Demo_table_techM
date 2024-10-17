@@ -9,6 +9,7 @@ include: "/views/*.view.lkml"                # include all views in the views/ f
 #
 explore: demo_table {}
 
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 # The name of this view in Looker is "Demo Table"
 view: demo_table {
