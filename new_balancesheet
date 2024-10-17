@@ -1,14 +1,6 @@
 view: balance_sheet {
-  # The sql_table_name parameter indicates the underlying database table
-  # to be used for all fields in this view.
+
   sql_table_name: "FIN"."BALANCE_SHEET" ;;
-
-  # No primary key is defined for this view. In order to join this view in an Explore,
-  # define primary_key: yes on a dimension that has no repeated values.
-
-  # Here's what a typical dimension looks like in LookML.
-  # A dimension is a groupable field that can be used to filter query results.
-  # This dimension will be called "A Grp" in Explore.
 
   dimension: a_grp {
     type: string
@@ -535,15 +527,4 @@ view: balance_sheet {
 
 }
 
------------------------------------------------------------------------------------------------------------------------------------
 
-
-connection: "fin_hub"
-
-include: "/views/*.view.lkml"                # include all views in the views/ folder in this project
-# include: "/**/*.view.lkml"                 # include all views in this project
-# include: "my_dashboard.dashboard.lookml"   # include a LookML dashboard called my_dashboard
-
-# # Select the views that should be a part of this model,
-# # and define the joins that connect them together.
-explore: balance_sheet {}
