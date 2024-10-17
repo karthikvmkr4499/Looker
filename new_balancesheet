@@ -1,3 +1,11 @@
+connection: "fin_hub"
+
+include: "/views/*.view.lkml"
+
+explore: balance_sheet {}
+
+-------------------------------------------------
+
 view: balance_sheet {
 
   sql_table_name: "FIN"."BALANCE_SHEET" ;;
