@@ -3,8 +3,14 @@ connection: "fin_hub"
 include: "/views/*.view.lkml"
 
 explore: balance_sheet {}
+-----------------------------------------------------------------------------------------------
+connection: "fin_hub"
 
--------------------------------------------------
+include: "/views/*.view.lkml"
+
+include: "/explores/*.explore"
+
+-----------------------------------------------------------------------------------------------
 
 view: balance_sheet {
 
