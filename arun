@@ -1,0 +1,655 @@
+#Explore;
+include: "/views/*.*.lkml"
+
+explore: balance_sheet {
+
+  join: lod_include_frf_cnt { 
+    sql_on: ${balance_sheet.RDIM_M} = ${lod_include_frf_cnt.rdim_m}
+           AND ${balance_sheet.sl_sg_i_2_nm_s} = ${lod_include_frf_cnt.sl_sg_i_2_nm_s}
+           AND ${balance_sheet.R_AType} = ${lod_include_frf_cnt.r_atype}
+           AND ${balance_sheet.f_yr} = ${lod_include_frf_cnt.f_yr}
+           AND ${balance_sheet.f_mt} = ${lod_include_frf_cnt.f_mt} ;;
+
+    relationship: many_to_one
+  }
+
+}
+
+
+
+
+explore: lod_include_frf_cnt{
+
+
+}
+________________________________________________________________________________
+#model;
+
+connection: "fin_hub"
+
+include: "/views/*.view.lkml"
+
+# include all the Explore(s)
+include: "/explores/*.explore"
+__________________________________________________________________________________
+
+#table;
+view: balance_sheet {
+
+  sql_table_name: "FIN"."BALANCE_SHEET" ;;
+
+  dimension: a_grp {
+    type: string
+    sql: ${TABLE}."A_GRP" ;;
+  }
+
+  dimension: a_prt {
+    type: string
+    sql: ${TABLE}."A_PRT" ;;
+  }
+
+  dimension: b_f_pl_to_bd_usd {
+    type: number
+    sql: ${TABLE}."B_+_F_PL_to_BD_$" ;;
+  }
+
+  measure: total_b_f_pl_to_bd_ {
+    type: sum
+    sql: ${b_f_pl_to_bd_usd} ;;
+  }
+
+  measure: average_b_f_pl_to_bd_ {
+    type: average
+    sql: ${b_f_pl_to_bd_usd} ;;
+  }
+
+  dimension: b_f_pl_to_bd_perc {
+    type: number
+    sql: ${TABLE}."B_+_F_PL_to_BD_%" ;;
+  }
+
+  dimension: bkd_last_yr {
+    type: number
+    sql: ${TABLE}."BKD_%_Last_YR" ;;
+  }
+
+  dimension: bkd_of_sly {
+    type: number
+    sql: ${TABLE}."BKD_%_of_SLY" ;;
+  }
+
+  dimension: bkl_crdt {
+    type: date
+    sql: ${TABLE}."BKL_CRDT" ;;
+  }
+
+  dimension: crtpt_grpows {
+    type: string
+    sql: ${TABLE}."CRTPT_GRPOWS" ;;
+  }
+
+  dimension: f_aty_nm {
+    type: string
+    sql: ${TABLE}."F_ATY_NM" ;;
+  }
+
+  dimension: f_mt {
+    type: number
+    sql: ${TABLE}."F_MT" ;;
+  }
+
+  dimension: f_pl {
+    type: number
+    sql: ${TABLE}."F_PL" ;;
+  }
+
+  dimension: f_qr_yr_nm {
+    type: string
+    sql: ${TABLE}."F_QR_YR_NM" ;;
+  }
+
+  dimension: f_smt {
+    type: string
+    sql: ${TABLE}."F_SMT" ;;
+  }
+
+  dimension: f_yr {
+    type: number
+    sql: ${TABLE}."F_YR" ;;
+  }
+
+  dimension: gd {
+    type: string
+    sql: ${TABLE}."GD" ;;
+  }
+
+  dimension: grs_r_am {
+    type: number
+    sql: ${TABLE}."GRS_R_AM" ;;
+  }
+
+  dimension: last_yr {
+    type: number
+    sql: ${TABLE}."LAST_YR" ;;
+  }
+
+  dimension: mc_ind_pl {
+    type: string
+    sql: ${TABLE}."MC_IND_PL" ;;
+  }
+
+  dimension: mt {
+    type: string
+    sql: ${TABLE}."MT" ;;
+  }
+
+  dimension: pb_d_grp {
+    type: string
+    sql: ${TABLE}."PB_D_GRP" ;;
+  }
+
+  dimension: pl {
+    type: number
+    sql: ${TABLE}."PL" ;;
+  }
+
+  dimension: pt_pr_grp_nms {
+    type: string
+    sql: ${TABLE}."PT_PR_GRP_NMS" ;;
+  }
+
+  dimension: r_grp_sty {
+    type: string
+    sql: ${TABLE}."R_GRP_STY" ;;
+  }
+
+  dimension: r_grpl_to_nm {
+    type: string
+    sql: ${TABLE}."R_GRPL_TO_NM" ;;
+  }
+
+  dimension: r_trx_sts {
+    type: string
+    sql: ${TABLE}."R_TRX_STS" ;;
+  }
+
+  dimension: r_ty {
+    type: string
+    sql: ${TABLE}."R_TY" ;;
+  }
+
+  dimension: rl_f_mt_os {
+    type: number
+    sql: ${TABLE}."RL_F_MT_OS" ;;
+  }
+
+  dimension: rl_f_q_os {
+    type: number
+    sql: ${TABLE}."RL_F_Q_OS" ;;
+  }
+
+  dimension: rl_f_yr_os {
+    type: number
+    sql: ${TABLE}."RL_F_YR_OS" ;;
+  }
+
+  dimension: sl_grp {
+    type: string
+    sql: ${TABLE}."SL_GRP" ;;
+  }
+
+  dimension: sl_sg_g_nm_s {
+    type: string
+    sql: ${TABLE}."SL_SG_G_NM_S" ;;
+  }
+
+  dimension: sl_sg_i_1_nm_s {
+    type: string
+    sql: ${TABLE}."SL_SG_I_1_NM_S" ;;
+  }
+
+  dimension: sl_sg_i_2_nm_s {
+    type: string
+    sql: ${TABLE}."SL_SG_I_2_NM_S" ;;
+  }
+
+  dimension: sly {
+    type: number
+    sql: ${TABLE}."SLY" ;;
+  }
+
+  dimension: ssg_lb {
+    type: number
+    sql: ${TABLE}."SSG_LB" ;;
+  }
+
+  dimension: ty_pc_vs_ly_pc {
+    type: number
+    sql: ${TABLE}."TY_PC_VS_LY_PC" ;;
+  }
+
+  dimension: un_pb_nm {
+    type: string
+    sql: ${TABLE}."UN_PB_NM" ;;
+  }
+
+  dimension: xd_fl {
+    type: string
+    sql: ${TABLE}."XD_FL" ;;
+  }
+
+  dimension: yr {
+    type: number
+    sql: ${TABLE}."YR" ;;
+  }
+  measure: count {
+    type: count
+  }
+  dimension: Blank {
+    type: string
+    sql: '' ;;
+  }
+  dimension: FS_MT_N {
+    type: string
+    sql: ${TABLE}.f_smt ;;
+  }
+  dimension: FS_MT_SM {
+    type: string
+    sql: ${TABLE}.f_smt ;;
+  }
+  dimension: ML1S {
+    type: string
+    sql:
+    CASE
+      WHEN ${f_yr} = 2024 AND ${f_mt} >= 4 AND UPPER(${sl_sg_i_1_nm_s}) = 'RG' THEN
+        CASE
+          WHEN NOT ISNULL(${pt_pr_grp_nms}) AND UPPER(${pt_pr_grp_nms}) IN ('CR', 'TW', 'TWV', 'GC', 'NR', 'DRW') THEN 'QD'
+          WHEN NOT ISNULL(${pt_pr_grp_nms}) AND UPPER(${pt_pr_grp_nms}) IN ('GE', 'HB') THEN 'VC'
+          WHEN ISNULL(${pt_pr_grp_nms}) THEN 'UNCL'
+          WHEN NOT ISNULL(${pt_pr_grp_nms}) AND UPPER(${pt_pr_grp_nms}) = 'TW' THEN 'TWT'
+          ELSE ${sl_sg_i_1_nm_s}
+        END
+
+      WHEN UPPER(${sl_sg_i_1_nm_s}) = 'RD' AND NOT ISNULL(${pt_pr_grp_nms}) AND UPPER(${pt_pr_grp_nms}) = 'TW' THEN
+      'TWT'
+
+      WHEN ${f_yr} = 2023 AND ${f_mt} >= 4 AND UPPER(${sl_sg_i_1_nm_s}) = 'RG' THEN
+      CASE
+      WHEN NOT ISNULL(${pt_pr_grp_nms}) AND UPPER(${pt_pr_grp_nms}) IN ('CR', 'TW', 'TWV', 'GC', 'NR', 'DRW') THEN 'QD'
+      WHEN NOT ISNULL(${pt_pr_grp_nms}) AND UPPER(${pt_pr_grp_nms}) IN ('GE', 'HB') THEN 'VC'
+      ELSE ${sl_sg_i_1_nm_s}
+      END
+
+      ELSE ${sl_sg_i_1_nm_s}
+      END ;;
+  }
+  dimension: PN {
+    type: string
+    sql:
+    CASE
+      WHEN ${rl_f_mt_os} = 1 OR ${rl_f_mt_os} = -11 OR ${rl_f_mt_os} = 13 THEN 'YES'
+      ELSE 'NO'
+    END ;;
+  }
+  dimension: PT {
+    type: string
+    sql:
+    CASE
+      WHEN ${rl_f_mt_os} = 0 OR ${rl_f_mt_os} = -12 OR ${rl_f_mt_os} = 12 THEN 'YES'
+      ELSE 'NO'
+    END ;;
+  }
+  dimension: PT_PR_GR {
+    type: string
+    sql: ${TABLE}.sl_sg_i_2_nm_s ;;
+  }
+  dimension: PT2 {
+    type: string
+    sql:
+    CASE
+      WHEN ${rl_f_q_os} = 0 OR ${rl_f_q_os} = -4 OR ${rl_f_q_os} = 4 THEN 'YES'
+      ELSE 'NO'
+    END ;;
+  }
+  dimension: PT3 {
+    type: string
+    sql:
+    CASE
+      WHEN ${rl_f_q_os} = 0 OR ${rl_f_q_os} = -1 OR ${rl_f_q_os} = 1 THEN 'YES'
+      ELSE 'NO'
+    END ;;
+  }
+  dimension: R_AType {
+    type: string
+    sql:
+    CASE
+      WHEN ${xd_fl} = 'Y' THEN 'XD'
+      ELSE ${r_ty}
+    END ;;
+  }
+  dimension: R_PL_GRP {
+    type: string
+    sql: '' ;;
+  }
+  dimension: RDIM_M {
+    type: string
+    sql:
+    CASE
+      WHEN ${sl_grp} = 'MCA' THEN NULL
+      WHEN ${sl_grp} = 'CNT' THEN 'LLB'
+      ELSE NULL
+    END ;;
+  }
+  dimension: SD_FL {
+    type: yesno
+    sql:
+    CASE
+      WHEN NOT ${un_pb_nm} IN ('ABC', 'DEF', 'GHI', 'JKL') THEN TRUE
+      WHEN ${un_pb_nm} IN ('DEF', 'HIJ', 'NOP', 'KLM') AND ${a_grp} IN ('CWH', 'TGG') THEN TRUE
+      ELSE FALSE
+    END ;;
+  }
+  dimension: SL_SG_G_NM_S_GRP {
+    type: string
+    sql: '' ;;
+  }
+  dimension: SND_PB_FL {
+    type: string
+    sql: '' ;;
+  }
+  measure: BF_PL {
+    type: number
+    sql: (COALESCE(SUM(${TBK_IFR}), 0) + COALESCE(SUM(${frf_cnt}), 0)) + 500 ;;
+  }
+  measure: BK_SL_PL_to_BD_perc {
+    type: number
+    sql: (COALESCE(${BKSL_PL}, 0) / NULLIF(SUM(${SB_TY}), 0)) ;;
+  }
+  measure: BK_SL_PL_to_BD_usd {
+    type: number
+    sql: ${BKSL_PL} - SUM(${SB_TY}) ;;
+  }
+  measure: BKSL_PL {
+    type: number
+    sql: SUM(${TBK_IFR}) + SUM(${sl_pl}) ;;
+  }
+  measure: Current_WTD {
+    type: number
+    sql:
+    CASE
+      WHEN ${bkl_crdt} >= DATE_TRUNC(WEEK, CURRENT_DATE())
+      AND ${bkl_crdt} <= CURRENT_DATE()
+      THEN ${f_pl}
+    END ;;
+  }
+
+  measure: Full_Year {
+    type: number
+    sql:
+    CASE
+      WHEN EXTRACT(YEAR FROM ${bkl_crdt}) = EXTRACT(YEAR FROM CURRENT_DATE)
+           AND ${bkl_crdt} <= CURRENT_DATE THEN ${f_pl}
+      ELSE 0
+    END ;;
+  }
+  measure: Last_LR_F{
+    type: number
+    sql:
+    CASE
+      WHEN ${rl_f_yr_os} = -1 THEN ${grs_r_am}
+      ELSE 0
+    END ;;
+  }
+  measure: LR_for_PC {
+    type: number
+    sql:
+    CASE
+      WHEN ${rl_f_mt_os} > -1 THEN ${Last_LR_F}
+      ELSE NULL
+    END ;;
+  }
+  measure: MTD {
+    type: number
+    sql:
+      CASE
+        WHEN EXTRACT(YEAR FROM TO_DATE(${bkl_crdt}, 'YYYY-MM-DD')) = EXTRACT(YEAR FROM CURRENT_DATE)
+             AND EXTRACT(MONTH FROM TO_DATE(${bkl_crdt}, 'YYYY-MM-DD')) = EXTRACT(MONTH FROM CURRENT_DATE)
+             AND TO_DATE(${bkl_crdt}, 'YYYY-MM-DD') <= CURRENT_DATE
+        THEN ${f_pl}
+        ELSE 0
+      END ;;
+  }
+
+  measure: Next {
+    type: number
+    sql:
+    CASE
+      WHEN ${rl_f_yr_os} = 1 THEN ${TBK}
+      ELSE 0
+    END ;;
+  }
+  measure: PL_D {
+    type: number
+    sql: ${pl} / 1000 ;;
+  }
+  measure: QTD {
+    type: number
+    sql:
+      CASE
+        WHEN EXTRACT(YEAR FROM TO_DATE(${bkl_crdt}, 'YYYY-MM-DD')) = EXTRACT(YEAR FROM CURRENT_DATE)
+             AND EXTRACT(QUARTER FROM TO_DATE(${bkl_crdt}, 'YYYY-MM-DD')) = EXTRACT(QUARTER FROM CURRENT_DATE)
+             AND TO_DATE(${bkl_crdt}, 'YYYY-MM-DD') <= CURRENT_DATE
+        THEN ${f_pl}
+        ELSE 0
+      END ;;
+  }
+
+  measure: SB_TY {
+    type: number
+    sql:
+    CASE
+      WHEN ${rl_f_yr_os} = 0 THEN ${ssg_lb} / 1000
+      ELSE 0
+    END ;;
+  }
+  measure: SL {
+    type: number
+    sql:
+    CASE
+      WHEN EXTRACT(YEAR FROM ${bkl_crdt}) = EXTRACT(YEAR FROM CURRENT_DATE) - 1
+           AND EXTRACT(MONTH FROM ${bkl_crdt}) <= EXTRACT(MONTH FROM CURRENT_DATE)
+      THEN ${f_pl}
+      ELSE 0
+    END ;;
+  }
+  measure: SL_BKD_perc_of_BD {
+    type: number
+    sql:
+    COALESCE(SUM(${Last_LR_F}), 0) / NULLIF(COALESCE(SUM(${ssg_lb}), 0), 0) ;;
+  }
+  measure: SL_BKD_BD {
+    type: number
+    sql: ${TBK_IFR} - ${SB_TY} ;;
+  }
+  measure: SL_LB_for_PC {
+    type: number
+    sql:
+    CASE
+      WHEN ${rl_f_mt_os} > -1 THEN ${ssg_lb}
+    END ;;
+  }
+
+  measure: TBK {
+    type: number
+    sql: (${grs_r_am} / 1000) + 1000 ;;
+  }
+  measure: TBK_IFR {
+    type: number
+    sql:
+    CASE
+      WHEN ${rl_f_yr_os} = 0 THEN ${TBK}
+      ELSE 0
+    END ;;
+  }
+  measure: TY_LR_FW_QS {
+    type: number
+    sql:
+    CASE
+      WHEN ${rl_f_yr_os} = 0 AND ${rl_f_q_os} >= 0 THEN ${grs_r_am}
+      ELSE NULL
+    END ;;
+  }
+  measure: TY_LR_F {
+    type: number
+    sql:
+    CASE
+      WHEN ${rl_f_yr_os} = 0 THEN ${grs_r_am}
+      ELSE 0
+    END ;;
+  }
+  measure: Ytd {
+
+    type: number
+    sql:
+    CASE
+      WHEN EXTRACT(YEAR FROM TO_DATE(${bkl_crdt}, 'YYYY-MM-DD')) = EXTRACT(YEAR FROM CURRENT_DATE)
+           AND TO_DATE(${bkl_crdt}, 'YYYY-MM-DD') <= CURRENT_DATE
+      THEN ${f_pl}
+      ELSE 0
+    END ;;
+  }
+  measure: sf_fl_pl {
+    type: yesno
+    sql:
+    CASE
+      WHEN (
+        (SELECT COUNT(DISTINCT ${SL_SG_G_NM_S_GRP}) FROM ${TABLE}) >= 7
+        AND (SELECT COUNT(DISTINCT ${a_grp}) FROM ${TABLE}) >= 31
+        AND (SELECT COUNT(DISTINCT ${gd}) FROM ${TABLE}) >= 23
+        AND (SELECT COUNT(DISTINCT ${f_aty_nm}) FROM ${TABLE}) >= 37
+        AND (SELECT COUNT(DISTINCT ${crtpt_grpows}) FROM ${TABLE}) >= 28
+        AND (SELECT COUNT(DISTINCT ${R_PL_GRP}) FROM ${TABLE}) >= 67
+        AND (SELECT COUNT(DISTINCT ${r_grp_sty}) FROM ${TABLE}) >= 5
+        AND (SELECT COUNT(DISTINCT ${a_prt}) FROM ${TABLE}) >= 2
+      )
+      THEN TRUE
+      ELSE FALSE
+    END ;;
+  }
+  measure: f_pl_f {
+    type: number
+    sql:
+    MIN(${PL_D}) ;;
+    drill_fields: [yr, mt, r_ty]
+  }
+   measure: frf_cnt {
+     type: number
+     sql:
+       CASE
+       WHEN MAX(${sl_sg_i_2_nm_s}) = 'DO' AND SUM(${PL_D}) > 0 THEN SUM(${PL_D}) - SUM(${TBK_IFR})
+       WHEN SUM(${PL_D}) - SUM(${TBK_IFR}) > 0 THEN SUM(${PL_D}) - SUM(${TBK_IFR})
+       ELSE 0
+     END ;;
+  }
+  measure: sl_pl {
+    type: number
+    sql:
+    CASE
+      WHEN MAX(${sl_sg_i_2_nm_s}) = 'DO' AND SUM(${PL_D}) > 0 THEN SUM(${PL_D}) - SUM(${TBK_IFR})
+      WHEN SUM(${PL_D}) - SUM(${TBK_IFR}) > 0 THEN SUM(${PL_D}) - SUM(${TBK_IFR})
+      ELSE 0
+    END ;;
+  }
+  parameter: category_param {
+    type: string
+    allowed_value: {
+      label: "Category A"
+      value: "CR"
+    }
+    allowed_value: {
+      label: "Category B"
+      value: "TW"
+    }
+    allowed_value: {
+      label: "Category C"
+      value: "GC"
+    }
+    default_value: "CR"
+  }
+  dimension: category_filter {
+    type: string
+    sql:
+    CASE
+      WHEN ${category_param} = ${pt_pr_grp_nms} THEN ${pt_pr_grp_nms}
+      ELSE 'Other'
+    END ;;
+  }
+
+
+}
+___________________________
+view: lod_include_frf_cnt {
+  derived_table: {
+    sql: SELECT
+     CASE
+      WHEN sl_grp = 'MCA' THEN NULL
+      WHEN sl_grp = 'CNT' THEN 'LLB'
+      ELSE NULL
+    END AS rdim_m,
+           sl_sg_i_2_nm_s,
+    CASE
+      WHEN xd_fl = 'Y' THEN 'XD'
+      ELSE r_ty
+    END as r_atype,
+           f_yr,
+           f_mt,
+           CASE
+             WHEN MAX(sl_sg_i_2_nm_s) = 'DO' AND SUM(pl /1000) > 0 THEN SUM((pl /1000) - CASE
+      WHEN rl_f_yr_os = 0 THEN ((grs_r_am / 1000) + 1000)
+      ELSE 0
+    END)
+             WHEN SUM((pl /1000) - CASE
+      WHEN rl_f_yr_os = 0 THEN ((grs_r_am / 1000) + 1000)
+      ELSE 0
+    END) > 0 THEN SUM((pl /1000) - CASE
+      WHEN rl_f_yr_os = 0 THEN ((grs_r_am / 1000) + 1000)
+      ELSE 0
+    END)
+             ELSE 0
+           END AS frf_cnt
+         FROM balance_sheet
+         GROUP BY rdim_m, sl_sg_i_2_nm_s, r_atype, f_yr, f_mt
+ ;;
+  }
+
+  dimension: rdim_m {
+    type: string
+    sql: ${TABLE}.rdim_m ;;
+  }
+
+  dimension: sl_sg_i_2_nm_s {
+    type: string
+    sql: ${TABLE}.sl_sg_i_2_nm_s ;;
+  }
+
+  dimension: r_atype {
+    type: string
+    sql: ${TABLE}.r_atype ;;
+  }
+
+  dimension: f_yr {
+    type: number
+    sql: ${TABLE}.f_yr ;;
+  }
+
+  dimension: f_mt {
+    type: number
+    sql: ${TABLE}.f_mt ;;
+  }
+
+  measure: frf_cnt {
+    type: sum
+    sql: ${TABLE}.frf_cnt ;;
+  }
+}
+
