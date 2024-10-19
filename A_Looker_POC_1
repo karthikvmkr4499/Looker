@@ -1272,6 +1272,16 @@ view: cgd_monitored {
     sql: COALESCE(SUM(CASE WHEN ${ins_crt_rel_qrtr} = ${qrtr_offset} AND ${acq_booking_type} = 'Following' THEN ${lgr} END), 0) ;;
   }
   
+# Measure: LGR FOLLOW CW 
+  measure: lgr_following_cw {
+    type: number
+    sql: COALESCE(SUM(CASE
+                     WHEN ${ins_crt_rel_week} = ${week_offset} 
+                          AND ${acq_booking_type} = 'Following' 
+                     THEN ${lgr} 
+                     END), 0) ;;
+  }
+  
 # Measure: LGR FOLLOW Digital
   measure: lgr_follow_digital {
     type: number
