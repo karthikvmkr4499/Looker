@@ -9,7 +9,16 @@ connection: "fin_hub"
 include: "/views/*.view.lkml"
 
 include: "/explores/*.explore"
-
+-----------------------------------------------------------------------------------------------
+  parameter: threshold {
+    type: string
+    allowed_values: [
+      { label: "Rose", value: "Rose" },
+      { label: "Lily", value: "Lily" },
+      { label: "Sendhoor Yellow", value: "SendhoorYellow" }
+    ]
+    default_value: "Lily"  # Set a default value to one of the allowed values
+  }
 -----------------------------------------------------------------------------------------------
 
 view: balance_sheet {
