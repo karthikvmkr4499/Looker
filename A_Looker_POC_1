@@ -361,16 +361,16 @@ view: cgd_monitored {
     CASE
       WHEN ${progo_flag} = 'Y' THEN
         CASE
-          WHEN ${booking_line_created_date_not_null} >= ${PROGO_INITIAL_START} AND ${booking_line_created_date_not_null} <= ${PROGO_INITIAL_END} THEN 'Initial'
-          WHEN ${booking_line_created_date_not_null} > ${PROGO_INITIAL_END} AND ${booking_line_created_date_not_null} <= DATEADD(DAY, 365, ${PROGO_INITIAL_START}) THEN 'Following'
+          WHEN ${booking_line_created_date_not_null} >= ${progo_initial_start} AND ${booking_line_created_date_not_null} <= ${progo_initial_end} THEN 'Initial'
+          WHEN ${booking_line_created_date_not_null} > ${progo_initial_end} AND ${booking_line_created_date_not_null} <= DATEADD(DAY, 365, ${progo_initial_start}) THEN 'Following'
           ELSE 'Not Eligible'
         END
       ELSE
         CASE
-          WHEN ${CG_EXCEPTION_FLAG} = 'Y' AND NOT IS_NULL(${booking_type}) THEN PROPER(${booking_type})
-          WHEN ${CG_RETENTION_TYPE} = 'Existing Customer' THEN 'One-off'
-          WHEN ${CG_EMPLOYEE_SALES_REGION} = 'Client Growth' AND ${booking_line_created_date_not_null} BETWEEN ${initial_booking_date} AND DATEADD(DAY, 27, ${initial_booking_date}) AND ${reporting_date_greater_than_initbooking} = 'Y' AND ${reporting_date_less_than_initbookingplus365} = 'Y' THEN 'Initial'
-          WHEN ${CG_EMPLOYEE_SALES_REGION} <> 'Client Growth' AND ${booking_line_created_date_not_null} BETWEEN ${initial_booking_date} AND DATEADD(DAY, 27, ${initial_booking_date}) AND ${reporting_date_greater_than_initbooking} = 'Y' AND ${reporting_date_less_than_initbookingplus365} = 'Y' THEN 'Following'
+          WHEN ${cg_exception_flag} = 'Y' AND NOT IS_NULL(${booking_type}) THEN PROPER(${booking_type})
+          WHEN ${cg_retention_type} = 'Existing Customer' THEN 'One-off'
+          WHEN ${cg_employee_sales_region} = 'Client Growth' AND ${booking_line_created_date_not_null} BETWEEN ${initial_booking_date} AND DATEADD(DAY, 27, ${initial_booking_date}) AND ${reporting_date_greater_than_initbooking} = 'Y' AND ${reporting_date_less_than_initbookingplus365} = 'Y' THEN 'Initial'
+          WHEN ${cg_employee_sales_region} <> 'Client Growth' AND ${booking_line_created_date_not_null} BETWEEN ${initial_booking_date} AND DATEADD(DAY, 27, ${initial_booking_date}) AND ${reporting_date_greater_than_initbooking} = 'Y' AND ${reporting_date_less_than_initbookingplus365} = 'Y' THEN 'Following'
           WHEN ${booking_line_created_date_not_null} > DATEADD(DAY, 27, ${initial_booking_date}) AND ${reporting_date_greater_than_initbooking} = 'Y' AND ${reporting_date_less_than_initbookingplus365} = 'Y' THEN 'Following'
           ELSE 'Not Eligible'
         END
@@ -409,7 +409,7 @@ view: cgd_monitored {
     type: string
     sql:
     CASE
-      WHEN ${progo_flag} = 'Y' THEN ${CG_Employee}
+      WHEN ${progo_flag} = 'Y' THEN ${cg_employee}
       ELSE PROPER(CONCAT(SPLIT(${employee_name}, ' ', -1), ' ', LEFT(${employee_name}, FINDNth(${employee_name}, ' ', -1) - 1)))
     END;;
   }
@@ -548,11 +548,11 @@ view: cgd_monitored {
     CASE
       WHEN ${cg_flag} = 'CG' THEN
         CASE
-          WHEN NOT IS_NULL(MIN(${CG_CUSTOMER_TYPE})) THEN
+          WHEN NOT IS_NULL(MIN(${cg_customer_type})) THEN
             CASE
-              WHEN UPPER(MIN(${CG_CUSTOMER_TYPE})) = 'NEW' THEN 'New Customer'
-              WHEN UPPER(MIN(${CG_CUSTOMER_TYPE})) = 'EXISTING' THEN 'Existing Customer'
-              WHEN UPPER(MIN(${CG_CUSTOMER_TYPE})) = 'WINBACK' THEN 'Re-Activated Customer'
+              WHEN UPPER(MIN(${cg_customer_type})) = 'NEW' THEN 'New Customer'
+              WHEN UPPER(MIN(${cg_customer_type})) = 'EXISTING' THEN 'Existing Customer'
+              WHEN UPPER(MIN(${cg_customer_type})) = 'WINBACK' THEN 'Re-Activated Customer'
             END
           ELSEIF
             SUM(
@@ -1726,12 +1726,12 @@ view: cgd_monitored {
   measure: mnth_offset {
     sql: 0 ;;
   }
-  
+
 # Measure: Qrtr Offset
   measure: qrtr_offset {
     sql: 0 ;;
   }
-  
+
 # Measure: Week Offset
   measure: week_offset {
     sql: 0 ;;
