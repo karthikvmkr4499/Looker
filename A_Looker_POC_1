@@ -358,183 +358,198 @@ view: cgd_monitored {
   dimension: acq_booking_type {
     type: string
     sql:
-    CASE
-      WHEN ${progo_flag} = 'Y' THEN
-        CASE
-          WHEN ${booking_line_created_date_not_null} >= ${progo_initial_start} AND ${booking_line_created_date_not_null} <= ${progo_initial_end} THEN 'Initial'
-          WHEN ${booking_line_created_date_not_null} > ${progo_initial_end} AND ${booking_line_created_date_not_null} <= DATEADD(DAY, 365, ${progo_initial_start}) THEN 'Following'
-          ELSE 'Not Eligible'
-        END
-      ELSE
-        CASE
-          WHEN ${cg_exception_flag} = 'Y' AND NOT IS_NULL(${booking_type}) THEN PROPER(${booking_type})
-          WHEN ${cg_retention_type} = 'Existing Customer' THEN 'One-off'
-          WHEN ${cg_employee_sales_region} = 'Client Growth' AND ${booking_line_created_date_not_null} BETWEEN ${initial_booking_date} AND DATEADD(DAY, 27, ${initial_booking_date}) AND ${reporting_date_greater_than_initbooking} = 'Y' AND ${reporting_date_less_than_initbookingplus365} = 'Y' THEN 'Initial'
-          WHEN ${cg_employee_sales_region} <> 'Client Growth' AND ${booking_line_created_date_not_null} BETWEEN ${initial_booking_date} AND DATEADD(DAY, 27, ${initial_booking_date}) AND ${reporting_date_greater_than_initbooking} = 'Y' AND ${reporting_date_less_than_initbookingplus365} = 'Y' THEN 'Following'
-          WHEN ${booking_line_created_date_not_null} > DATEADD(DAY, 27, ${initial_booking_date}) AND ${reporting_date_greater_than_initbooking} = 'Y' AND ${reporting_date_less_than_initbookingplus365} = 'Y' THEN 'Following'
-          ELSE 'Not Eligible'
-        END
-    END;;
+      CASE
+        WHEN ${progo_flag} = 'y' THEN
+          CASE
+            WHEN ${booking_line_created_date_not_null} >= ${progo_initial_start} AND ${booking_line_created_date_not_null} <= ${progo_initial_end} THEN 'Initial'
+            WHEN ${booking_line_created_date_not_null} > ${progo_initial_end} AND ${booking_line_created_date_not_null} <= DATEADD(DAY, 365, ${progo_initial_start}) THEN 'Following'
+            ELSE 'Not Eligible'
+          END
+        ELSE
+          CASE
+            WHEN ${cg_exception_flag} = 'y' AND NOT IS_NULL(${booking_type}) THEN PROPER(${booking_type})
+            WHEN ${cg_retention_type} = 'existing customer' THEN 'One-off'
+            WHEN ${cg_employee_sales_region} = 'client growth' AND ${booking_line_created_date_not_null} BETWEEN ${initial_booking_date} AND DATEADD(DAY, 27, ${initial_booking_date}) AND ${reporting_date_greater_than_initbooking} = 'y' AND ${reporting_date_less_than_initbookingplus365} = 'y' THEN 'Initial'
+            WHEN ${cg_employee_sales_region} <> 'client growth' AND ${booking_line_created_date_not_null} BETWEEN ${initial_booking_date} AND DATEADD(DAY, 27, ${initial_booking_date}) AND ${reporting_date_greater_than_initbooking} = 'y' AND ${reporting_date_less_than_initbookingplus365} = 'y' THEN 'Following'
+            WHEN ${booking_line_created_date_not_null} > DATEADD(DAY, 27, ${initial_booking_date}) AND ${reporting_date_greater_than_initbooking} = 'y' AND ${reporting_date_less_than_initbookingplus365} = 'y' THEN 'Following'
+            ELSE 'Not Eligible'
+          END
+      END;;
   }
+  
   dimension: acq_booking_type_copy_3 {
     type: string
     sql:
-    CASE
-      WHEN ${progo_flag} = 'Y' THEN
-        CASE
-          WHEN ${booking_line_created_date_not_null} >= ${PROGO_INITIAL_START} AND ${booking_line_created_date_not_null} <= ${PROGO_INITIAL_END} THEN 'Initial'
-          WHEN ${booking_line_created_date_not_null} > ${PROGO_INITIAL_END} AND ${booking_line_created_date_not_null} <= DATEADD(DAY, 365, ${PROGO_INITIAL_START}) THEN 'Following'
-          ELSE 'Not Eligible'
-        END
-      ELSE
-        CASE
-          WHEN ${CG_EXCEPTION_FLAG} = 'Y' AND NOT IS_NULL(${booking_type}) THEN PROPER(${booking_type})
-          WHEN ${CG_RETENTION_TYPE} = 'Existing Customer' THEN 'One-off'
-          WHEN ${CG_EMPLOYEE_SALES_REGION} = 'Client Growth' AND ${booking_line_created_date_not_null} BETWEEN ${initial_booking_date} AND DATEADD(DAY, 27, ${initial_booking_date}) AND ${reporting_date_greater_than_initbooking} = 'Y' AND ${reporting_date_less_than_initbookingplus365} = 'Y' THEN 'Initial'
-          WHEN ${CG_EMPLOYEE_SALES_REGION} <> 'Client Growth' AND ${booking_line_created_date_not_null} BETWEEN ${initial_booking_date} AND DATEADD(DAY, 27, ${initial_booking_date}) AND ${reporting_date_greater_than_initbooking} = 'Y' AND ${reporting_date_less_than_initbookingplus365} = 'Y' THEN 'Following'
-          WHEN ${booking_line_created_date_not_null} > DATEADD(DAY, 27, ${initial_booking_date}) AND ${reporting_date_greater_than_initbooking} = 'Y' AND ${reporting_date_less_than_initbookingplus365} = 'Y' THEN 'Following'
-          ELSE 'Not Eligible'
-        END
-    END;;
+      CASE
+        WHEN ${progo_flag} = 'y' THEN
+          CASE
+            WHEN ${booking_line_created_date_not_null} >= ${progo_initial_start} AND ${booking_line_created_date_not_null} <= ${progo_initial_end} THEN 'Initial'
+            WHEN ${booking_line_created_date_not_null} > ${progo_initial_end} AND ${booking_line_created_date_not_null} <= DATEADD(DAY, 365, ${progo_initial_start}) THEN 'Following'
+            ELSE 'Not Eligible'
+          END
+        ELSE
+          CASE
+            WHEN ${cg_exception_flag} = 'y' AND NOT IS_NULL(${booking_type}) THEN PROPER(${booking_type})
+            WHEN ${cg_retention_type} = 'existing customer' THEN 'One-off'
+            WHEN ${cg_employee_sales_region} = 'client growth' AND ${booking_line_created_date_not_null} BETWEEN ${initial_booking_date} AND DATEADD(DAY, 27, ${initial_booking_date}) AND ${reporting_date_greater_than_initbooking} = 'y' AND ${reporting_date_less_than_initbookingplus365} = 'y' THEN 'Initial'
+            WHEN ${cg_employee_sales_region} <> 'client growth' AND ${booking_line_created_date_not_null} BETWEEN ${initial_booking_date} AND DATEADD(DAY, 27, ${initial_booking_date}) AND ${reporting_date_greater_than_initbooking} = 'y' AND ${reporting_date_less_than_initbookingplus365} = 'y' THEN 'Following'
+            WHEN ${booking_line_created_date_not_null} > DATEADD(DAY, 27, ${initial_booking_date}) AND ${reporting_date_greater_than_initbooking} = 'y' AND ${reporting_date_less_than_initbookingplus365} = 'y' THEN 'Following'
+            ELSE 'Not Eligible'
+          END
+      END;;
   }
+  
   dimension: adtype_pub {
     type: string
     sql:
-    CASE
-      WHEN ${revenue_type} = 'PRINT' THEN ${unified_publication_name}
-      WHEN ${revenue_type} = 'DIGITAL' THEN ${fin_adtype_name}
-    END;;
+      CASE
+        WHEN ${revenue_type} = 'print' THEN ${unified_publication_name}
+        WHEN ${revenue_type} = 'digital' THEN ${fin_adtype_name}
+      END;;
   }
+  
   dimension: booked_by {
     type: string
     sql:
-    CASE
-      WHEN ${progo_flag} = 'Y' THEN ${cg_employee}
-      ELSE PROPER(CONCAT(SPLIT(${employee_name}, ' ', -1), ' ', LEFT(${employee_name}, FINDNth(${employee_name}, ' ', -1) - 1)))
-    END;;
+      CASE
+        WHEN ${progo_flag} = 'y' THEN ${cg_employee}
+        ELSE PROPER(CONCAT(SPLIT(${employee_name}, ' ', -1), ' ', LEFT(${employee_name}, FINDNth(${employee_name}, ' ', -1) - 1)))
+      END;;
   }
+  
   dimension: calculation1 {
     type: string
     sql:
-    CASE
-      WHEN ${reporting_date_greater_than_20231002} = 'Y' AND (${booking_line_created_date_not_null} >= DATE('2023-09-04') OR ${CG_EXCEPTION_FLAG} = 'Y')
-      AND (${CG_EXCEPTION_FLAG} = 'Y' OR ${CG_TEAM} = 'CG Campaigns A' OR (${CG_TEAM} <> 'CG Campaigns A' AND ${CG_RETENTION_TYPE} <> 'Existing Customer'))
-      THEN 'Y' ELSE 'N'
-    END;;
+      CASE
+        WHEN ${reporting_date_greater_than_20231002} = 'y' AND (${booking_line_created_date_not_null} >= DATE('2023-09-04') OR ${cg_exception_flag} = 'y')
+        AND (${cg_exception_flag} = 'y' OR ${cg_team} = 'cg campaigns a' OR (${cg_team} <> 'cg campaigns a' AND ${cg_retention_type} <> 'existing customer'))
+        THEN 'Y' ELSE 'N'
+      END;;
   }
+  
   measure: calculation2 {
     type: number
     sql:
-    SUM(
-      CASE
-        WHEN ${reporting_date_greater_than_initbooking} = 'N' AND ${CG_Exclude_OMP_CTR_Unruly_Classifieds} = 'Include'
-        THEN ${gross_revenue_ex_adj_amount}
-      END
-    ) > 0;;
+      SUM(
+        CASE
+          WHEN ${reporting_date_greater_than_initbooking} = 'n' AND ${cg_exclude_omp_ctr_unruly_classifieds} = 'include'
+          THEN ${gross_revenue_ex_adj_amount}
+        END
+      ) > 0;;
   }
+  
   dimension: cg_employee {
     type: string
     sql:
-    PROPER(
-      CASE
-        WHEN ${CG_EXCEPTION_FLAG} = 'Y' THEN ${CG_EMPLOYEE_FULL_NAME}
-        WHEN ${acq_booking_type} = 'Following' THEN ${CG_INIT_Employee}
-        ELSE ${CG_Employee_FL_Name}
-      END
-    );;
+      PROPER(
+        CASE
+          WHEN ${cg_exception_flag} = 'y' THEN ${cg_employee_full_name}
+          WHEN ${acq_booking_type} = 'Following' THEN ${cg_init_employee}
+          ELSE ${cg_employee_fl_name}
+        END
+      );;
   }
+  
   dimension: cg_employee_fl_name {
     type: string
     sql:
-    CASE
-      WHEN ${CG_EXCEPTION_FLAG} = 'Y' THEN PROPER(${CG_EMPLOYEE_FULL_NAME})
-      ELSE CONCAT(SPLIT(${employee_name}, ' ', -1), ' ', LEFT(${employee_name}, FIND(${employee_name}, ' ') - 1))
-    END;;
+      CASE
+        WHEN ${cg_exception_flag} = 'y' THEN PROPER(${cg_employee_full_name})
+        ELSE CONCAT(SPLIT(${employee_name}, ' ', -1), ' ', LEFT(${employee_name}, FIND(${employee_name}, ' ') - 1))
+      END;;
   }
+  
   dimension: cg_init_employee {
     type: string
     sql:
-    MIN(
-      CASE
-        WHEN ${CG_EMPLOYEE_SALES_REGION} = 'Client Growth' AND ${booking_line_created_date_not_null} =
-          (SELECT MIN(${booking_line_created_date_not_null}) FROM ${TABLE} WHERE ${CG_EMPLOYEE_SALES_REGION} = 'Client Growth' AND ${booking_line_created_date_not_null} >= DATE('2023-09-04'))
-        THEN ${CG_Employee_FL_Name}
-      END
-    );;
+      MIN(
+        CASE
+          WHEN ${cg_employee_sales_region} = 'client growth' AND ${booking_line_created_date_not_null} =
+            (SELECT MIN(${booking_line_created_date_not_null}) FROM ${table} WHERE ${cg_employee_sales_region} = 'client growth' AND ${booking_line_created_date_not_null} >= DATE('2023-09-04'))
+          THEN ${cg_employee_fl_name}
+        END
+      );;
   }
+  
   dimension: cg_init_team {
     type: string
     sql:
-    COALESCE(
-      MIN(
-        CASE
-          WHEN ${CG_EMPLOYEE_SALES_REGION} = 'Client Growth' AND ${booking_line_created_date_not_null} >= DATE('2023-09-04') AND ${CG_Employee} = ${cg_init_employee} AND ${relative_fy_year_offset} IN (0, 1)
-          THEN ${CG_EMPLOYEE_SALES_TEAM}
-        END
-      ),
-      MIN(
-        CASE
-          WHEN ${CG_EMPLOYEE_SALES_REGION} = 'Client Growth' AND ${booking_line_created_date_not_null} >= DATE('2023-09-04') AND ${CG_Employee} = ${cg_init_employee}
-          THEN ${CG_EMPLOYEE_SALES_TEAM}
-        END
-      )
-    );;
+      COALESCE(
+        MIN(
+          CASE
+            WHEN ${cg_employee_sales_region} = 'client growth' AND ${booking_line_created_date_not_null} >= DATE('2023-09-04') AND ${cg_employee} = ${cg_init_employee} AND ${relative_fy_year_offset} IN (0, 1)
+            THEN ${cg_employee_sales_team}
+          END
+        ),
+        MIN(
+          CASE
+            WHEN ${cg_employee_sales_region} = 'client growth' AND ${booking_line_created_date_not_null} >= DATE('2023-09-04') AND ${cg_employee} = ${cg_init_employee}
+            THEN ${cg_employee_sales_team}
+          END
+        )
+      );;
   }
+  
   dimension: cg_team {
     type: string
     sql:
-    CASE
-      WHEN ${CG_EXCEPTION_FLAG} = 'Y' THEN ${CG_EMPLOYEE_SALES_TEAM}
-      WHEN ${acq_booking_type} = 'Following' THEN ${cg_init_team}
-      WHEN ${CG_EMPLOYEE_SALES_REGION} <> 'Client Growth' THEN 'CG Unclaimed'
-      ELSE ${CG_EMPLOYEE_SALES_TEAM}
-    END;;
+      CASE
+        WHEN ${cg_exception_flag} = 'y' THEN ${cg_employee_sales_team}
+        WHEN ${acq_booking_type} = 'Following' THEN ${cg_init_team}
+        WHEN ${cg_employee_sales_region} <> 'client growth' THEN 'cg unclaimed'
+        ELSE ${cg_employee_sales_team}
+      END;;
   }
+  
   dimension: cg_team_copy {
     type: string
     sql:
-    CASE
-      WHEN ${CG_EXCEPTION_FLAG} = 'Y' THEN ${CG_EMPLOYEE_SALES_TEAM}
-      WHEN ${acq_booking_type} = 'Following' THEN ${cg_init_team}
-      WHEN ${CG_EMPLOYEE_SALES_REGION} <> 'Client Growth' THEN 'CG Unclaimed'
-      ELSE ${CG_EMPLOYEE_SALES_TEAM}
-    END;;
+      CASE
+        WHEN ${cg_exception_flag} = 'y' THEN ${cg_employee_sales_team}
+        WHEN ${acq_booking_type} = 'Following' THEN ${cg_init_team}
+        WHEN ${cg_employee_sales_region} <> 'client growth' THEN 'cg unclaimed'
+        ELSE ${cg_employee_sales_team}
+      END;;
   }
+  
   dimension: cg_type {
     type: string
     sql:
-    CASE
-      WHEN ${CG_RETENTION_TYPE} = 'Existing Customer' THEN 'Existing'
-      WHEN ${CG_RETENTION_TYPE} IN ('Re-Activated Customer', 'New Customer') THEN 'New & Winback'
-    END;;
+      CASE
+        WHEN ${cg_retention_type} = 'existing customer' THEN 'Existing'
+        WHEN ${cg_retention_type} IN ('re-activated customer', 'new customer') THEN 'New & Winback'
+      END;;
   }
+  
   dimension: cg_exclude_omp_ctr_unruly_classifieds {
     type: string
     sql:
-    CASE
-      WHEN ${portfolio_parent_group_name_current} = 'SMB TRANSACTIONAL' OR
-           UPPER(${cost_model_type}) = 'NON-GUARANTEED' OR
-           UPPER(LEFT(${Customer_Name}, 3)) = 'CTR' OR
-           UPPER(${unified_publication_name}) = 'UNRULY' THEN 'Exclude'
-      ELSE 'Include'
-    END;;
+      CASE
+        WHEN ${portfolio_parent_group_name_current} = 'smb transactional' OR
+             UPPER(${cost_model_type}) = 'non-guaranteed' OR
+             UPPER(LEFT(${customer_name}, 3)) = 'ctr' OR
+             UPPER(${unified_publication_name}) = 'unruly' THEN 'Exclude'
+        ELSE 'Include'
+      END;;
   }
+  
   dimension: cg_flag {
     type: string
     sql:
-    CASE
-      WHEN ${progo_flag} = 'Y' AND ${rev_sub_type} = 'PROGRAMMATIC SOURCE' THEN 'CG'
-      WHEN NOT IS_NULL(${initial_booking_date}) THEN 'CG'
-    END;;
+      CASE
+        WHEN ${progo_flag} = 'y' AND ${rev_sub_type} = 'programmatic source' THEN 'CG'
+        WHEN NOT IS_NULL(${initial_booking_date}) THEN 'CG'
+      END;;
   }
+  
   measure: cg_initial_booking_date_hierarchy {
     type: date
     sql:
-    CASE
-      WHEN ${cg_employee_sales_region} = 'Client Growth'
-        AND ${booking_line_created_date_not_null} >= "2023-09-04"
-      THEN ${booking_line_created_date_not_null}
-    END ;;
+      CASE
+        WHEN ${cg_employee_sales_region} = 'client growth'
+          AND ${booking_line_created_date_not_null} >= "2023-09-04"
+        THEN ${booking_line_created_date_not_null}
+      END ;;
     filters: {
       field: cpq_account
       value: "fixed"
@@ -542,42 +557,44 @@ view: cgd_monitored {
     sql_on: ${cpq_account} ;;
     aggregation: min
   }
+  
   dimension: cg_retention_type {
     type: string
     sql:
-    CASE
-      WHEN ${cg_flag} = 'CG' THEN
-        CASE
-          WHEN NOT IS_NULL(MIN(${cg_customer_type})) THEN
-            CASE
-              WHEN UPPER(MIN(${cg_customer_type})) = 'NEW' THEN 'New Customer'
-              WHEN UPPER(MIN(${cg_customer_type})) = 'EXISTING' THEN 'Existing Customer'
-              WHEN UPPER(MIN(${cg_customer_type})) = 'WINBACK' THEN 'Re-Activated Customer'
-            END
-          ELSEIF
-            SUM(
+      CASE
+        WHEN ${cg_flag} = 'cg' THEN
+          CASE
+            WHEN NOT IS_NULL(MIN(${cg_customer_type})) THEN
               CASE
-                WHEN ${reporting_date_greater_than_initbooking} = 'N' AND ${CG_Exclude_OMP_CTR_Unruly_Classifieds} = 'Include' AND ${reporting_date_greater_than_initbookingminus365} = 'Y'
-                THEN ${gross_revenue_ex_adj_amount}
+                WHEN UPPER(MIN(${cg_customer_type})) = 'new' THEN 'New Customer'
+                WHEN UPPER(MIN(${cg_customer_type})) = 'existing' THEN 'Existing Customer'
+                WHEN UPPER(MIN(${cg_customer_type})) = 'winback' THEN 'Re-Activated Customer'
               END
-            ) > 0
-            OR SUM(
+            ELSEIF
+              SUM(
+                CASE
+                  WHEN ${reporting_date_greater_than_initbooking} = 'n' AND ${cg_exclude_omp_ctr_unruly_classifieds} = 'include' AND ${reporting_date_greater_than_initbookingminus365} = 'y'
+                  THEN ${gross_revenue_ex_adj_amount}
+                END
+              ) > 0
+              OR SUM(
+                CASE
+                  WHEN ${reporting_date_greater_than_initbooking} = 'y' AND ${booking_line_created_date_not_null} < ${initial_booking_date} AND ${cg_exclude_omp_ctr_unruly_classifieds} = 'include'
+                  THEN ${gross_revenue_ex_adj_amount}
+                END
+              ) > 0
+            THEN 'Existing Customer'
+            ELSE
               CASE
-                WHEN ${reporting_date_greater_than_initbooking} = 'Y' AND ${booking_line_created_date_not_null} < ${initial_booking_date} AND ${CG_Exclude_OMP_CTR_Unruly_Classifieds} = 'Include'
-                THEN ${gross_revenue_ex_adj_amount}
+                WHEN IS_NULL(SUM(CASE WHEN ${reporting_date_greater_than_initbooking} = 'n' AND ${cg_exclude_omp_ctr_unruly_classifieds} = 'include' AND ${reporting_date_greater_than_initbookingminus365} = 'y' THEN ${gross_revenue_ex_adj_amount} END))
+                OR SUM(CASE WHEN ${reporting_date_greater_than_initbooking} = 'n' AND ${cg_exclude_omp_ctr_unruly_classifieds} = 'include' THEN ${gross_revenue_ex_adj_amount} END) > 0
+                THEN 'New Customer'
               END
-            ) > 0
-          THEN 'Existing Customer'
-          ELSE
-            CASE
-              WHEN IS_NULL(SUM(CASE WHEN ${reporting_date_greater_than_initbooking} = 'N' AND ${CG_Exclude_OMP_CTR_Unruly_Classifieds} = 'Include' AND ${reporting_date_greater_than_initbookingminus365} = 'Y' THEN ${gross_revenue_ex_adj_amount} END))
-              OR SUM(CASE WHEN ${reporting_date_greater_than_initbooking} = 'N' AND ${CG_Exclude_OMP_CTR_Unruly_Classifieds} = 'Include' THEN ${gross_revenue_ex_adj_amount} END) > 0
-              THEN 'New Customer'
-            END
-        END
-      ELSE NULL
-    END;;
+          END
+        ELSE NULL
+      END;;
   }
+  
 # Dimension for Client Acquired - Eligible Client
   dimension: client_acquired_eligible_client {
     type: string
