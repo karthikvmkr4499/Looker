@@ -290,12 +290,12 @@ view: cgd_data {
   }
 
   dimension: reporting_date_greater_than_initbooking {
-    type: yesno
+    type: string
     sql: ${TABLE}."REPORTING_DATE_GREATER_THAN_INITBOOKING" ;;
   }
 
   dimension: reporting_date_greater_than_initbookingminus365 {
-    type: yesno
+    type: string
     sql: ${TABLE}."REPORTING_DATE_GREATER_THAN_INITBOOKINGMINUS365" ;;
   }
 
@@ -483,12 +483,24 @@ dimension: cg_employee {
 
 dimension: cg_employee_fl_name {
   type: string
-  sql:
-  CASE
-    WHEN ${cg_exception_flag} = 'y' THEN INITCAP(${cg_employee_full_name})
-    ELSE CONCAT(SPLIT(${employee_name}, ' ', -1), ' ', LEFT(${employee_name}, FIND(${employee_name}, ' ') - 1))
-  END;;
-}
+    sql:
+    CASE
+      -- Check if Cg Exception Flag is 'Y'
+      WHEN ${cg_exception_flag} = 'true' THEN
+        UPPER(${cg_employee_full_name})  -- Converts the entire string to uppercase as a placeholder for proper case
+      ELSE
+        CONCAT(
+          REGEXP_SUBSTR(${employee_name}, ' ', -1),  -- Get last part of the Employee Name
+          ' ',
+          LEFT(
+            ${employee_name},
+            POSITION(' ' IN ${employee_name}) - 1  -- Get the first part of the Employee Name
+          )
+        )
+    END ;;
+  }
+
+
 
 dimension: cg_init_employee {
   type: string
@@ -560,26 +572,30 @@ dimension: cg_type {
   END;;
 }
 
-dimension: cg_exclude_omp_ctr_unruly_classifieds {
-  type: string
-  sql:
-  CASE
-    WHEN ${portfolio_parent_group_name_current} = 'smb transactional' OR
-         UPPER(${cost_model_type}) = 'non-guaranteed' OR
-         UPPER(LEFT(${customer_name}, 3)) = 'ctr' OR
-         UPPER(${unified_publication_name}) = 'unruly' THEN 'Exclude'
-    ELSE 'Include'
-  END;;
-}
+  dimension: cg_exclude_omp_ctr_unruly_classifieds {
+    type: string
+    sql:
+    CASE
+      WHEN ${portfolio_parent_group_name_current} = 'SMB TRANSACTIONAL'
+      OR UPPER(${cost_model_type}) = 'NON-GUARANTEED'
+      OR UPPER(LEFT(${advertiser_name}, 3)) = 'CTR'
+      OR UPPER(${unified_publication_name}) = 'UNRULY'
+      THEN 'Exclude'
+      ELSE 'Include'
+    END ;;
+  }
 
-dimension: cg_flag {
-  type: string
-  sql:
-  CASE
-    WHEN ${progo_flag} = 'y' AND ${rev_sub_type} = 'programmatic source' THEN 'CG'
-    WHEN NOT IS_NULL(${initial_booking_date}) THEN 'CG'
-  END;;
-}
+
+  dimension: cg_flag {
+    type: string
+    sql:
+    CASE
+      WHEN ${progo_flag} = 'Y' AND UPPER(${rev_sub_type}) = 'PROGRAMMATIC SOURCE' THEN 'CG'
+      WHEN ${initial_booking_date} IS NOT NULL THEN 'CG'
+    END ;;
+  }
+
+
 
 measure: cg_initial_booking_date_hierarchy {
   type: date
@@ -597,42 +613,84 @@ measure: cg_initial_booking_date_hierarchy {
   aggregation: min
 }
 
-dimension: cg_retention_type {
-  type: string
-  sql:
-  CASE
-    WHEN ${cg_flag} = 'cg' THEN
-      CASE
-        WHEN NOT IS_NULL(MIN(${cg_customer_type})) THEN
+  dimension: cg_retention_type {
+    type: string
+      sql:
           CASE
-            WHEN UPPER(MIN(${cg_customer_type})) = 'new' THEN 'New Customer'
-            WHEN UPPER(MIN(${cg_customer_type})) = 'existing' THEN 'Existing Customer'
-            WHEN UPPER(MIN(${cg_customer_type})) = 'winback' THEN 'Re-Activated Customer'
-          END
-        ELSEIF
-          SUM(
-            CASE
-              WHEN ${reporting_date_greater_than_initbooking} = 'n' AND ${cg_exclude_omp_ctr_unruly_classifieds} = 'include' AND ${reporting_date_greater_than_initbookingminus365} = 'y'
-              THEN ${gross_revenue_ex_adj_amount}
-            END
-          ) > 0
-          OR SUM(
-            CASE
-              WHEN ${reporting_date_greater_than_initbooking} = 'y' AND ${booking_line_created_date_not_null} < ${initial_booking_date} AND ${cg_exclude_omp_ctr_unruly_classifieds} = 'include'
-              THEN ${gross_revenue_ex_adj_amount}
-            END
-          ) > 0
+            -- Check if CG_FLAG is 'CG'
+            WHEN ${cg_flag} = 'CG' THEN (
+              CASE
+                -- Check if `Cg Customer Type` is not null
+                WHEN NOT MIN(${cg_customer_type}) IS NULL THEN (
+                  CASE
+                    -- Classify customer type based on the Cg Customer Type field
+                    WHEN UPPER(MIN(${cg_customer_type})) = 'NEW' THEN 'New Customer'
+                    WHEN UPPER(MIN(${cg_customer_type})) = 'EXISTING' THEN 'Existing Customer'
+                    WHEN UPPER(MIN(${cg_customer_type})) = 'WINBACK' THEN 'Re-Activated Customer'
+                  END
+                )
+
+        -- Revenue published LY or TY before CG INIT date or created before CG INIT date
+        WHEN SUM(
+        CASE
+        WHEN ${reporting_date_greater_than_initbooking} = 'N'
+        AND ${cg_exclude_omp_ctr_unruly_classifieds} = 'Include'
+        AND ${reporting_date_greater_than_initbookingminus365} = 'Y'
+        THEN ${gross_revenue_ex_adj_amount}
+        ELSE 0
+        END
+        ) > 0
+        OR SUM(
+        CASE
+        WHEN ${reporting_date_greater_than_initbooking} = 'Y'
+        AND ${booking_line_created_date_not_null} < ${initial_booking_date}
+        AND ${cg_exclude_omp_ctr_unruly_classifieds} = 'Include'
+        THEN ${gross_revenue_ex_adj_amount}
+        ELSE 0
+        END
+        ) > 0
         THEN 'Existing Customer'
-        ELSE
-          CASE
-            WHEN IS_NULL(SUM(CASE WHEN ${reporting_date_greater_than_initbooking} = 'n' AND ${cg_exclude_omp_ctr_unruly_classifieds} = 'include' AND ${reporting_date_greater_than_initbookingminus365} = 'y' THEN ${gross_revenue_ex_adj_amount} END))
-            OR SUM(CASE WHEN ${reporting_date_greater_than_initbooking} = 'n' AND ${cg_exclude_omp_ctr_unruly_classifieds} = 'include' THEN ${gross_revenue_ex_adj_amount} END) > 0
-            THEN 'New Customer'
-          END
-      END
-    ELSE NULL
-  END;;
-}
+
+        -- If the revenue before init is NULL or 0, further check if the customer is Re-Activated or New
+        WHEN SUM(
+        CASE
+        WHEN ${reporting_date_greater_than_initbooking} = 'N'
+        AND ${cg_exclude_omp_ctr_unruly_classifieds} = 'Include'
+        AND ${reporting_date_greater_than_initbookingminus365} = 'Y'
+        THEN ${gross_revenue_ex_adj_amount}
+        ELSE 0
+        END
+        ) IS NULL OR SUM(
+        CASE
+        WHEN ${reporting_date_greater_than_initbooking} = 'N'
+        AND ${cg_exclude_omp_ctr_unruly_classifieds} = 'Include'
+        AND ${reporting_date_greater_than_initbookingminus365} = 'Y'
+        THEN ${gross_revenue_ex_adj_amount}
+        ELSE 0
+        END
+        ) = 0
+        THEN (
+        CASE
+        -- If non-init revenue exists, classify as Re-Activated Customer
+        WHEN SUM(
+        CASE
+        WHEN ${cg_exclude_omp_ctr_unruly_classifieds} = 'Include'
+        AND ${reporting_date_greater_than_initbookingminus365} = 'N'
+        THEN ${gross_revenue_ex_adj_amount}
+        ELSE 0
+        END
+        ) > 0
+        THEN 'Re-Activated Customer'
+        ELSE 'New Customer'
+        END
+        )
+        END
+        )
+        END ;;
+    }
+
+
+
 
 # Dimension for Client Acquired Eligible Client
 
