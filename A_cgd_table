@@ -590,10 +590,10 @@ measure: cg_initial_booking_date_hierarchy {
     THEN ${booking_line_created_date_not_null}
   END ;;
   filters: {
-    field: cpq_account
+    field: crm_account_number
     value: "fixed"
   }
-  sql_on: ${cpq_account} ;;
+  sql_on: ${crm_account_number} ;;
   aggregation: min
 }
 
@@ -644,7 +644,7 @@ dimension: client_acquired_eligible_client {
           CONCAT(CAST(${financial_year} AS STRING), '0', CAST(${financial_month} AS STRING))
         ELSE
           CONCAT(CAST(${financial_year} AS STRING), CAST(${financial_month} AS STRING))
-      END = ${first_pub_year_month_after_init} THEN ${cpq_account}
+      END = ${first_pub_year_month_after_init} THEN ${crm_account_number}
       END;;
   }
 
@@ -941,7 +941,7 @@ dimension: client_acquired_eligible_client {
 # Measure: CG Existing Count
   measure: cg_existing_count {
     type: count_distinct
-    sql: CASE WHEN ${cg_employee_sales_region} = 'client growth' AND ${cg_retention_type} = 'existing customer' THEN ${cpq_account} END ;;
+    sql: CASE WHEN ${cg_employee_sales_region} = 'client growth' AND ${cg_retention_type} = 'existing customer' THEN ${crm_account_number} END ;;
   }
 
 # Measure: CG Existing Digital
@@ -977,7 +977,7 @@ dimension: client_acquired_eligible_client {
 # Measure: CG New Winback Count
   measure: cg_new_winback_count {
     type: count_distinct
-    sql: CASE WHEN ${cg_employee_sales_region} = 'client growth' AND (${cg_retention_type} = 'new customer' OR ${cg_retention_type} = 're-activated customer') THEN ${cpq_account} END ;;
+    sql: CASE WHEN ${cg_employee_sales_region} = 'client growth' AND (${cg_retention_type} = 'new customer' OR ${cg_retention_type} = 're-activated customer') THEN ${crm_account_number} END ;;
   }
 
 # Measure: CG New Winback Digital
@@ -1019,7 +1019,7 @@ dimension: client_acquired_eligible_client {
 # Measure: CG Non-CG Count
   measure: cg_non_cg_count {
     type: count_distinct
-    sql: CASE WHEN ${cg_employee_sales_region} != 'client growth' THEN ${cpq_account} END ;;
+    sql: CASE WHEN ${cg_employee_sales_region} != 'client growth' THEN ${crm_account_number} END ;;
   }
 
 # Measure: CG Non-CG Digital
@@ -1056,31 +1056,31 @@ dimension: client_acquired_eligible_client {
 # Measure: Client Count
   measure: client_count {
     type: count_distinct
-    sql: ${cpq_account} ;;
+    sql: ${crm_account_number} ;;
   }
 
 # Measure: Count Client CM
   measure: count_client_cm {
     type: count_distinct
-    sql: CASE WHEN ${ins_crt_rel_mnth} = ${mnth_offset} THEN ${cpq_account} END ;;
+    sql: CASE WHEN ${ins_crt_rel_mnth} = ${mnth_offset} THEN ${crm_account_number} END ;;
   }
 
 # Measure: Count Client CQ
   measure: count_client_cq {
     type: count_distinct
-    sql: CASE WHEN ${ins_crt_rel_qrtr} = ${qrtr_offset} THEN ${cpq_account} END ;;
+    sql: CASE WHEN ${ins_crt_rel_qrtr} = ${qrtr_offset} THEN ${crm_account_number} END ;;
   }
 
 # Measure: Count Client CW
   measure: count_client_cw {
     type: count_distinct
-    sql: CASE WHEN ${ins_crt_rel_week} = ${week_offset} THEN ${cpq_account} END ;;
+    sql: CASE WHEN ${ins_crt_rel_week} = ${week_offset} THEN ${crm_account_number} END ;;
   }
 
 # Measure: Count Existing
   measure: count_existing {
     type: count_distinct
-    sql: CASE WHEN ${cg_retention_type} = 'existing customer' THEN ${cpq_account} END ;;
+    sql: CASE WHEN ${cg_retention_type} = 'existing customer' THEN ${crm_account_number} END ;;
   }
 
 # Measure: Count Existing %
@@ -1092,25 +1092,25 @@ dimension: client_acquired_eligible_client {
 # Measure: Count Existing CM
   measure: count_existing_cm {
     type: count_distinct
-    sql: CASE WHEN ${cg_retention_type} = 'existing customer' AND ${ins_crt_rel_mnth} = ${mnth_offset} THEN ${cpq_account} END ;;
+    sql: CASE WHEN ${cg_retention_type} = 'existing customer' AND ${ins_crt_rel_mnth} = ${mnth_offset} THEN ${crm_account_number} END ;;
   }
 
 # Measure: Count Existing CQ
   measure: count_existing_cq {
     type: count_distinct
-    sql: CASE WHEN ${cg_retention_type} = 'existing customer' AND ${ins_crt_rel_qrtr} = ${qrtr_offset} THEN ${cpq_account} END ;;
+    sql: CASE WHEN ${cg_retention_type} = 'existing customer' AND ${ins_crt_rel_qrtr} = ${qrtr_offset} THEN ${crm_account_number} END ;;
   }
 
 # Measure: Count Existing CW
   measure: count_existing_cw {
     type: count_distinct
-    sql: CASE WHEN ${cg_retention_type} = 'existing customer' AND ${ins_crt_rel_week} = ${week_offset} THEN ${cpq_account} END ;;
+    sql: CASE WHEN ${cg_retention_type} = 'existing customer' AND ${ins_crt_rel_week} = ${week_offset} THEN ${crm_account_number} END ;;
   }
 
 # Measure: Count Existing Digital
   measure: count_existing_digital {
     type: count_distinct
-    sql: CASE WHEN ${cg_retention_type} = 'existing customer' AND ${revenue_type} = 'digital' THEN ${cpq_account} END ;;
+    sql: CASE WHEN ${cg_retention_type} = 'existing customer' AND ${revenue_type} = 'digital' THEN ${crm_account_number} END ;;
   }
 
 # Measure: Count Existing Digital Only
@@ -1122,7 +1122,7 @@ dimension: client_acquired_eligible_client {
 # Measure: Count Existing Print
   measure: count_existing_print {
     type: count_distinct
-    sql: CASE WHEN ${cg_retention_type} = 'existing customer' AND ${revenue_type} = 'print' THEN ${cpq_account} END ;;
+    sql: CASE WHEN ${cg_retention_type} = 'existing customer' AND ${revenue_type} = 'print' THEN ${crm_account_number} END ;;
   }
 
 # Measure: Count Existing Print + Digital
@@ -1140,7 +1140,7 @@ dimension: client_acquired_eligible_client {
 # Measure: Count New
   measure: count_new {
     type: count_distinct
-    sql: CASE WHEN ${cg_retention_type} = 'new customer' THEN ${cpq_account} END ;;
+    sql: CASE WHEN ${cg_retention_type} = 'new customer' THEN ${crm_account_number} END ;;
   }
 
 # Measure: Count New %
@@ -1152,25 +1152,25 @@ dimension: client_acquired_eligible_client {
 # Measure: Count New CM
   measure: count_new_cm {
     type: count_distinct
-    sql: CASE WHEN ${cg_retention_type} = 'new customer' AND ${ins_crt_rel_mnth} = ${mnth_offset} THEN ${cpq_account} END ;;
+    sql: CASE WHEN ${cg_retention_type} = 'new customer' AND ${ins_crt_rel_mnth} = ${mnth_offset} THEN ${crm_account_number} END ;;
   }
 
 # Measure: Count New CQ
   measure: count_new_cq {
     type: count_distinct
-    sql: CASE WHEN ${cg_retention_type} = 'new customer' AND ${ins_crt_rel_qrtr} = ${qrtr_offset} THEN ${cpq_account} END ;;
+    sql: CASE WHEN ${cg_retention_type} = 'new customer' AND ${ins_crt_rel_qrtr} = ${qrtr_offset} THEN ${crm_account_number} END ;;
   }
 
 # Measure: Count New CW
   measure: count_new_cw {
     type: count_distinct
-    sql: CASE WHEN ${cg_retention_type} = 'new customer' AND ${ins_crt_rel_week} = ${week_offset} THEN ${cpq_account} END ;;
+    sql: CASE WHEN ${cg_retention_type} = 'new customer' AND ${ins_crt_rel_week} = ${week_offset} THEN ${crm_account_number} END ;;
   }
 
 # Measure: Count New Digital
   measure: count_new_digital {
     type: count_distinct
-    sql: CASE WHEN ${cg_retention_type} = 'new customer' AND ${revenue_type} = 'digital' THEN ${cpq_account} END ;;
+    sql: CASE WHEN ${cg_retention_type} = 'new customer' AND ${revenue_type} = 'digital' THEN ${crm_account_number} END ;;
   }
 
 # Measure: Count New Digital Only
@@ -1182,7 +1182,7 @@ dimension: client_acquired_eligible_client {
 # Measure: Count New Print
   measure: count_new_print {
     type: count_distinct
-    sql: CASE WHEN ${cg_retention_type} = 'new customer' AND ${revenue_type} = 'print' THEN ${cpq_account} END ;;
+    sql: CASE WHEN ${cg_retention_type} = 'new customer' AND ${revenue_type} = 'print' THEN ${crm_account_number} END ;;
   }
 
 # Measure: Count New Print + Digital
@@ -1200,7 +1200,7 @@ dimension: client_acquired_eligible_client {
 # Measure: Count Re-Activated
   measure: count_re_activated {
     type: count_distinct
-    sql: CASE WHEN ${cg_retention_type} = 're-activated customer' THEN ${cpq_account} END ;;
+    sql: CASE WHEN ${cg_retention_type} = 're-activated customer' THEN ${crm_account_number} END ;;
   }
 
 # Measure: Count Re-Activated %
@@ -1212,25 +1212,25 @@ dimension: client_acquired_eligible_client {
 # Measure: Count Re-Activated CM
   measure: count_re_activated_cm {
     type: count_distinct
-    sql: CASE WHEN ${cg_retention_type} = 're-activated customer' AND ${ins_crt_rel_mnth} = ${mnth_offset} THEN ${cpq_account} END ;;
+    sql: CASE WHEN ${cg_retention_type} = 're-activated customer' AND ${ins_crt_rel_mnth} = ${mnth_offset} THEN ${crm_account_number} END ;;
   }
 
 # Measure: Count Re-Activated CQ
   measure: count_re_activated_cq {
     type: count_distinct
-    sql: CASE WHEN ${cg_retention_type} = 're-activated customer' AND ${ins_crt_rel_qrtr} = ${qrtr_offset} THEN ${cpq_account} END ;;
+    sql: CASE WHEN ${cg_retention_type} = 're-activated customer' AND ${ins_crt_rel_qrtr} = ${qrtr_offset} THEN ${crm_account_number} END ;;
   }
 
 # Measure: Count Re-Activated CW
   measure: count_re_activated_cw {
     type: count_distinct
-    sql: CASE WHEN ${cg_retention_type} = 're-activated customer' AND ${ins_crt_rel_week} = ${week_offset} THEN ${cpq_account} END ;;
+    sql: CASE WHEN ${cg_retention_type} = 're-activated customer' AND ${ins_crt_rel_week} = ${week_offset} THEN ${crm_account_number} END ;;
   }
 
 # Measure: Count Re-Activated Digital
   measure: count_re_activated_digital {
     type: count_distinct
-    sql: CASE WHEN ${cg_retention_type} = 're-activated customer' AND ${revenue_type} = 'digital' THEN ${cpq_account} END ;;
+    sql: CASE WHEN ${cg_retention_type} = 're-activated customer' AND ${revenue_type} = 'digital' THEN ${crm_account_number} END ;;
   }
 
 # Measure: Count Re-Activated Digital Only
@@ -1242,7 +1242,7 @@ dimension: client_acquired_eligible_client {
 # Measure: Count Re-Activated Print
   measure: count_re_activated_print {
     type: count_distinct
-    sql: CASE WHEN ${cg_retention_type} = 're-activated customer' AND ${revenue_type} = 'print' THEN ${cpq_account} END ;;
+    sql: CASE WHEN ${cg_retention_type} = 're-activated customer' AND ${revenue_type} = 'print' THEN ${crm_account_number} END ;;
   }
 
 # Measure: Count Re-Activated Print + Digital
