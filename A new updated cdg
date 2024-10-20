@@ -1,0 +1,2484 @@
+# Define the database connection to be used for this model.
+connection: "fin_hub"
+
+# include all the views
+include: "/views/**/*.view.lkml"
+
+# Datagroups define a caching policy for an Explore. To learn more,
+# use the Quick Help panel on the right to see documentation.
+
+datagroup: cgd_default_datagroup {
+  # sql_trigger: SELECT MAX(id) FROM etl_log;;
+  max_cache_age: "1 hour"
+}
+
+persist_with: cgd_default_datagroup
+
+# Explores allow you to join together different views (database tables) based on the
+# relationships between fields. By joining a view into an Explore, you make those
+# fields available to users for data analysis.
+# Explores should be purpose-built for specific use cases.
+
+# To see the Explore you’re building, navigate to the Explore menu and select an Explore under "Cgd"
+
+# To create more sophisticated Explores that involve multiple views, you can use the join parameter.
+# Typically, join parameters require that you define the join type, join relationship, and a sql_on clause.
+# Each joined view also needs to define a primary key.
+
+explore: cgd_data {}
+
+explore: digi_subs {}
+-----------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+view: cgd_data {
+  
+  sql_table_name: "FIN"."CGD_DATA" ;;
+  
+  dimension: account_number {
+    type: string
+    sql: ${TABLE}."ACCOUNT_NUMBER" ;;
+  }
+  
+  dimension: adjustment_amount {
+    type: number
+    sql: ${TABLE}."ADJUSTMENT_AMOUNT" ;;
+  }
+  
+  measure: total_adjustment_amount {
+    type: sum
+    sql: ${adjustment_amount} ;;  }
+  measure: average_adjustment_amount {
+    type: average
+    sql: ${adjustment_amount} ;;  }
+  
+  dimension: advertiser_group {
+    type: string
+    sql: ${TABLE}."ADVERTISER_GROUP" ;;
+  }
+  
+  dimension: advertiser_name {
+    type: string
+    sql: ${TABLE}."ADVERTISER_NAME" ;;
+  }
+  
+  dimension: advertiser_parent {
+    type: string
+    sql: ${TABLE}."ADVERTISER_PARENT" ;;
+  }
+  
+  dimension: agency_group {
+    type: string
+    sql: ${TABLE}."AGENCY_GROUP" ;;
+  }
+  
+  dimension: agency_name {
+    type: string
+    sql: ${TABLE}."AGENCY_NAME" ;;
+  }
+  
+  dimension: agency_parent {
+    type: string
+    sql: ${TABLE}."AGENCY_PARENT" ;;
+  }
+  
+  dimension: booking_line_created_date {
+    type: date
+    sql: ${TABLE}."BOOKING_LINE_CREATED_DATE" ;;
+  }
+  
+  dimension: booking_line_created_date_not_null {
+    type: date
+    sql: ${TABLE}."BOOKING_LINE_CREATED_DATE_NOT_NULL" ;;
+  }
+  
+  dimension: booking_line_created_month_offset {
+    type: number
+    sql: ${TABLE}."BOOKING_LINE_CREATED_MONTH_OFFSET" ;;
+  }
+  
+  dimension: booking_line_created_quarter {
+    type: number
+    sql: ${TABLE}."BOOKING_LINE_CREATED_QUARTER" ;;
+  }
+  
+  dimension: booking_line_created_quarter_offset {
+    type: number
+    sql: ${TABLE}."BOOKING_LINE_CREATED_QUARTER_OFFSET" ;;
+  }
+  
+  dimension: booking_line_created_short_month {
+    type: string
+    sql: ${TABLE}."BOOKING_LINE_CREATED_SHORT_MONTH" ;;
+  }
+  
+  dimension: booking_line_created_week {
+    type: number
+    sql: ${TABLE}."BOOKING_LINE_CREATED_WEEK" ;;
+  }
+  
+  dimension: booking_line_created_week_offset {
+    type: number
+    sql: ${TABLE}."BOOKING_LINE_CREATED_WEEK_OFFSET" ;;
+  }
+  
+  dimension: booking_line_created_year {
+    type: number
+    sql: ${TABLE}."BOOKING_LINE_CREATED_YEAR" ;;
+  }
+  
+  dimension: booking_line_created_year_offset {
+    type: number
+    sql: ${TABLE}."BOOKING_LINE_CREATED_YEAR_OFFSET" ;;
+  }
+  
+  dimension: booking_number {
+    type: string
+    sql: ${TABLE}."BOOKING_NUMBER" ;;
+  }
+  
+  dimension: booking_type {
+    type: string
+    sql: ${TABLE}."BOOKING_TYPE" ;;
+  }
+  
+  dimension: cg_customer_type {
+    type: string
+    sql: ${TABLE}."CG_CUSTOMER_TYPE" ;;
+  }
+  
+  dimension: cg_employee_full_name {
+    type: string
+    sql: ${TABLE}."CG_EMPLOYEE_FULL_NAME" ;;
+  }
+  
+  dimension: cg_employee_sales_region {
+    type: string
+    sql: ${TABLE}."CG_EMPLOYEE_SALES_REGION" ;;
+  }
+  
+  dimension: cg_employee_sales_team {
+    type: string
+    sql: ${TABLE}."CG_EMPLOYEE_SALES_TEAM" ;;
+  }
+  
+  dimension: cg_exception_flag {
+    type: string
+    sql: ${TABLE}."CG_EXCEPTION_FLAG" ;;
+  }
+  
+  dimension: classification_name {
+    type: string
+    sql: ${TABLE}."CLASSIFICATION_NAME" ;;
+  }
+  
+  dimension: cost_model_type {
+    type: string
+    sql: ${TABLE}."COST_MODEL_TYPE" ;;
+  }
+  
+  dimension: crm_account_number {
+    type: string
+    sql: ${TABLE}."CRM_ACCOUNT_NUMBER" ;;
+  }
+  
+  dimension: current_portfolio_group_owner_current {
+    type: string
+    sql: ${TABLE}."CURRENT_PORTFOLIO_GROUP_OWNER_CURRENT" ;;
+  }
+  
+  dimension: current_portfolio_parent_group_owner_sync {
+    type: string
+    sql: ${TABLE}."CURRENT_PORTFOLIO_PARENT_GROUP_OWNER_SYNC" ;;
+  }
+  
+  dimension: employee_name {
+    type: string
+    sql: ${TABLE}."EMPLOYEE_NAME" ;;
+  }
+  
+  dimension: fin_adtype_name {
+    type: string
+    sql: ${TABLE}."FIN_ADTYPE_NAME" ;;
+  }
+  
+  dimension: financial_month {
+    type: number
+    sql: ${TABLE}."FINANCIAL_MONTH" ;;
+  }
+  
+  dimension: financial_quarter {
+    type: number
+    sql: ${TABLE}."FINANCIAL_QUARTER" ;;
+  }
+  
+  dimension: financial_short_month {
+    type: string
+    sql: ${TABLE}."FINANCIAL_SHORT_MONTH" ;;
+  }
+  
+  dimension: financial_week {
+    type: number
+    sql: ${TABLE}."FINANCIAL_WEEK" ;;
+  }
+  
+  dimension: financial_year {
+    type: number
+    sql: ${TABLE}."FINANCIAL_YEAR" ;;
+  }
+  
+  dimension: first_pub_date_after_init {
+    type: date
+    sql: ${TABLE}."FIRST_PUB_DATE_AFTER_INIT" ;;
+  }
+  
+  dimension: gross_revenue_ex_adj_amount {
+    type: number
+    sql: ${TABLE}."GROSS_REVENUE_EX_ADJ_AMOUNT" ;;
+  }
+  
+  dimension: initial_booking_date {
+    type: date
+    sql: ${TABLE}."INITIAL_BOOKING_DATE" ;;
+  }
+  
+  dimension: is_future_period_flag {
+    type: string
+    sql: ${TABLE}."IS_FUTURE_PERIOD_FLAG" ;;
+  }
+  
+  dimension: nca_industry_pillar {
+    type: string
+    sql: ${TABLE}."NCA_INDUSTRY_PILLAR" ;;
+  }
+  
+  dimension: portfolio_conformed_name_current {
+    type: string
+    sql: ${TABLE}."PORTFOLIO_CONFORMED_NAME_CURRENT" ;;
+  }
+  
+  dimension: portfolio_conformed_name_sync {
+    type: string
+    sql: ${TABLE}."PORTFOLIO_CONFORMED_NAME_SYNC" ;;
+  }
+  
+  dimension: portfolio_group_name_current {
+    type: string
+    sql: ${TABLE}."PORTFOLIO_GROUP_NAME_CURRENT" ;;
+  }
+  
+  dimension: portfolio_group_name_sync {
+    type: string
+    sql: ${TABLE}."PORTFOLIO_GROUP_NAME_SYNC" ;;
+  }
+  
+  dimension: portfolio_parent_group_name_current {
+    type: string
+    sql: ${TABLE}."PORTFOLIO_PARENT_GROUP_NAME_CURRENT" ;;
+  }
+  
+  dimension: portfolio_parent_group_name_sync {
+    type: string
+    sql: ${TABLE}."PORTFOLIO_PARENT_GROUP_NAME_SYNC" ;;
+  }
+  
+  dimension: progo_flag {
+    type: string
+    sql: ${TABLE}."PROGO_FLAG" ;;
+  }
+  
+  dimension: progo_initial_end {
+    type: date
+    sql: ${TABLE}."PROGO_INITIAL_END" ;;
+  }
+  
+  dimension: progo_initial_start {
+    type: date
+    sql: ${TABLE}."PROGO_INITIAL_START" ;;
+  }
+  
+  dimension: relative_fy_month_offset {
+    type: number
+    sql: ${TABLE}."RELATIVE_FY_MONTH_OFFSET" ;;
+  }
+  
+  dimension: relative_fy_quarter_offset {
+    type: number
+    sql: ${TABLE}."RELATIVE_FY_QUARTER_OFFSET" ;;
+  }
+  
+  dimension: relative_fy_week_offset {
+    type: number
+    sql: ${TABLE}."RELATIVE_FY_WEEK_OFFSET" ;;
+  }
+  
+  dimension: relative_fy_year_offset {
+    type: number
+    sql: ${TABLE}."RELATIVE_FY_YEAR_OFFSET" ;;
+  }
+  
+  dimension: reporting_date_greater_than_20231002 {
+    type: string
+    sql: ${TABLE}."REPORTING_DATE_GREATER_THAN_20231002" ;;
+  }
+  
+  dimension: reporting_date_greater_than_initbooking {
+    type: string
+    sql: ${TABLE}."REPORTING_DATE_GREATER_THAN_INITBOOKING" ;;
+  }
+  
+  dimension: reporting_date_greater_than_initbookingminus365 {
+    type: string
+    sql: ${TABLE}."REPORTING_DATE_GREATER_THAN_INITBOOKINGMINUS365" ;;
+  }
+  
+  dimension: reporting_date_less_than_initbookingplus365 {
+    type: string
+    sql: ${TABLE}."REPORTING_DATE_LESS_THAN_INITBOOKINGPLUS365" ;;
+  }
+  
+  dimension: revenue_group_subtype {
+    type: string
+    sql: ${TABLE}."REVENUE_GROUP_SUBTYPE" ;;
+  }
+  
+  dimension: revenue_type {
+    type: string
+    sql: ${TABLE}."REVENUE_TYPE" ;;
+  }
+  
+  dimension: sales_segment_gm_name_sync {
+    type: string
+    sql: ${TABLE}."SALES_SEGMENT_GM_NAME_SYNC" ;;
+  }
+  
+  dimension: sales_segment_l_2_name_sync {
+    type: string
+    sql: ${TABLE}."SALES_SEGMENT_L_2_NAME_SYNC" ;;
+  }
+  
+  dimension: sales_team_name {
+    type: string
+    sql: ${TABLE}."SALES_TEAM_NAME" ;;
+  }
+  
+  dimension: unified_publication_name {
+    type: string
+    sql: ${TABLE}."UNIFIED_PUBLICATION_NAME" ;;
+  }
+  
+  dimension: xtend_flag {
+    type: string
+    sql: ${TABLE}."XTEND_FLAG" ;;
+  }
+  measure: count {
+    type: count
+    drill_fields: [detail*]
+  }
+  
+  # ----- Sets of fields for drilling ------
+  set: detail {
+    fields: [
+      sales_team_name,
+      advertiser_name,
+      classification_name,
+      fin_adtype_name,
+      unified_publication_name,
+      cg_employee_full_name,
+      employee_name,
+      agency_name
+    ]
+  }
+  dimension: acq_booking_type {
+    type: string
+    sql:
+        CASE
+          -- First condition when Progo Flag is 'Y'
+          WHEN ${progo_flag} = 'Y' THEN
+            CASE
+              -- Initial booking when date falls within the Progo range
+              WHEN ${booking_line_created_date_not_null} >= ${progo_initial_start}
+                AND ${booking_line_created_date_not_null} <= ${progo_initial_end} THEN 'Initial'
+      
+      -- Following booking when date is within one year from Progo Initial Start
+      WHEN ${booking_line_created_date_not_null} > ${progo_initial_end}
+      AND ${booking_line_created_date_not_null} <= DATEADD(DAY, 365, ${progo_initial_start}) THEN 'Following'
+      
+      -- Default to 'Not Eligible'
+      ELSE 'Not Eligible'
+      END
+      
+      -- When Progo Flag is not 'Y'
+      ELSE
+      CASE
+      -- Cg Exception Flag is 'Y' and booking type is not null
+      WHEN ${cg_exception_flag} = 'Y' AND ${booking_type} IS NOT NULL THEN INITCAP(${booking_type})
+      
+      -- Retention type is 'Existing Customer'
+      WHEN ${cg_retention_type} = 'Existing Customer' THEN 'One-off'
+      
+      -- Initial booking in Client Growth region
+      WHEN ${cg_employee_sales_region} = 'Client Growth'
+      AND ${booking_line_created_date_not_null} BETWEEN ${initial_booking_date} AND DATEADD(DAY, 27, ${initial_booking_date})
+      AND ${reporting_date_greater_than_initbooking} = 'Y'
+      AND ${reporting_date_less_than_initbookingplus365} = 'Y' THEN 'Initial'
+      
+      -- Following booking in non-Client Growth region
+      WHEN ${cg_employee_sales_region} <> 'Client Growth'
+      AND ${booking_line_created_date_not_null} BETWEEN ${initial_booking_date} AND DATEADD(DAY, 27, ${initial_booking_date})
+      AND ${reporting_date_greater_than_initbooking} = 'Y'
+      AND ${reporting_date_less_than_initbookingplus365} = 'Y' THEN 'Following'
+      
+      -- Following booking after initial date range
+      WHEN ${booking_line_created_date_not_null} > DATEADD(DAY, 27, ${initial_booking_date})
+      AND ${reporting_date_greater_than_initbooking} = 'Y'
+      AND ${reporting_date_less_than_initbookingplus365} = 'Y' THEN 'Following'
+      
+      -- Default to 'Not Eligible'
+      ELSE 'Not Eligible'
+      END
+      END ;;
+  }
+  
+  
+  
+  dimension: acq_booking_type_copy_3 {
+    type: string
+    sql:
+        CASE
+          -- First condition when Progo Flag is 'Y'
+          WHEN ${progo_flag} = 'Y' THEN
+            CASE
+              -- Initial booking when date falls within the Progo range
+              WHEN ${booking_line_created_date_not_null} >= ${progo_initial_start}
+                AND ${booking_line_created_date_not_null} <= ${progo_initial_end} THEN 'Initial'
+      
+      -- Following booking when date is within one year from Progo Initial Start
+      WHEN ${booking_line_created_date_not_null} > ${progo_initial_end}
+      AND ${booking_line_created_date_not_null} <= DATEADD(DAY, 365, ${progo_initial_start}) THEN 'Following'
+      
+      -- Default to 'Not Eligible'
+      ELSE 'Not Eligible'
+      END
+      
+      -- When Progo Flag is not 'Y'
+      ELSE
+      CASE
+      -- Cg Exception Flag is 'Y' and booking type is not null
+      WHEN ${cg_exception_flag} = 'Y' AND ${booking_type} IS NOT NULL THEN INITCAP(${booking_type})
+      
+      -- Retention type is 'Existing Customer'
+      WHEN ${cg_retention_type} = 'Existing Customer' THEN 'One-off'
+      
+      -- Initial booking in Client Growth region
+      WHEN ${cg_employee_sales_region} = 'Client Growth'
+      AND ${booking_line_created_date_not_null} BETWEEN ${initial_booking_date} AND DATEADD(DAY, 27, ${initial_booking_date})
+      AND ${reporting_date_greater_than_initbooking} = 'Y'
+      AND ${reporting_date_less_than_initbookingplus365} = 'Y' THEN 'Initial'
+      
+      -- Following booking in non-Client Growth region
+      WHEN ${cg_employee_sales_region} <> 'Client Growth'
+      AND ${booking_line_created_date_not_null} BETWEEN ${initial_booking_date} AND DATEADD(DAY, 27, ${initial_booking_date})
+      AND ${reporting_date_greater_than_initbooking} = 'Y'
+      AND ${reporting_date_less_than_initbookingplus365} = 'Y' THEN 'Following'
+      
+      -- Following booking after initial date range
+      WHEN ${booking_line_created_date_not_null} > DATEADD(DAY, 27, ${initial_booking_date})
+      AND ${reporting_date_greater_than_initbooking} = 'Y'
+      AND ${reporting_date_less_than_initbookingplus365} = 'Y' THEN 'Following'
+      
+      -- Default to 'Not Eligible'
+      ELSE 'Not Eligible'
+      END
+      END ;;
+  }
+  
+  dimension: adtype_pub {
+    type: string
+    sql:
+      CASE
+        WHEN ${revenue_type} = 'print' THEN ${unified_publication_name}
+        WHEN ${revenue_type} = 'digital' THEN ${fin_adtype_name}
+      END;;
+  }
+  
+  dimension: booked_by {
+    type: string
+    sql:
+      CASE
+        WHEN ${progo_flag} = 'y' THEN ${cg_employee}
+        ELSE INITCAP(CONCAT(SPLIT(${employee_name}, ' ', -1), ' ', LEFT(${employee_name}, FINDNth(${employee_name}, ' ', -1) - 1)))
+      END;;
+  }
+  
+  dimension: calculation1 {
+    type: string
+    sql:
+      CASE
+        WHEN ${reporting_date_greater_than_20231002} = 'y' AND (${booking_line_created_date_not_null} >= DATE('2023-09-04') OR ${cg_exception_flag} = 'y')
+        AND (${cg_exception_flag} = 'y' OR ${cg_team} = 'cg campaigns a' OR (${cg_team} <> 'cg campaigns a' AND ${cg_retention_type} <> 'existing customer'))
+        THEN 'Y' ELSE 'N'
+      END;;
+  }
+  
+  measure: calculation2 {
+    type: number
+    sql:
+      SUM(
+        CASE
+          WHEN ${reporting_date_greater_than_initbooking} = 'n' AND ${cg_exclude_omp_ctr_unruly_classifieds} = 'include'
+          THEN ${gross_revenue_ex_adj_amount}
+        END
+      ) > 0;;
+  }
+  
+  dimension: cg_employee {
+    type: string
+    sql:
+    INITCAP(
+      CASE
+        WHEN ${cg_exception_flag} = 'Y' THEN ${cg_employee_full_name}
+        WHEN ${acq_booking_type} = 'Following' THEN ${cg_init_employee}
+        ELSE ${cg_employee_fl_name}
+      END
+    ) ;;
+  }
+  
+  dimension: cg_employee_fl_name {
+    type: string
+    sql:
+    CASE
+      -- Check if Cg Exception Flag is 'Y'
+      WHEN ${cg_exception_flag} = 'true' THEN
+        UPPER(${cg_employee_full_name})  -- Converts the entire string to uppercase as a placeholder for proper case
+      ELSE
+        CONCAT(
+          REGEXP_SUBSTR(${employee_name}, ' ', -1),  -- Get last part of the Employee Name
+          ' ',
+          LEFT(
+            ${employee_name},
+            POSITION(' ' IN ${employee_name}) - 1  -- Get the first part of the Employee Name
+          )
+        )
+    END ;;
+  }
+  
+  
+  
+  dimension: cg_init_employee {
+    type: string
+    sql:
+    CASE
+      WHEN ${cg_employee_sales_region} = 'client growth'
+      AND ${booking_line_created_date_not_null} = (
+        SELECT MIN(${booking_line_created_date_not_null})
+        FROM ${TABLE}
+        WHERE ${cg_employee_sales_region} = 'client growth'
+        AND ${booking_line_created_date_not_null} >= DATE('2023-09-04')
+      )
+      THEN ${cg_employee_fl_name}
+    END ;;
+  }
+  
+  
+  dimension: cg_init_team {
+    type: string
+    sql:
+    COALESCE(
+      (
+        SELECT MIN(${cg_employee_sales_team})
+        FROM ${TABLE}
+        WHERE ${cg_employee_sales_region} = 'Client Growth'
+          AND ${booking_line_created_date_not_null} >= '2023-09-04'
+          AND ${cg_employee} = ${cg_init_employee}
+          AND ${relative_fy_year_offset} IN (0, 1)
+      ),
+      (
+        SELECT MIN(${cg_employee_sales_team})
+        FROM ${TABLE}
+        WHERE ${cg_employee_sales_region} = 'Client Growth'
+          AND ${booking_line_created_date_not_null} >= '2023-09-04'
+          AND ${cg_employee} = ${cg_init_employee}
+      )
+    );;
+  }
+  
+  
+  dimension: cg_team {
+    type: string
+    sql:
+      CASE
+        WHEN ${cg_exception_flag} = 'y' THEN ${cg_employee_sales_team}
+        WHEN ${acq_booking_type} = 'Following' THEN ${cg_init_team}
+        WHEN ${cg_employee_sales_region} <> 'client growth' THEN 'cg unclaimed'
+        ELSE ${cg_employee_sales_team}
+      END;;
+  }
+  
+  dimension: cg_team_copy {
+    type: string
+    sql:
+      CASE
+        WHEN ${cg_exception_flag} = 'y' THEN ${cg_employee_sales_team}
+        WHEN ${acq_booking_type} = 'Following' THEN ${cg_init_team}
+        WHEN ${cg_employee_sales_region} <> 'client growth' THEN 'cg unclaimed'
+        ELSE ${cg_employee_sales_team}
+      END;;
+  }
+  
+  dimension: cg_type {
+    type: string
+    sql:
+      CASE
+        WHEN ${cg_retention_type} = 'existing customer' THEN 'Existing'
+        WHEN ${cg_retention_type} IN ('re-activated customer', 'new customer') THEN 'New & Winback'
+      END;;
+  }
+  
+  dimension: cg_exclude_omp_ctr_unruly_classifieds {
+    type: string
+    sql:
+    CASE
+      WHEN ${portfolio_parent_group_name_current} = 'SMB TRANSACTIONAL'
+      OR UPPER(${cost_model_type}) = 'NON-GUARANTEED'
+      OR UPPER(LEFT(${advertiser_name}, 3)) = 'CTR'
+      OR UPPER(${unified_publication_name}) = 'UNRULY'
+      THEN 'Exclude'
+      ELSE 'Include'
+    END ;;
+  }
+  
+  
+  dimension: cg_flag {
+    type: string
+    sql:
+    CASE
+      WHEN ${progo_flag} = 'Y' AND UPPER(${rev_sub_type}) = 'PROGRAMMATIC SOURCE' THEN 'CG'
+      WHEN ${initial_booking_date} IS NOT NULL THEN 'CG'
+    END ;;
+  }
+  
+  
+  
+  measure: cg_initial_booking_date_hierarchy {
+    type: date
+    sql:
+          MIN(CASE
+            WHEN ${cg_employee_sales_region} = 'Client Growth'
+                 AND ${booking_line_created_date} IS NOT NULL
+                 AND ${booking_line_created_date} >= DATE '2023-09-04'
+            THEN ${booking_line_created_date}
+            ELSE NULL
+          END) ;;
+    group_label: "Booking Line Metrics"
+  }
+  
+  dimension: cg_retention_type {
+    type: string
+    sql: CASE
+            WHEN ${cg_flag} = 'CG' THEN
+              CASE
+                WHEN (SELECT MIN(${cg_customer_type})
+                      FROM cgd_data
+                      WHERE ${crm_account_number} = crm_account_number) IS NOT NULL THEN
+                  CASE
+                    WHEN UPPER((SELECT MIN(${cg_customer_type})
+                                 FROM cgd_data
+                                 WHERE ${crm_account_number} = crm_account_number)) = 'NEW' THEN 'New Customer'
+                    WHEN UPPER((SELECT MIN(${cg_customer_type})
+                                 FROM cgd_data
+                                 WHERE ${crm_account_number} = crm_account_number)) = 'EXISTING' THEN 'Existing Customer'
+                    WHEN UPPER((SELECT MIN(${cg_customer_type})
+                                 FROM cgd_data
+                                 WHERE ${crm_account_number} = crm_account_number)) = 'WINBACK' THEN 'Re-Activated Customer'
+                    ELSE NULL
+                  END
+                WHEN
+                  (SELECT SUM(CASE
+                    WHEN ${reporting_date_greater_than_initbooking} = 'N'
+                         AND ${cg_exclude_omp_ctr_unruly_classifieds} = 'Include'
+                         AND ${reporting_date_greater_than_initbookingminus365} = 'Y'
+                    THEN ${gross_revenue_ex_adj_amount}
+                    ELSE NULL
+                  END)
+                  FROM cgd_data WHERE ${crm_account_number} = crm_account_number) > 0
+                  OR
+                  (SELECT SUM(CASE
+                    WHEN ${reporting_date_greater_than_initbooking} = 'Y'
+                         AND ${booking_line_created_date_not_null} < ${initial_booking_date}
+                         AND ${cg_exclude_omp_ctr_unruly_classifieds} = 'Include'
+                    THEN ${gross_revenue_ex_adj_amount}
+                    ELSE NULL
+                  END)
+                  FROM cgd_data WHERE ${crm_account_number} = crm_account_number) > 0
+                THEN 'Existing Customer'
+                WHEN
+                  (SELECT SUM(CASE
+                    WHEN ${reporting_date_greater_than_initbooking} = 'N'
+                         AND ${cg_exclude_omp_ctr_unruly_classifieds} = 'Include'
+                         AND ${reporting_date_greater_than_initbookingminus365} = 'Y'
+                    THEN ${gross_revenue_ex_adj_amount}
+                    ELSE NULL
+                  END)
+                  FROM cgd_data WHERE ${crm_account_number} = crm_account_number) IS NULL
+                  OR
+                  (SELECT SUM(CASE
+                    WHEN ${reporting_date_greater_than_initbooking} = 'N'
+                         AND ${cg_exclude_omp_ctr_unruly_classifieds} = 'Include'
+                         AND ${reporting_date_greater_than_initbookingminus365} = 'Y'
+                    THEN ${gross_revenue_ex_adj_amount}
+                    ELSE NULL
+                  END)
+                  FROM cgd_data WHERE ${crm_account_number} = crm_account_number) = 0
+                THEN
+                  CASE
+                    WHEN (SELECT SUM(CASE
+                      WHEN ${cg_exclude_omp_ctr_unruly_classifieds} = 'Include'
+                           AND ${reporting_date_greater_than_initbookingminus365} = 'N'
+                      THEN ${gross_revenue_ex_adj_amount}
+                      ELSE NULL
+                    END)
+                    FROM cgd_data WHERE ${crm_account_number} = crm_account_number) > 0
+                    THEN 'Re-Activated Customer'
+                    ELSE 'New Customer'
+                  END
+                ELSE NULL
+              END
+            ELSE NULL
+          END ;;
+  }
+  
+  
+  
+  
+  
+  
+  
+# Dimension for Client Acquired Eligible Client
+  
+  dimension: client_acquired_eligible_client {
+    type: string
+    sql:
+          CASE
+            -- Check if Financial Month has a length of 1 and format accordingly
+            WHEN LENGTH(CAST(${financial_month} AS STRING)) = 1 THEN
+              CAST(${financial_year} AS STRING) || '0' || CAST(${financial_month} AS STRING)
+      
+      ELSE
+      CAST(${financial_year} AS STRING) || CAST(${financial_month} AS STRING)
+      END = ${first_pub_year_month_after_init} THEN
+      ${crm_account_number}
+      END ;;
+  }
+  
+  
+# Dimension for Combined
+  dimension: combined {
+    type: string
+    sql: 'Combined';;
+  }
+  
+# Dimension for Customer Name
+  dimension: customer_name {
+    type: string
+    sql: ${customer_name};;
+  }
+  
+# Dimension for Exception
+  dimension: exception {
+    type: string
+    sql:
+      CASE
+        WHEN ${cg_exception_flag} = 'y' THEN 'EXCEPTIONS'
+        ELSE 'STANDARD BOOKING'
+      END;;
+  }
+  
+# Dimension for Exclude SMB Transactional
+  dimension: excl_smb_transactional {
+    type: string
+    sql:
+      CASE
+        WHEN IS_NULL(${cg_exception_flag}) AND UPPER(${sales_segment_l_2_name_sync}) = 'smb transactional' THEN 'TO EXCLUDE'
+      END;;
+  }
+  
+# Dimension for False
+  dimension: false {
+    type: string
+    sql: 'FALSE' ;;
+  }
+  
+# Dimension for First Pub Month After INIT
+  dimension: first_pub_month_after_init {
+    type: string
+    sql:
+      RIGHT(
+        CASE
+          WHEN ${acq_booking_type} = 'one-off' AND LEFT(${cg_team}, 12) = 'cg campaigns' THEN
+            MIN(
+              CASE
+                WHEN ${reporting_date_greater_than_20231002} = 'y' AND LEFT(${cg_team}, 12) = 'cg campaigns' THEN
+                  CASE
+                    WHEN LENGTH(CAST(${financial_month} AS STRING)) = 1 THEN
+                      CONCAT(CAST(${financial_year} AS STRING), '0', CAST(${financial_month} AS STRING))
+                    ELSE
+                      CONCAT(CAST(${financial_year} AS STRING), CAST(${financial_month} AS STRING))
+                  END
+              END
+            )
+          ELSE
+            MIN(
+              CASE
+                WHEN ${cg_retention_type} IN ('new customer', 're-activated customer')
+                AND ${from_fy23_oct_filter} = 'y' AND ${reporting_date_greater_than_initbooking} = 'y' THEN
+                  CASE
+                    WHEN LENGTH(CAST(${financial_month} AS STRING)) = 1 THEN
+                      CONCAT(CAST(${financial_year} AS STRING), '0', CAST(${financial_month} AS STRING))
+                    ELSE
+                      CONCAT(CAST(${financial_year} AS STRING), CAST(${financial_month} AS STRING))
+                  END
+              END
+            )
+        END, 2
+      );;
+  }
+  
+# Dimension for First Pub Year + Month After INIT
+  dimension: first_publ_year_month_after_init {
+    type: string
+    sql:
+      CASE
+        WHEN ${acq_booking_type} = 'one-off' AND LEFT(${cg_team}, 12) = 'cg campaigns' THEN
+          MIN(
+            CASE
+              WHEN ${reporting_date_greater_than_20231002} = 'y' AND ${from_fy23_oct_filter} = 'y' AND LEFT(${cg_team}, 12) = 'cg campaigns' THEN
+                CASE
+                  WHEN LENGTH(CAST(${financial_month} AS STRING)) = 1 THEN
+                    CONCAT(CAST(${financial_year} AS STRING), '0', CAST(${financial_month} AS STRING))
+                  ELSE
+                    CONCAT(CAST(${financial_year} AS STRING), CAST(${financial_month} AS STRING))
+                END
+            END
+          )
+        ELSE
+          MIN(
+            CASE
+              WHEN ${from_fy23_oct_filter} = 'y' AND ${reporting_date_greater_than_initbooking} = 'y' THEN
+                CASE
+                  WHEN LENGTH(CAST(${financial_month} AS STRING)) = 1 THEN
+                    CONCAT(CAST(${financial_year} AS STRING), '0', CAST(${financial_month} AS STRING))
+                  ELSE
+                    CONCAT(CAST(${financial_year} AS STRING), CAST(${financial_month} AS STRING))
+                END
+            END
+          )
+      END;;
+  }
+  
+# Dimension for Current FY Param
+  dimension: for_current_fy_param {
+    type: string
+    sql:
+      CASE
+        WHEN ${relative_fy_year_offset} = 0 THEN RIGHT(CAST(${financial_year} AS STRING), 2)
+      END;;
+  }
+  
+# Dimension for From FY23 Oct Filter
+  dimension: from_fy23_oct_filter {
+    type: string
+    sql:
+      CASE
+        WHEN ${reporting_date_greater_than_20231002} = 'y'
+        AND (${booking_line_created_date_not_null} >= DATE('2023-09-04') OR ${cg_exception_flag} = 'y')
+        AND (${cg_exception_flag} = 'y' OR ${cg_team} = 'cg campaigns a'
+        OR (${cg_team} <> 'cg campaigns a' AND ${cg_retention_type} <> 'existing customer'))
+        AND ${cg_employee_sales_region} <> 'other'
+        AND ${lgr} <> 0
+        AND (
+          CASE
+            WHEN ${progo_flag} = 'y' THEN
+              ${booking_line_created_date_not_null} >= ${progo_initial_start}
+              AND ${booking_line_created_date_not_null} <= DATEADD(DAY, 365, ${progo_initial_start})
+            ELSE TRUE
+          END
+        )
+        THEN 'y'
+        ELSE 'n'
+      END;;
+  }
+  
+# Dimension for Full Year
+  dimension: full_year {
+    type: string
+    sql: 'Full Year';;
+  }
+  
+# Dimension for FY23 Month Filter
+  dimension: fy23_mth_filter {
+    type: string
+    sql:
+      CASE
+        WHEN ${financial_year} = 2024 AND ${financial_month} < 4 THEN 'n'
+        ELSE 'y'
+      END;;
+  }
+  
+# Dimension for FY24 Dashboard
+  dimension: fy24_dashboard {
+    type: string
+    sql: 'Link to FY24 Dashboard';;
+  }
+  
+# Dimension for GM - Belinda
+  dimension: gm_bel {
+    type: string
+    sql: ${sales_segment_gm_name_sync} = 'Belinda MacPherson';;
+  }
+  
+# Dimension for GM - Ian
+  dimension: gm_ian {
+    type: string
+    sql: ${sales_segment_gm_name_sync} = 'Ian Paterson';;
+  }
+  
+# Dimension for GM - Kelly
+  dimension: gm_kelly {
+    type: string
+    sql: ${sales_segment_gm_name_sync} = 'Kelly Healy';;
+  }
+  
+# Dimension for GM - Natalie
+  dimension: gm_natalie {
+    type: string
+    sql: ${sales_segment_gm_name_sync} = 'Natalie Grabbe';;
+  }
+  
+# Dimension for Insertion Created Date Hierarchy
+  dimension: insertion_crt_dt_hierarchy {
+    type: date
+    sql: ${booking_line_created_date_not_null};;
+  }
+  
+# Dimension for Period
+  dimension: period {
+    type: string
+    sql: CONCAT('FY', RIGHT(CAST(${financial_year} AS STRING), 2), ' - ', ${financial_short_month});;
+  }
+  
+# Dimension for Rep
+  dimension: rep {
+    type: string
+    sql: ${cg_employee};;
+  }
+  
+# Dimension for report_dim_gm_copy
+  
+  dimension: report_dim_gm_copy {
+    type: string
+    sql: ${sales_segment_gm_name_sync};;
+  }
+  
+# Dimension for reset
+  dimension: reset {
+    type: string
+    sql: 'Reset';;
+  }
+  
+# Dimension for rev_sub_type
+  dimension: rev_sub_type {
+    type: string
+    sql: UPPER(${revenue_group_subtype});;
+  }
+  
+# Dimension for revenue_adtype
+  dimension: revenue_adtype {
+    type: string
+    sql:
+      CASE
+        WHEN UPPER(${fin_adtype_name}) = 'xtend' THEN 'XTEND'
+        ELSE ${revenue_type}
+      END;;
+  }
+  
+# Dimension for revenue_adtype_alias
+  dimension: revenue_adtype_alias {
+    type: string
+    sql:
+      CASE
+        WHEN ${revenue_adtype} = 'print' THEN 'PRINT'
+        WHEN ${revenue_adtype} = 'digital' THEN 'DIGITAL (excl. XTEND)'
+        WHEN ${revenue_adtype} = 'xtend' THEN 'XTEND ONLY'
+      END;;
+  }
+  
+# Dimension for true
+  dimension: true {
+    type: string
+    sql: 'TRUE' ;;
+  }
+  
+# Dimension for ytd
+  dimension: ytd {
+    type: string
+    sql: 'YTD';;
+  }
+  
+# Measure: % to NCA Total
+  
+  measure: percentage_to_nca_total {
+    type: number
+    sql:
+          SUM(CASE
+              WHEN ${cg_flag} = 'CG' THEN ${lgr}
+              ELSE NULL
+          END) /
+          NULLIF(
+              SUM(CASE
+                  WHEN ${ins_crt_rel_year} = 0 AND ${reporting_date_greater_than_20231002} > '2023-10-02' THEN ${lgr}
+                  ELSE NULL
+              END), 0
+          ) ;;
+  }
+  
+# Measure: Average Revenue Client
+  measure: average_revenue_client {
+    type: number
+    sql: SUM(${lgr}) / ${client_count} ;;
+  }
+  
+# Measure: CG Booked by CG
+  measure: cg_booked_by_cg {
+    type: sum
+    sql: CASE WHEN ${cg_employee_sales_region} = 'client growth' THEN ${lgr} END ;;
+  }
+  
+# Measure: CG Existing
+  measure: cg_existing {
+    type: sum
+    sql: CASE
+        WHEN ${cg_employee_sales_region} = 'Client Growth'
+             AND ${cg_retention_type} = 'Existing Customer'
+        THEN ${lgr}
+        ELSE 0
+      END ;;
+  }
+  
+  
+# Measure: CG Existing Count
+  measure: cg_existing_count {
+    type: count_distinct
+    sql: CASE
+        WHEN ${cg_employee_sales_region} = 'Client Growth'
+             AND ${cg_retention_type} = 'Existing Customer'
+        THEN ${crm_account_number}
+        ELSE NULL
+      END ;;
+  }
+  
+  
+# Measure: CG Existing Digital
+  measure: cg_existing_digital {
+    type: sum
+    sql: CASE WHEN ${revenue_type} = 'digital' AND ${cg_employee_sales_region} = 'client growth' AND ${cg_retention_type} = 'existing customer' THEN ${lgr} END ;;
+  }
+  
+# Measure: CG Existing Digital %
+  measure: cg_existing_digital_percentage {
+    type: number
+    sql: ${cg_existing_digital} / ${cg_existing} ;;
+  }
+  
+# Measure: CG Existing Print
+  measure: cg_existing_print {
+    type: sum
+    sql: CASE WHEN ${revenue_type} = 'print' AND ${cg_employee_sales_region} = 'client growth' AND ${cg_retention_type} = 'existing customer' THEN ${lgr} END ;;
+  }
+  
+# Measure: CG Existing Print %
+  measure: cg_existing_print_percentage {
+    type: number
+    sql: ${cg_existing_print} / ${cg_existing} ;;
+  }
+  
+# Measure: CG New Winback
+  measure: cg_new_winback {
+    type: sum
+    sql: CASE WHEN ${cg_employee_sales_region} = 'client growth' AND (${cg_retention_type} = 'new customer' OR ${cg_retention_type} = 're-activated customer') THEN ${lgr} END ;;
+  }
+  
+# Measure: CG New Winback Count
+  measure: cg_new_winback_count {
+    type: count_distinct
+    sql: CASE WHEN ${cg_employee_sales_region} = 'client growth' AND (${cg_retention_type} = 'new customer' OR ${cg_retention_type} = 're-activated customer') THEN ${crm_account_number} END ;;
+  }
+  
+# Measure: CG New Winback Digital
+  measure: cg_new_winback_digital {
+    type: sum
+    sql: CASE WHEN ${revenue_type} = 'digital' AND ${cg_employee_sales_region} = 'client growth' AND (${cg_retention_type} = 'new customer' OR ${cg_retention_type} = 're-activated customer') THEN ${lgr} END ;;
+  }
+  
+# Measure: CG New Winback Digital %
+  measure: cg_new_winback_digital_percentage {
+    type: number
+    sql: ${cg_new_winback_digital} / ${cg_new_winback} ;;
+  }
+  
+# Measure: CG New Winback Print
+  measure: cg_new_winback_print {
+    type: sum
+    sql: CASE WHEN ${revenue_type} = 'print' AND ${cg_employee_sales_region} = 'client growth' AND (${cg_retention_type} = 'new customer' OR ${cg_retention_type} = 're-activated customer') THEN ${lgr} END ;;
+  }
+  
+# Measure: CG New Winback Print %
+  measure: cg_new_winback_print_percentage {
+    type: number
+    sql: ${cg_new_winback_print} / ${cg_new_winback} ;;
+  }
+  
+# Measure: CG Non-CG
+  measure: cg_non_cg {
+    type: sum
+    sql: CASE WHEN ${cg_employee_sales_region} != 'client growth' THEN ${lgr} END ;;
+  }
+  
+# Measure: CG Non-CG (copy)
+  measure: cg_non_cg_copy {
+    type: sum
+    sql: CASE WHEN ${cg_employee_sales_region} != 'client growth' THEN ${lgr} ELSE 0 END ;;
+  }
+  
+# Measure: CG Non-CG Count
+  measure: cg_non_cg_count {
+    type: count_distinct
+    sql: CASE WHEN ${cg_employee_sales_region} != 'client growth' THEN ${crm_account_number} END ;;
+  }
+  
+# Measure: CG Non-CG Digital
+  measure: cg_non_cg_digital {
+    type: sum
+    sql: CASE WHEN ${revenue_type} = 'digital' AND ${cg_employee_sales_region} != 'client growth' THEN ${lgr} END ;;
+  }
+  
+# Measure: CG Non-CG Digital %
+  measure: cg_non_cg_digital_percentage {
+    type: number
+    sql: ${cg_non_cg_digital} / ${cg_non_cg} ;;
+  }
+  
+# Measure: CG Non-CG Print
+  measure: cg_non_cg_print {
+    type: sum
+    sql: CASE WHEN ${revenue_type} = 'print' AND ${cg_employee_sales_region} != 'client growth' THEN ${lgr} END ;;
+  }
+  
+# Measure: CG Non-CG Print %
+  measure: cg_non_cg_print_percentage {
+    type: number
+    sql: ${cg_non_cg_print} / ${cg_non_cg} ;;
+  }
+  
+# Measure: Client Acquired - Count
+  
+  measure: client_acquired_count {
+    type: count_distinct
+    sql: ${client_acquired_eligible_client} ;;
+  }
+  
+# Measure: Client Count
+  measure: client_count {
+    type: count_distinct
+    sql: ${crm_account_number} ;;
+  }
+  
+# Measure: Count Client CM
+  measure: count_client_cm {
+    type: count_distinct
+    sql: CASE WHEN ${ins_crt_rel_mnth} = ${mnth_offset} THEN ${crm_account_number} END ;;
+  }
+  
+# Measure: Count Client CQ
+  measure: count_client_cq {
+    type: count_distinct
+    sql: CASE WHEN ${ins_crt_rel_qrtr} = ${qrtr_offset} THEN ${crm_account_number} END ;;
+  }
+  
+# Measure: Count Client CW
+  measure: count_client_cw {
+    type: count_distinct
+    sql: CASE WHEN ${ins_crt_rel_week} = ${week_offset} THEN ${crm_account_number} END ;;
+  }
+  
+# Measure: Count Existing
+  measure: count_existing {
+    type: count_distinct
+    sql: CASE WHEN ${cg_retention_type} = 'existing customer' THEN ${crm_account_number} END ;;
+  }
+  
+# Measure: Count Existing %
+  measure: count_existing_percentage {
+    type: number
+    sql: ${count_existing} / ${client_count} ;;
+  }
+  
+# Measure: Count Existing CM
+  measure: count_existing_cm {
+    type: count_distinct
+    sql: CASE WHEN ${cg_retention_type} = 'existing customer' AND ${ins_crt_rel_mnth} = ${mnth_offset} THEN ${crm_account_number} END ;;
+  }
+  
+# Measure: Count Existing CQ
+  measure: count_existing_cq {
+    type: count_distinct
+    sql: CASE WHEN ${cg_retention_type} = 'existing customer' AND ${ins_crt_rel_qrtr} = ${qrtr_offset} THEN ${crm_account_number} END ;;
+  }
+  
+# Measure: Count Existing CW
+  measure: count_existing_cw {
+    type: count_distinct
+    sql: CASE WHEN ${cg_retention_type} = 'existing customer' AND ${ins_crt_rel_week} = ${week_offset} THEN ${crm_account_number} END ;;
+  }
+  
+# Measure: Count Existing Digital
+  measure: count_existing_digital {
+    type: count_distinct
+    sql: CASE WHEN ${cg_retention_type} = 'existing customer' AND ${revenue_type} = 'digital' THEN ${crm_account_number} END ;;
+  }
+  
+# Measure: Count Existing Digital Only
+  measure: count_existing_digital_only {
+    type: number
+    sql: ${count_existing_digital} - ${count_existing_print} + ${count_existing_print_digital} ;;
+  }
+  
+# Measure: Count Existing Print
+  measure: count_existing_print {
+    type: count_distinct
+    sql: CASE WHEN ${cg_retention_type} = 'existing customer' AND ${revenue_type} = 'print' THEN ${crm_account_number} END ;;
+  }
+  
+# Measure: Count Existing Print + Digital
+  measure: count_existing_print_digital {
+    type: number
+    sql: ${count_existing_print} + ${count_existing_digital} - ${count_existing} ;;
+  }
+  
+# Measure: Count Existing Print Only
+  measure: count_existing_print_only {
+    type: number
+    sql: ${count_existing_print} - ${count_existing_print_digital} ;;
+  }
+  
+# Measure: Count New
+  measure: count_new {
+    type: count_distinct
+    sql: CASE WHEN ${cg_retention_type} = 'new customer' THEN ${crm_account_number} END ;;
+  }
+  
+# Measure: Count New %
+  measure: count_new_percentage {
+    type: number
+    sql: ${count_new} / ${client_count} ;;
+  }
+  
+# Measure: Count New CM
+  measure: count_new_cm {
+    type: count_distinct
+    sql: CASE WHEN ${cg_retention_type} = 'new customer' AND ${ins_crt_rel_mnth} = ${mnth_offset} THEN ${crm_account_number} END ;;
+  }
+  
+# Measure: Count New CQ
+  measure: count_new_cq {
+    type: count_distinct
+    sql: CASE WHEN ${cg_retention_type} = 'new customer' AND ${ins_crt_rel_qrtr} = ${qrtr_offset} THEN ${crm_account_number} END ;;
+  }
+  
+# Measure: Count New CW
+  measure: count_new_cw {
+    type: count_distinct
+    sql: CASE WHEN ${cg_retention_type} = 'new customer' AND ${ins_crt_rel_week} = ${week_offset} THEN ${crm_account_number} END ;;
+  }
+  
+# Measure: Count New Digital
+  measure: count_new_digital {
+    type: count_distinct
+    sql: CASE WHEN ${cg_retention_type} = 'new customer' AND ${revenue_type} = 'digital' THEN ${crm_account_number} END ;;
+  }
+  
+# Measure: Count New Digital Only
+  measure: count_new_digital_only {
+    type: number
+    sql: ${count_new_digital} - ${count_new_print} + ${count_new_print_digital} ;;
+  }
+  
+# Measure: Count New Print
+  measure: count_new_print {
+    type: count_distinct
+    sql: CASE WHEN ${cg_retention_type} = 'new customer' AND ${revenue_type} = 'print' THEN ${crm_account_number} END ;;
+  }
+  
+# Measure: Count New Print + Digital
+  measure: count_new_print_digital {
+    type: number
+    sql: ${count_new_print} + ${count_new_digital} - ${count_new} ;;
+  }
+  
+# Measure: Count New Print Only
+  measure: count_new_print_only {
+    type: number
+    sql: ${count_new_print} - ${count_new_print_digital} ;;
+  }
+  
+# Measure: Count Re-Activated
+  measure: count_re_activated {
+    type: count_distinct
+    sql: CASE WHEN ${cg_retention_type} = 're-activated customer' THEN ${crm_account_number} END ;;
+  }
+  
+# Measure: Count Re-Activated %
+  measure: count_re_activated_percentage {
+    type: number
+    sql: ${count_re_activated} / ${client_count} ;;
+  }
+  
+# Measure: Count Re-Activated CM
+  measure: count_re_activated_cm {
+    type: count_distinct
+    sql: CASE WHEN ${cg_retention_type} = 're-activated customer' AND ${ins_crt_rel_mnth} = ${mnth_offset} THEN ${crm_account_number} END ;;
+  }
+  
+# Measure: Count Re-Activated CQ
+  measure: count_re_activated_cq {
+    type: count_distinct
+    sql: CASE WHEN ${cg_retention_type} = 're-activated customer' AND ${ins_crt_rel_qrtr} = ${qrtr_offset} THEN ${crm_account_number} END ;;
+  }
+  
+# Measure: Count Re-Activated CW
+  measure: count_re_activated_cw {
+    type: count_distinct
+    sql: CASE WHEN ${cg_retention_type} = 're-activated customer' AND ${ins_crt_rel_week} = ${week_offset} THEN ${crm_account_number} END ;;
+  }
+  
+# Measure: Count Re-Activated Digital
+  measure: count_re_activated_digital {
+    type: count_distinct
+    sql: CASE WHEN ${cg_retention_type} = 're-activated customer' AND ${revenue_type} = 'digital' THEN ${crm_account_number} END ;;
+  }
+  
+# Measure: Count Re-Activated Digital Only
+  measure: count_re_activated_digital_only {
+    type: number
+    sql: ${count_re_activated_digital} - ${count_re_activated_print} + ${count_re_activated_print_digital} ;;
+  }
+  
+# Measure: Count Re-Activated Print
+  measure: count_re_activated_print {
+    type: count_distinct
+    sql: CASE WHEN ${cg_retention_type} = 're-activated customer' AND ${revenue_type} = 'print' THEN ${crm_account_number} END ;;
+  }
+  
+# Measure: Count Re-Activated Print + Digital
+  measure: count_re_activated_print_digital {
+    type: number
+    sql: ${count_re_activated_print} + ${count_re_activated_digital} - ${count_re_activated} ;;
+  }
+  
+# Measure: Count Re-Activated Print Only
+  measure: count_re_activated_print_only {
+    type: number
+    sql: ${count_re_activated_print} - ${count_re_activated_print_digital} ;;
+  }
+  
+# Measure: Current Month
+  measure: current_mnth {
+    type: string
+    sql: CASE WHEN ${ins_crt_rel_mnth} = ${mnth_offset} THEN ${ins_crt_mnth} END ;;
+  }
+  
+# Measure: Current Quarter
+  measure: current_qrtr {
+    type: string
+    sql: CASE WHEN ${ins_crt_rel_qrtr} = ${qrtr_offset} THEN MID(${ins_crt_qrtr}, 2) END ;;
+  }
+  
+# Measure: Current Week
+  measure: current_week {
+    type: string
+    sql: CASE WHEN ${ins_crt_rel_week} = ${week_offset} THEN ${ins_crt_week} END ;;
+  }
+  
+# Measure: Existing Client Acquired - Count
+  measure: existing_client_acquired_count {
+    type: count_distinct
+    sql: CASE WHEN ${cg_retention_type} = 'existing customer' THEN ${client_acquired_eligible_client} END ;;
+  }
+  
+# Measure: Filter Applied?
+  measure: filter_applied {
+    type: number
+    sql: SUM(CASE WHEN ${ins_crt_rel_year} = 0 AND ${cg_flag} = 'cg' AND ${from_fy23_oct_filter} = 'y' THEN 0 END) = COUNT(0) ;;
+  }
+  
+# Measure: Index
+  
+  measure: index {
+    type: number
+    sql: INDEX() ;;
+  }
+  
+# Measure: Index Client Performance
+  measure: index_client_performance {
+    type: number
+    sql: INDEX() ;;
+  }
+  
+# Measure: LGR
+  measure: lgr {
+    type: number
+    sql: ${gross_revenue_ex_adj_amount} + ${adjustment_amount} ;;
+  }
+  
+# Measure: LGR in $'000
+  measure: lgr_thousands {
+    type: number
+    sql: ${gross_revenue_ex_adj_amount} + ${adjustment_amount} ;;
+  }
+  
+# Measure: LGR CM
+  measure: lgr_cm {
+    type: number
+    sql: SUM(CASE WHEN ${ins_crt_rel_mnth} = ${mnth_offset} THEN ${lgr} END) ;;
+  }
+  
+# Measure: LGR CQ
+  measure: lgr_cq {
+    type: number
+    sql: SUM(CASE WHEN ${ins_crt_rel_qrtr} = ${qrtr_offset} THEN ${lgr} END) ;;
+  }
+  
+# Measure: LGR CW
+  measure: lgr_cw {
+    type: number
+    sql: SUM(CASE WHEN ${ins_crt_rel_week} = ${week_offset} THEN ${lgr} END) ;;
+  }
+  
+# Measure: LGR DIGITAL
+  measure: lgr_digital {
+    type: number
+    sql: SUM(CASE WHEN ${revenue_type} = 'digital' THEN ${lgr} END) ;;
+  }
+  
+# Measure: LGR DIGITAL %
+  measure: lgr_digital_percentage {
+    type: number
+    sql: SUM(CASE WHEN ${revenue_type} = 'digital' THEN ${lgr} END) / SUM(${lgr}) ;;
+  }
+  
+# Measure: LGR EXISTING
+  measure: lgr_existing {
+    type: number
+    sql: SUM(CASE WHEN ${cg_retention_type} = 'existing customer' THEN ${lgr} END) ;;
+  }
+  
+# Measure: LGR Existing CG %
+  measure: lgr_existing_cg_percentage {
+    type: number
+    sql: ${lgr_existing} / SUM(${lgr}) ;;
+  }
+  
+# Measure: LGR FOLLOW CM
+  measure: lgr_follow_cm {
+    type: number
+    sql: COALESCE(SUM(CASE WHEN ${ins_crt_rel_mnth} = ${mnth_offset} AND ${acq_booking_type} = 'following' THEN ${lgr} END), 0) ;;
+  }
+  
+# Measure: LGR FOLLOW CQ
+  measure: lgr_follow_cq {
+    type: number
+    sql: COALESCE(SUM(CASE WHEN ${ins_crt_rel_qrtr} = ${qrtr_offset} AND ${acq_booking_type} = 'following' THEN ${lgr} END), 0) ;;
+  }
+  
+# Measure: LGR FOLLOW CW
+  measure: lgr_follow_cw {
+    type: number
+    sql: COALESCE(SUM(CASE
+                   WHEN ${ins_crt_rel_week} = ${week_offset}
+                        AND ${acq_booking_type} = 'following'
+                   THEN ${lgr}
+                   END), 0) ;;
+  }
+  
+# Measure: LGR FOLLOW Digital
+  measure: lgr_follow_digital {
+    type: number
+    sql: SUM(CASE WHEN ${acq_booking_type} = 'following' AND ${revenue_type} = 'digital' THEN ${lgr} END) ;;
+  }
+  
+# Measure: LGR FOLLOW Digital %
+  measure: lgr_follow_digital_percent {
+    type: number
+    sql: ${lgr_follow_digital} / NULLIF(${lgr_following}, 0) ;;
+  }
+  
+# Measure: LGR FOLLOW Digital CM
+  measure: lgr_follow_digital_cm {
+    type: number
+    sql: COALESCE(SUM(CASE WHEN ${ins_crt_rel_mnth} = ${mnth_offset}
+                    AND ${acq_booking_type} = 'following'
+                    AND ${revenue_type} = 'digital' THEN ${lgr} END), 0) ;;
+  }
+  
+# Measure: LGR FOLLOW Digital CQ
+  measure: lgr_follow_digital_cq {
+    type: number
+    sql: COALESCE(SUM(CASE WHEN ${ins_crt_rel_qrtr} = ${qrtr_offset}
+                    AND ${acq_booking_type} = 'following'
+                    AND ${revenue_type} = 'digital' THEN ${lgr} END), 0) ;;
+  }
+  
+# Measure: LGR FOLLOW Digital CW
+  measure: lgr_follow_digital_cw {
+    type: number
+    sql: COALESCE(SUM(CASE WHEN ${ins_crt_rel_week} = ${week_offset}
+                    AND ${acq_booking_type} = 'following'
+                    AND ${revenue_type} = 'digital' THEN ${lgr} END), 0) ;;
+  }
+  
+# Measure: LGR FOLLOW Print
+  measure: lgr_follow_print {
+    type: number
+    sql: SUM(CASE WHEN ${acq_booking_type} = 'following' AND ${revenue_type} = 'print' THEN ${lgr} END) ;;
+  }
+  
+# Measure: LGR FOLLOW Print %
+  measure: lgr_follow_print_percent {
+    type: number
+    sql: ${lgr_follow_print} / NULLIF(${lgr_following}, 0) ;;
+  }
+  
+# Measure: LGR FOLLOW Print CM
+  measure: lgr_follow_print_cm {
+    type: number
+    sql: COALESCE(SUM(CASE WHEN ${ins_crt_rel_mnth} = ${mnth_offset}
+                    AND ${acq_booking_type} = 'following'
+                    AND ${revenue_type} = 'print' THEN ${lgr} END), 0) ;;
+  }
+  
+# Measure: LGR FOLLOW Print CQ
+  measure: lgr_follow_print_cq {
+    type: number
+    sql: COALESCE(SUM(CASE WHEN ${ins_crt_rel_qrtr} = ${qrtr_offset}
+                    AND ${acq_booking_type} = 'following'
+                    AND ${revenue_type} = 'print' THEN ${lgr} END), 0) ;;
+  }
+  
+# Measure: LGR FOLLOW Print CW
+  measure: lgr_follow_print_cw {
+    type: number
+    sql: COALESCE(SUM(CASE WHEN ${ins_crt_rel_week} = ${week_offset}
+                    AND ${acq_booking_type} = 'following'
+                    AND ${revenue_type} = 'print' THEN ${lgr} END), 0) ;;
+  }
+  
+# Measure: LGR Following
+  measure: lgr_following {
+    type: number
+    sql: SUM(CASE WHEN ${acq_booking_type} = 'following' THEN ${lgr} END) ;;
+  }
+  
+# Measure: LGR Following %
+  measure: lgr_following_percent {
+    type: number
+    sql: ${lgr_following} / NULLIF(SUM(${lgr}), 0) ;;
+  }
+  
+# Measure: LGR INITIAL
+  measure: lgr_initial {
+    type: number
+    sql: SUM(CASE WHEN ${acq_booking_type} = 'initial' THEN ${lgr} END) ;;
+  }
+  
+# Measure: LGR INITIAL %
+  measure: lgr_initial_percent {
+    type: number
+    sql: ${lgr_initial} / NULLIF(SUM(${lgr}), 0) ;;
+  }
+  
+# Measure: LGR INITIAL CM
+  measure: lgr_initial_cm {
+    type: number
+    sql: COALESCE(SUM(CASE WHEN ${ins_crt_rel_mnth} = ${mnth_offset}
+      AND ${acq_booking_type} = 'initial' THEN ${lgr} END), 0) ;;
+  }
+  
+# Measure: LGR INITIAL CQ
+  measure: lgr_initial_cq {
+    type: number
+    sql: COALESCE(SUM(CASE WHEN ${ins_crt_rel_qrtr} = ${qrtr_offset}
+      AND ${acq_booking_type} = 'initial' THEN ${lgr} END), 0) ;;
+  }
+  
+# Measure: LGR INITIAL CW
+  measure: lgr_initial_cw {
+    type: number
+    sql: COALESCE(SUM(CASE WHEN ${ins_crt_rel_week} = ${week_offset}
+      AND ${acq_booking_type} = 'initial' THEN ${lgr} END), 0) ;;
+  }
+  
+# Measure: LGR INITIAL Digital
+  measure: lgr_initial_digital {
+    type: number
+    sql: SUM(CASE WHEN ${acq_booking_type} = 'initial' AND ${revenue_type} = 'digital' THEN ${lgr} END) ;;
+  }
+  
+# Measure: LGR INITIAL Digital %
+  measure: lgr_initial_digital_percent {
+    type: number
+    sql: ${lgr_initial_digital} / NULLIF(${lgr_initial}, 0) ;;
+  }
+  
+# Measure: LGR INITIAL Digital CM
+  measure: lgr_initial_digital_cm {
+    type: number
+    sql: COALESCE(SUM(CASE WHEN ${ins_crt_rel_mnth} = ${mnth_offset}
+                    AND ${acq_booking_type} = 'initial'
+                    AND ${revenue_type} = 'digital' THEN ${lgr} END), 0) ;;
+  }
+  
+# Measure: LGR INITIAL Digital CQ
+  measure: lgr_initial_digital_cq {
+    type: number
+    sql: COALESCE(SUM(CASE WHEN ${ins_crt_rel_qrtr} = ${qrtr_offset}
+                    AND ${acq_booking_type} = 'initial'
+                    AND ${revenue_type} = 'digital' THEN ${lgr} END), 0) ;;
+  }
+  
+# Measure: LGR INITIAL Digital CW
+  measure: lgr_initial_digital_cw {
+    type: number
+    sql: COALESCE(SUM(CASE WHEN ${ins_crt_rel_week} = ${week_offset}
+                    AND ${acq_booking_type} = 'initial'
+                    AND ${revenue_type} = 'digital' THEN ${lgr} END), 0) ;;
+  }
+  
+# Measure: LGR INITIAL Print
+  measure: lgr_initial_print {
+    type: number
+    sql: SUM(CASE WHEN ${acq_booking_type} = 'initial' AND ${revenue_type} = 'print' THEN ${lgr} END) ;;
+  }
+  
+# Measure: LGR INITIAL Print %
+  
+  measure: lgr_initial_print_percent {
+    type: number
+    sql: ${lgr_initial_print} / NULLIF(${lgr_initial}, 0) ;;
+  }
+  
+# Measure: LGR INITIAL Print CM
+  measure: lgr_initial_print_cm {
+    type: number
+    sql: COALESCE(SUM(CASE WHEN ${ins_crt_rel_mnth} = ${mnth_offset} AND ${acq_booking_type} = 'initial' AND ${revenue_type} = 'print' THEN ${lgr} END), 0) ;;
+  }
+  
+# Measure: LGR INITIAL Print CQ
+  measure: lgr_initial_print_cq {
+    type: number
+    sql: COALESCE(SUM(CASE WHEN ${ins_crt_rel_qrtr} = ${qrtr_offset} AND ${acq_booking_type} = 'initial' AND ${revenue_type} = 'print' THEN ${lgr} END), 0) ;;
+  }
+  
+# Measure: LGR INITIAL Print CW
+  measure: lgr_initial_print_cw {
+    type: number
+    sql: COALESCE(SUM(CASE WHEN ${ins_crt_rel_week} = ${week_offset} AND ${acq_booking_type} = 'initial' AND ${revenue_type} = 'print' THEN ${lgr} END), 0) ;;
+  }
+  
+# Measure: LGR NEW
+  measure: lgr_new {
+    type: number
+    sql: SUM(CASE WHEN ${cg_retention_type} = 'new customer' THEN ${lgr} END) ;;
+  }
+  
+# Measure: LGR New/Winback CG %
+  measure: lgr_new_winback_cg_percentage {
+    type: number
+    sql: ${cg_new_winback}M(${lgr}) ;;
+  }
+  
+# Measure: LGR Non CG %
+  measure: lgr_non_cg_percentage {
+    type: number
+    sql: ${cg_non_cg}/ SUM(${lgr}) ;;
+  }
+  
+# Measure: LGR ONEOFF
+  measure: lgr_oneoff {
+    type: number
+    sql: SUM(CASE WHEN ${acq_booking_type} = 'one-off' THEN ${lgr} END) ;;
+  }
+  
+# Measure: LGR ONEOFF %
+  measure: lgr_oneoff_percentage {
+    type: number
+    sql: ${lgr_oneoff} / SUM(${lgr}) ;;
+  }
+  
+# Measure: LGR ONEOFF Digital
+  measure: lgr_oneoff_digital {
+    type: number
+    sql: SUM(CASE WHEN ${acq_booking_type} = 'one-off' AND ${revenue_type} = 'digital' THEN ${lgr} END) ;;
+  }
+  
+# Measure: LGR ONEOFF Digital %
+  measure: lgr_oneoff_digital_percentage {
+    type: number
+    sql: ${lgr_oneoff_digital} / ${lgr_oneoff} ;;
+  }
+  
+# Measure: LGR ONEOFF Print
+  measure: lgr_oneoff_print {
+    type: number
+    sql: SUM(CASE WHEN ${acq_booking_type} = 'one-off' AND ${revenue_type} = 'print' THEN ${lgr} END) ;;
+  }
+  
+# Measure: LGR ONEOFF Print %
+  measure: lgr_oneoff_print_percentage {
+    type: number
+    sql: ${lgr_oneoff_print} / ${lgr_oneoff} ;;
+  }
+  
+# Measure: LGR PRINT
+  measure: lgr_print {
+    type: number
+    sql: SUM(CASE WHEN ${revenue_type} = 'print' THEN ${lgr} END) ;;
+  }
+  
+# Measure: LGR PRINT %
+  measure: lgr_print_percentage {
+    type: number
+    sql: ${lgr_print} / SUM(${lgr}) ;;
+  }
+  
+# Measure: LGR Re-Activated
+  measure: lgr_re_activated {
+    type: number
+    sql: SUM(CASE WHEN ${cg_retention_type} = 're-activated customer' THEN ${lgr} END) ;;
+  }
+  
+# Measure: LGR/Client EXISTING
+  measure: lgr_per_client_existing {
+    type: number
+    sql: ${lgr_existing} / COUNT(${count_existing});;
+  }
+  
+# Measure: LGR/Client NEW
+  measure: lgr_per_client_new {
+    type: number
+    sql: CASE WHEN ${count_new} != 0 THEN ${lgr_new} / ${count_new} ELSE NULL END ;;
+    group_label: "LGR Metrics"
+  }
+  
+# Measure: LGR/Client WINBACK
+  measure: lgr_per_client_winback {
+    type: number
+    sql: CASE WHEN ${count_re_activated} != 0 THEN ${lgr_re_activated} / ${count_re_activated} ELSE NULL END ;;
+    group_label: "LGR Metrics"
+  }
+  
+# Measure: LY gross_revenue_ex_adj_amount
+  measure: ly_gross_revenue_ex_adj_amount {
+    type: number
+    sql: CASE WHEN ${relative_fy_year_offset} = -1 THEN ${gross_revenue_ex_adj_amount} ELSE 0 END ;;
+  }
+  
+# Measure: MNTH + QRTR
+  measure: mnth_plus_qrtr {
+    type: string
+    sql: CASE
+      WHEN MIN(${qrtr}) = MAX(${qrtr}) THEN
+        CASE
+          WHEN MIN(${mnth}) = MAX(${mnth}) THEN MIN(${mnth})
+          ELSE MIN(${qrtr})
+        END
+      ELSE 'full year'
+     END ;;
+  }
+  
+# Measure: New Client Acquired - Count
+  measure: new_client_acquired_count {
+    type: number
+    sql: COALESCE(COUNT(DISTINCT CASE WHEN ${cg_retention_type} = 'new customer' THEN ${client_acquired_eligible_client} END), 0) ;;
+  }
+  
+# Measure: Selected Filter - CG Employee
+  measure: selected_filter_cg_employee {
+    type: string
+    sql: CASE
+      WHEN MIN(${cg_employee}) = MAX(${cg_employee}) THEN
+        'cg employee: ' || UPPER(${cg_employee})
+      ELSE ''
+     END ;;
+  }
+  
+# Measure: Selected Filter - CG Team
+  measure: selected_filter_cg_team {
+    type: string
+    sql: CASE
+      WHEN MIN(${cg_team}) = MAX(${cg_team}) THEN
+        'cg team: ' || UPPER(${cg_team})
+      ELSE ''
+     END ;;
+  }
+  
+# Measure: Selected Filter - Customer
+  measure: selected_filter_customer {
+    type: string
+    sql: CASE
+      WHEN MIN(${customer_name}) = MAX(${customer_name}) THEN
+        'customer: ' || UPPER(${customer_name})
+      ELSE ''
+     END ;;
+  }
+  
+# Measure: Selected Filter - Fin Mth
+  measure: selected_filter_fin_mth {
+    type: string
+    sql: CASE
+      WHEN MIN(${mnth}) = MAX(${mnth}) THEN
+        ${pub_ins_mth_dim} || ': ' || UPPER(${mnth})
+      ELSE ''
+     END ;;
+  }
+  
+# Measure: Selected Filter - Fin Qtr
+  measure: selected_filter_fin_qtr {
+    type: string
+    sql: CASE
+      WHEN MIN(${qrtr}) = MAX(${qrtr}) THEN
+        ${pub_ins_qtr_dim} || ': ' || UPPER(${qrtr})
+      ELSE ''
+     END ;;
+  }
+  
+# Measure: Selected Filter - GM
+  measure: selected_filter_gm {
+    type: string
+    sql: CASE
+      WHEN MIN(${sales_segment_gm_name_sync}) = MAX(${sales_segment_gm_name_sync}) THEN
+        'gm: ' || UPPER(${sales_segment_gm_name_sync})
+      ELSE ''
+     END ;;
+  }
+  
+# Measure: Selected Filter - GSD
+  measure: selected_filter_gsd {
+    type: string
+    sql: CASE
+      WHEN MIN(${current_portfolio_group_owner_current}) = MAX(${current_portfolio_group_owner_current}) THEN
+        'gsd: ' || UPPER(${current_portfolio_group_owner_current})
+      ELSE ''
+     END ;;
+  }
+  
+# Measure: Selected Filter - Industry
+  measure: selected_filter_industry {
+    type: string
+    sql: CASE
+      WHEN MIN(${nca_industry_pillar}) = MAX(${nca_industry_pillar}) THEN
+        'industry: ' || UPPER(${nca_industry_pillar})
+      ELSE ''
+     END ;;
+  }
+  
+# Measure: Selected Filter - Multiple Selected
+  measure: selected_filter_multiple_selected {
+    type: string
+    sql: CASE
+      WHEN ${selected_filter_label} = '' THEN
+        'multiple values selected. click to filter for more details'
+      ELSE NULL
+     END ;;
+  }
+  
+# Measure: Selected Filter - Pillar
+  measure: selected_filter_pillar {
+    type: string
+    sql: CASE
+      WHEN MIN(${nca_industry_pillar}) = MAX(${nca_industry_pillar}) THEN
+        'pillar: ' || UPPER(${nca_industry_pillar})
+      ELSE ''
+     END ;;
+  }
+  
+# Measure: Selected Filter - PPG
+  measure: selected_filter_ppg {
+    type: string
+    sql: CASE
+      WHEN MIN(${sales_segment_l_2_name_sync}) = MAX(${sales_segment_l_2_name_sync}) THEN
+        'ppg: ' || UPPER(${sales_segment_l_2_name_sync})
+      ELSE ''
+     END ;;
+  }
+  
+# Measure: Selected Filter - Revenue Type
+  
+  measure: selected_filter_revenue_type {
+    type: string
+    sql: CASE
+      WHEN MIN(${revenue_adtype}) = MAX(${revenue_adtype}) THEN
+        'revenue type: ' || UPPER(${revenue_adtype_alias})
+      ELSE ''
+     END ;;
+  }
+  
+# Measure: Selected Filter Label
+  measure: selected_filter_label {
+    type: string
+    sql: ${selected_filter_gm} || ' ' ||
+           ${selected_filter_gsd} || ' ' ||
+           ${selected_filter_ppg} || ' ' ||
+           ${selected_filter_cg_team} || ' ' ||
+           ${selected_filter_cg_employee} || ' ' ||
+           ${selected_filter_revenue_type} || ' ' ||
+           ${selected_filter_industry} || ' ' ||
+           ${selected_filter_pillar} || ' ' ||
+           ${selected_filter_customer} || ' ' ||
+           ${selected_filter_fin_qtr} || ' ' ||
+           ${selected_filter_fin_mth} ;;
+  }
+  
+# Measure: Winback Client Acquired - Count
+  measure: winback_client_acquired_count {
+    type: number
+    sql: COALESCE(COUNT(DISTINCT CASE WHEN ${cg_retention_type} = 're-activated customer' THEN ${client_acquired_eligible_client} END), 0) ;;
+  }
+  
+# Measure: Mnth Offset
+  measure: mnth_offset {
+    sql: 0 ;;
+  }
+  
+# Measure: Qrtr Offset
+  measure: qrtr_offset {
+    sql: 0 ;;
+  }
+  
+# Measure: Week Offset
+  measure: week_offset {
+    sql: 0 ;;
+  }
+  
+  parameter: publication_ins_creation_view {
+    type: string
+    allowed_value: {
+      label: "Publication View" value: "Publication View" }
+    allowed_value: { label: "Ins Creation View" value: "Ins Creation View" }
+  }
+  
+  dimension: pub_ins_qtr_dim {
+    type: string
+    sql: CASE
+         WHEN {% parameter publication_ins_creation_view %} = 'Publication View' THEN 'Publication Qtr'
+         WHEN {% parameter publication_ins_creation_view %} = 'Ins Creation View' THEN 'Insertion Created Qtr'
+         ELSE NULL
+       END ;;
+  }
+  dimension: ins_crt_week {
+    type: string
+    sql:
+    CASE
+      WHEN {% parameter publication_ins_creation_view %} = 'Publication View' THEN ${financial_week}
+      ELSE ${booking_line_created_week}
+    END ;;
+  }
+  dimension: ins_crt_rel_week {
+    type: number
+    sql:
+    CASE
+      WHEN {% parameter publication_ins_creation_view %} = 'Publication View' THEN ${relative_fy_week_offset}
+      ELSE ${booking_line_created_week_offset}
+    END ;;
+  }
+  dimension: ins_crt_rel_mnth {
+    type: number
+    sql:
+    CASE
+      WHEN {% parameter publication_ins_creation_view %} = 'Publication View' THEN ${relative_fy_month_offset}
+      ELSE ${booking_line_created_month_offset}
+    END ;;
+  }
+  dimension: ins_crt_year {
+    type: number
+    sql:
+    CASE
+      WHEN {% parameter publication_ins_creation_view %} = 'Publication View' THEN ${financial_year}
+      ELSE ${booking_line_created_year}
+    END ;;
+  }
+  dimension: ins_crt_rel_year_title {
+    type: string
+    sql:
+    CASE
+      WHEN {% parameter publication_ins_creation_view %} = 'Publication View' THEN
+        CONCAT('Revenue Published in FY', RIGHT(CAST(${ins_crt_year} AS STRING), 2))
+      ELSE
+        CONCAT('Revenue Created in FY', RIGHT(CAST(${ins_crt_year} AS STRING), 2))
+    END ;;
+  }
+  dimension: ins_crt_rel_qrtr {
+    type: number
+    sql:
+    CASE
+      WHEN {% parameter publication_ins_creation_view %} = 'Publication View' THEN ${relative_fy_quarter_offset}
+      ELSE ${booking_line_created_quarter_offset}
+    END ;;
+  }
+  dimension: ins_crt_qrtr {
+    type: string
+    sql:
+    CASE
+      WHEN {% parameter publication_ins_creation_view %} = 'Publication View' THEN
+        CONCAT('Q', CAST(${financial_quarter} AS STRING))
+      ELSE
+        CONCAT('Q', CAST(${booking_line_created_quarter} AS STRING))
+    END ;;
+  }
+  dimension: ins_crt_rel_year {
+    type: number
+    sql:
+    CASE
+      WHEN {% parameter publication_ins_creation_view %} = 'Publication View' THEN ${relative_fy_year_offset}
+      ELSE ${booking_line_created_year_offset}
+    END ;;
+  }
+  dimension: ins_crt_mnth {
+    type: string
+    sql:
+    CASE
+      WHEN {% parameter publication_ins_creation_view %} = 'Publication View' THEN ${financial_short_month}
+      ELSE ${booking_line_created_short_month}
+    END ;;
+  }
+  dimension: pub_ins_mth_dim {
+    type: string
+    sql:
+    CASE
+      WHEN {% parameter publication_ins_creation_view %} = 'Publication View' THEN 'Publication Month'
+      WHEN {% parameter publication_ins_creation_view %} = 'Ins Creation View' THEN 'Insertion Created Month'
+    END ;;
+  }
+  parameter: booked_new_following {
+    type: string
+    allowed_value: {
+      label: "Booked New Revenue"
+      value: "Booked New Revenue"
+    }
+    allowed_value: {
+      label: "Following Revenue"
+      value: "Following Revenue"
+    }
+  }
+  dimension: booked_new_following_dim {
+    type: string
+    sql: % booked_new_following % ;;
+  }
+  parameter: hide_show_customer_param {
+    type: yesno  # No default value is necessary
+  }
+  
+  dimension: hide_show_customer_dim {
+    type: yesno
+    sql: NOT ${hide_show_customer_param} ;;
+  }
+  
+  parameter: initial_booking_view_all_booking_view {
+    type: string
+    allowed_value: {
+      label: "Initial Booking View"
+      value: "Initial Booking View"
+    }
+    allowed_value: {
+      label: "All Booking View"
+      value: "All Booking View"
+    }
+  }
+  dimension: initial_booking_view {
+    type: yesno
+    sql: {% parameter initial_booking_view_all_booking_view %} = 'Initial Booking View' ;;
+  }
+  
+  dimension: mnth {
+    type: string
+    sql: ${ins_crt_mnth};;
+  }
+  dimension: qrtr {
+    type: string
+    sql: ${ins_crt_qrtr};;
+  }
+  parameter: Current_FY{
+    type: string
+  }
+  parameter: GM_Select {
+    type: number
+    allowed_value: {
+      label: "Danny Lavell"
+      value: "Danny Lavell"
+    }
+    allowed_value: {
+      label: "Nicole Ware"
+      value: "Nicole Ware"
+    }
+    allowed_value: {
+      label: "Kelly Healy"
+      value: "Kelly Healy"
+    }
+    allowed_value: {
+      label: "Jodi Graham"
+      value: "Jodi Graham"
+    }
+    allowed_value: {
+      label: "True Other"
+      value: "True Other"
+    }
+    allowed_value: {
+      label: "Unclaimed"
+      value: "Unclaimed"
+    }
+  }
+  
+  parameter: Month/Week {
+    type: yesno
+    allowed_value: {
+      label: "Week"
+      value: "yes"
+    }
+    allowed_value: {
+      label: "Month"
+      value: "no"
+    }
+  }
+  parameter: Param_Month/Week {
+    type: string
+    allowed_value: {
+      label: "By Month View"
+      value: "By Month View"
+    }
+    allowed_value: {
+      label: "By Week View"
+      value: "By Week View"
+    }
+  }
+  parameter: Selected_Benchmark {
+    type: string
+    allowed_value: {
+      label: "Budget"
+      value: "1"
+    }
+    allowed_value: {
+      label: "Forecast"
+      value: "2"
+    }
+    allowed_value: {
+      label: "Last Year"
+      value: "3"
+    }
+  }
+  parameter: Sort_Param{
+    type: string
+    allowed_value: {
+      label: "Full Year"
+      value: "Full Year"
+    }
+    allowed_value: {
+      label: "YTD"
+      value: "YTD"
+    }
+    allowed_value: {
+      label: "Q1"
+      value: "Q1"
+    }
+    allowed_value: {
+      label: "Q2"
+      value: "Q2"
+    }
+    allowed_value: {
+      label: "Q3"
+      value: "Q3"
+    }
+    allowed_value: {
+      label: "Q4"
+      value: "Q4"
+    }
+    allowed_value: {
+      label: "Jul"
+      value: "Jul"
+    }
+    allowed_value: {
+      label: "Aug"
+      value: "Aug"
+    }
+    allowed_value: {
+      label: "Sep"
+      value: "Sep"
+    }
+    allowed_value: {
+      label: "Oct"
+      value: "Oct"
+    }
+    allowed_value: {
+      label: "Nov"
+      value: "Nov"
+    }
+    allowed_value: {
+      label: "Dec"
+      value: "Dec"
+    }
+    allowed_value: {
+      label: "Jan"
+      value: "Jan"
+    }
+    allowed_value: {
+      label: "Feb"
+      value: "Feb"
+    }
+    allowed_value: {
+      label: "Mar"
+      value: "Mar"
+    }
+    allowed_value: {
+      label: "Apr"
+      value: "Apr"
+    }
+    allowed_value: {
+      label: "May"
+      value: "May"
+    }
+    allowed_value: {
+      label: "Jun"
+      value: "May"
+    }
+  }
+  parameter: Select_Year_to_Go {
+    type: string
+    allowed_value: {
+      label: "Budget"
+      value: "1"
+    }
+    allowed_value: {
+      label: "Forecast"
+      value: "2"
+    }
+    allowed_value: {
+      label: "Last Year"
+      value: "3"
+    }
+    allowed_value: {
+      label: "None"
+      value: "4"
+    }
+  }
+  measure: Booked_new_following_client_count{
+    type: count_distinct
+    sql:
+    CASE
+      -- Logic for 'Booked New Revenue'
+      WHEN {% parameter booked_new_following %} = 'Booked New Revenue' THEN
+        CASE
+          WHEN ${cg_employee_sales_region} = 'Client Growth' THEN ${crm_account_number}
+        END
+      
+      -- Logic for 'Following Revenue'
+      WHEN {% parameter booked_new_following %} = 'Following Revenue' THEN
+      CASE
+      WHEN ${cg_employee_sales_region} != 'Client Growth' THEN ${crm_account_number}
+      END
+      
+      -- Default NULL in case nothing matches
+      ELSE NULL
+      END ;;
+  }
+# Dimension or Measure to Implement the Conditional Logic
+  
+  dimension: Booked_new_following_lgr {
+    sql: CASE
+          WHEN {% parameter booked_new_following %} = 'Booked New Revenue' THEN ${cg_booked_by_cg}
+          WHEN {% parameter booked_new_following %} = 'Following Revenue' THEN ${cg_non_cg_copy}
+          ELSE NULL
+        END ;;
+  }
+  
+  measure: Booked_new_following_lgr_sort {
+    sql: CASE
+          WHEN ${booked_new_following} = 'Booked New Revenue' THEN ${cg_booked_by_cg_for_sort}
+          WHEN ${booked_new_following} = 'Following Revenue' THEN ${cg_non_cg_for_sort}
+          ELSE NULL
+        END ;;
+  }
+  measure: cg_non_cg_for_sort {
+    type: number
+    sql: CASE
+          WHEN ${cg_employee_sales_region} != 'Client Growth' THEN
+            CASE
+              WHEN {% parameter Sort_param %} = 1 AND ${ins_crt_rel_year} = 0 THEN ${lgr}
+              WHEN {% parameter sort_param %} = 2 AND ${relative_fy_year_offset} = 0 AND ${is_future_period_flag} = 'N' THEN ${lgr}
+              WHEN {% parameter sort_param %} = 3 AND ${ins_crt_qrtr} = 'Q1' THEN ${lgr}
+              WHEN {% parameter sort_param %} = 4 AND ${ins_crt_qrtr} = 'Q2' THEN ${lgr}
+              WHEN {% parameter sort_param %} = 5 AND ${ins_crt_qrtr} = 'Q3' THEN ${lgr}
+              WHEN {% parameter sort_param %} = 6 AND ${ins_crt_qrtr} = 'Q4' THEN ${lgr}
+              WHEN {% parameter sort_param %} = 7 AND ${ins_crt_mnth} = 'Jul' THEN ${lgr}
+              WHEN {% parameter sort_param %} = 8 AND ${ins_crt_mnth} = 'Aug' THEN ${lgr}
+              WHEN {% parameter sort_param %} = 9 AND ${ins_crt_mnth} = 'Sep' THEN ${lgr}
+              WHEN {% parameter sort_param %} = 10 AND ${ins_crt_mnth} = 'Oct' THEN ${lgr}
+              WHEN {% parameter sort_param %} = 11 AND ${ins_crt_mnth} = 'Nov' THEN ${lgr}
+              WHEN {% parameter sort_param %} = 12 AND ${ins_crt_mnth} = 'Dec' THEN ${lgr}
+              WHEN {% parameter sort_param %} = 13 AND ${ins_crt_mnth} = 'Jan' THEN ${lgr}
+              WHEN {% parameter sort_param %} = 14 AND ${ins_crt_mnth} = 'Feb' THEN ${lgr}
+              WHEN {% parameter sort_param %} = 15 AND ${ins_crt_mnth} = 'Mar' THEN ${lgr}
+              WHEN {% parameter sort_param %} = 16 AND ${ins_crt_mnth} = 'Apr' THEN ${lgr}
+              WHEN {% parameter sort_param %} = 17 AND ${ins_crt_mnth} = 'May' THEN ${lgr}
+              WHEN {% parameter sort_param %} = 18 AND ${ins_crt_mnth} = 'Jun' THEN ${lgr}
+              ELSE NULL
+            END
+          ELSE NULL
+        END ;;
+  }
+  dimension: cg_booked_by_cg_for_sort {
+    type: number
+    sql: CASE
+          WHEN ${cg_employee_sales_region} = 'Client Growth' THEN
+            CASE
+              WHEN {% parameter Sort_param %} = 1 AND ${ins_crt_rel_year} = 0 THEN ${lgr}
+              WHEN {% parameter sort_param %} = 2 AND ${relative_fy_year_offset} = 0 AND ${is_future_period_flag} = 'N' THEN ${lgr}
+              WHEN {% parameter sort_param %} = 3 AND ${ins_crt_qrtr} = 'Q1' THEN ${lgr}
+              WHEN {% parameter sort_param %} = 4 AND ${ins_crt_qrtr} = 'Q2' THEN ${lgr}
+              WHEN {% parameter sort_param %} = 5 AND ${ins_crt_qrtr} = 'Q3' THEN ${lgr}
+              WHEN {% parameter sort_param %} = 6 AND ${ins_crt_qrtr} = 'Q4' THEN ${lgr}
+              WHEN {% parameter sort_param %} = 7 AND ${ins_crt_mnth} = 'Jul' THEN ${lgr}
+              WHEN {% parameter sort_param %} = 8 AND ${ins_crt_mnth} = 'Aug' THEN ${lgr}
+              WHEN {% parameter sort_param %} = 9 AND ${ins_crt_mnth} = 'Sep' THEN ${lgr}
+              WHEN {% parameter sort_param %} = 10 AND ${ins_crt_mnth} = 'Oct' THEN ${lgr}
+              WHEN {% parameter sort_param %} = 11 AND ${ins_crt_mnth} = 'Nov' THEN ${lgr}
+              WHEN {% parameter sort_param %} = 12 AND ${ins_crt_mnth} = 'Dec' THEN ${lgr}
+              WHEN {% parameter sort_param %} = 13 AND ${ins_crt_mnth} = 'Jan' THEN ${lgr}
+              WHEN {% parameter sort_param %} = 14 AND ${ins_crt_mnth} = 'Feb' THEN ${lgr}
+              WHEN {% parameter sort_param %} = 15 AND ${ins_crt_mnth} = 'Mar' THEN ${lgr}
+              WHEN {% parameter sort_param %} = 16 AND ${ins_crt_mnth} = 'Apr' THEN ${lgr}
+              WHEN {% parameter sort_param %} = 17 AND ${ins_crt_mnth} = 'May' THEN ${lgr}
+              WHEN {% parameter sort_param %} = 18 AND ${ins_crt_mnth} = 'Jun' THEN ${lgr}
+              ELSE NULL
+            END
+          ELSE NULL
+        END ;;
+  }
+  dimension: mnth_qrtr {
+    type: string
+    sql:
+    CASE
+      WHEN MIN(${qrtr}) = MAX(${qrtr})
+        THEN CASE
+          WHEN MIN(${mnth}) = MAX(${mnth})
+            THEN MIN(${mnth})
+          ELSE MIN(${qrtr})
+        END
+      ELSE 'Full Year'
+    END ;;
+  }
+  measure: ytd_booked_new_following_lgr {
+    type: number
+    sql: CASE
+          WHEN ${relative_fy_year_offset} = 0 AND ${is_future_period_flag} = 'N' THEN
+            CASE
+              -- Logic for 'Booked New Revenue'
+              WHEN {% parameter booked_new_following %} = 'Booked New Revenue'
+                AND ${cg_employee_sales_region} = 'Client Growth' THEN ${lgr}
+      
+      -- Logic for 'Following Revenue'
+      WHEN {% parameter booked_new_following %} = 'Following Revenue'
+      AND ${cg_employee_sales_region} != 'Client Growth' THEN ${lgr}
+      
+      -- Return NULL if conditions are not met
+      ELSE NULL
+      END
+      ELSE NULL
+      END ;;
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+}
