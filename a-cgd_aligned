@@ -1,3 +1,4 @@
+#This model is generated through "AIVizMigrate"
 view: cgd_data {
   
   sql_table_name: "FIN"."CGD_DATA" ;;
