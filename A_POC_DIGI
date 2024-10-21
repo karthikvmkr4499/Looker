@@ -1,0 +1,2726 @@
+view: digi_subs {
+
+  sql_table_name: "FIN"."DIGI_SUBS" ;;
+
+
+# -----------------------------------------------------------------------------
+# Filters
+
+  dimension_group: date {
+    type: time
+    timeframes: [
+      date,
+      month,
+      quarter,
+      year
+    ]
+  }
+
+
+
+# Parmeters
+
+  parameter: fisc_week {
+    type: unquoted
+    allowed_value: {
+      label: "Current Week"
+      value: "0"
+    }
+    allowed_value: {
+      value: "1"
+    }
+    allowed_value: {
+      value: "2"
+    }
+    allowed_value: {
+      value: "3"
+    }
+    allowed_value: {
+      value: "4"
+    }
+    allowed_value: {
+      value: "5"
+    }
+    allowed_value: {
+      value: "6"
+    }
+    allowed_value: {
+      value: "7"
+    }
+    allowed_value: {
+      value: "8"
+    }
+    allowed_value: {
+      value: "9"
+    }
+    allowed_value: {
+      value: "10"
+    }
+    allowed_value: {
+      value: "11"
+    }
+    allowed_value: {
+      value: "12"
+    }
+    allowed_value: {
+      value: "13"
+    }
+    allowed_value: {
+      value: "14"
+    }
+    allowed_value: {
+      value: "15"
+    }
+
+    default_value: "15"
+  }
+
+  parameter: benchmark_selector {
+    type: unquoted
+    allowed_value: {
+      label: "YoY"
+      value: "1"
+    }
+    allowed_value: {
+      label: "BUD"
+      value: "2"
+    }
+    allowed_value: {
+      label: "FCT"
+      value: "3"
+    }
+    default_value: "2"
+  }
+
+  parameter: period_selector {
+    type: unquoted
+    allowed_value: {
+      label: "WTD"
+      value: "1"
+    }
+    allowed_value: {
+      label: "MTD"
+      value: "2"
+    }
+    allowed_value: {
+      label: "QTD"
+      value: "3"
+    }
+    allowed_value: {
+      label: "YTD"
+      value: "4"
+    }
+    default_value: "1"
+  }
+
+  parameter: summary_selector {
+    type: unquoted
+    allowed_value: {
+      label: "Closing Base"
+      value: "1"
+    }
+    allowed_value: {
+      label: "Adds"
+      value: "2"
+    }
+    allowed_value: {
+      label: "Cancels"
+      value: "3"
+    }
+    allowed_value: {
+      label: "Revenue"
+      value: "4"
+    }
+    allowed_value: {
+      label: "ARPU"
+      value: "5"
+    }
+    default_value: "1"
+  }
+
+  parameter: metric_selector {
+    type: unquoted
+    allowed_value: {
+      label: "Gross"
+      value: "1"
+    }
+    allowed_value: {
+      label: "Net"
+      value: "2"
+    }
+    default_value: "1"
+  }
+
+
+#default columns (Dimentions & Measures) from Table
+
+  dimension: budgetaddsqty {
+    type: number
+    sql: ${TABLE}."BUDGETADDSQTY" ;;
+  }
+
+  dimension: budgetcancelsqty {
+    type: number
+    sql: ${TABLE}."BUDGETCANCELSQTY" ;;
+  }
+
+  dimension: budgetclosingbase {
+    type: number
+    sql: ${TABLE}."BUDGETCLOSINGBASE" ;;
+  }
+
+  dimension: budgetearnedamount {
+    type: number
+    sql: ${TABLE}."BUDGETEARNEDAMOUNT" ;;
+  }
+
+  dimension: budgetnetaddsqty {
+    type: number
+    sql: ${TABLE}."BUDGETNETADDSQTY" ;;
+  }
+
+  dimension: budgetnetcancelsqty {
+    type: number
+    sql: ${TABLE}."BUDGETNETCANCELSQTY" ;;
+  }
+
+  dimension: budgetopeningbase {
+    type: number
+    sql: ${TABLE}."BUDGETOPENINGBASE" ;;
+  }
+
+  dimension: category_name {
+    type: string
+    sql: ${TABLE}."CATEGORY_NAME" ;;
+  }
+
+  dimension: classification_level_1_description {
+    type: string
+    sql: ${TABLE}."CLASSIFICATION_LEVEL_1_DESCRIPTION" ;;
+  }
+
+  dimension: classification_level_2_description {
+    type: string
+    sql: ${TABLE}."CLASSIFICATION_LEVEL_2_DESCRIPTION" ;;
+  }
+
+  dimension: closingbase {
+    type: number
+    sql: ${TABLE}."CLOSINGBASE" ;;
+  }
+
+  dimension: customer_segment {
+    type: string
+    sql: ${TABLE}."CUSTOMER_SEGMENT" ;;
+  }
+
+  dimension: customer_segment_group {
+    type: string
+    sql: ${TABLE}."CUSTOMER_SEGMENT_GROUP" ;;
+  }
+
+  dimension: delivery_medium_type {
+    type: string
+    sql: ${TABLE}."DELIVERY_MEDIUM_TYPE" ;;
+  }
+
+  dimension: delivery_schedule_group {
+    type: string
+    sql: ${TABLE}."DELIVERY_SCHEDULE_GROUP" ;;
+  }
+
+  dimension: dw_billing_system_code {
+    type: string
+    sql: ${TABLE}."DW_BILLING_SYSTEM_CODE" ;;
+  }
+
+  dimension: dw_source_system_code {
+    type: string
+    sql: ${TABLE}."DW_SOURCE_SYSTEM_CODE" ;;
+  }
+
+  dimension: earnedamount {
+    type: number
+    sql: ${TABLE}."EARNEDAMOUNT" ;;
+  }
+
+  dimension: exclusionreasoncancellation {
+    type: number
+    sql: ${TABLE}."EXCLUSIONREASONCANCELLATION" ;;
+  }
+
+  dimension: fiscal_week_id {
+    type: number
+    sql: ${TABLE}."FISCAL_WEEK_ID" ;;
+  }
+
+  dimension: forecastaddsqty {
+    type: number
+    sql: ${TABLE}."FORECASTADDSQTY" ;;
+  }
+
+  dimension: forecastbudgetearnedamount {
+    type: number
+    sql: ${TABLE}."FORECASTBUDGETEARNEDAMOUNT" ;;
+  }
+
+  dimension: forecastcancelsqty {
+    type: number
+    sql: ${TABLE}."FORECASTCANCELSQTY" ;;
+  }
+
+  dimension: forecastclosingbase {
+    type: number
+    sql: ${TABLE}."FORECASTCLOSINGBASE" ;;
+  }
+
+  dimension: forecastnetaddsqty {
+    type: number
+    sql: ${TABLE}."FORECASTNETADDSQTY" ;;
+  }
+
+  dimension: forecastnetcancelsqty {
+    type: number
+    sql: ${TABLE}."FORECASTNETCANCELSQTY" ;;
+  }
+
+  dimension: forecastopeningbase {
+    type: number
+    sql: ${TABLE}."FORECASTOPENINGBASE" ;;
+  }
+
+  dimension: freetopaidacquisition {
+    type: number
+    sql: ${TABLE}."FREETOPAIDACQUISITION" ;;
+  }
+
+  dimension: frontbook_backbook_category_name {
+    type: string
+    sql: ${TABLE}."FRONTBOOK_BACKBOOK_CATEGORY_NAME" ;;
+  }
+
+  dimension: fy_month_of_year {
+    type: number
+    sql: ${TABLE}."FY_MONTH_OF_YEAR" ;;
+  }
+
+  dimension: fy_quarter_of_year {
+    type: number
+    sql: ${TABLE}."FY_QUARTER_OF_YEAR" ;;
+  }
+
+  dimension: fy_week_of_year {
+    type: number
+    sql: ${TABLE}."FY_WEEK_OF_YEAR" ;;
+  }
+
+  dimension: fy_year {
+    type: number
+    sql: ${TABLE}."FY_YEAR" ;;
+  }
+
+  dimension: gl_account_code {
+    type: string
+    sql: ${TABLE}."GL_ACCOUNT_CODE" ;;
+  }
+
+  dimension: gl_publication_code {
+    type: string
+    sql: ${TABLE}."GL_PUBLICATION_CODE" ;;
+  }
+
+  dimension: l11_publication_name {
+    type: string
+    sql: ${TABLE}."L11_PUBLICATION_NAME" ;;
+  }
+
+  dimension: masthead_code {
+    type: string
+    sql: ${TABLE}."MASTHEAD_CODE" ;;
+  }
+
+  dimension: netacquisition {
+    type: number
+    sql: ${TABLE}."NETACQUISITION" ;;
+  }
+
+  dimension: netcanellation {
+    type: number
+    sql: ${TABLE}."NETCANELLATION" ;;
+  }
+
+  dimension: nfearnedamount {
+    type: number
+    sql: ${TABLE}."NFEARNEDAMOUNT" ;;
+  }
+
+  dimension: nybudgetaddsqty {
+    type: number
+    sql: ${TABLE}."NYBUDGETADDSQTY" ;;
+  }
+
+  dimension: nybudgetcancelsqty {
+    type: number
+    sql: ${TABLE}."NYBUDGETCANCELSQTY" ;;
+  }
+
+  dimension: nybudgetclosingbase {
+    type: number
+    sql: ${TABLE}."NYBUDGETCLOSINGBASE" ;;
+  }
+
+  dimension: nybudgetearnedamount {
+    type: number
+    sql: ${TABLE}."NYBUDGETEARNEDAMOUNT" ;;
+  }
+
+  dimension: nybudgetopeningbase {
+    type: number
+    sql: ${TABLE}."NYBUDGETOPENINGBASE" ;;
+  }
+
+  dimension: offer_category_group_name {
+    type: string
+    sql: ${TABLE}."OFFER_CATEGORY_GROUP_NAME" ;;
+  }
+
+  dimension: offer_category_name {
+    type: string
+    sql: ${TABLE}."OFFER_CATEGORY_NAME" ;;
+  }
+
+  dimension: openingbase {
+    type: number
+    sql: ${TABLE}."OPENINGBASE" ;;
+  }
+
+  dimension: rate_plan_code {
+    type: string
+    sql: ${TABLE}."RATE_PLAN_CODE" ;;
+  }
+
+  dimension: rate_plan_group_name {
+    type: string
+    sql: ${TABLE}."RATE_PLAN_GROUP_NAME" ;;
+  }
+
+  dimension: reactivationacquisition {
+    type: number
+    sql: ${TABLE}."REACTIVATIONACQUISITION" ;;
+  }
+
+  dimension: reactivationcancellation {
+    type: number
+    sql: ${TABLE}."REACTIVATIONCANCELLATION" ;;
+  }
+
+  dimension: revenue_component {
+    type: string
+    sql: ${TABLE}."REVENUE_COMPONENT" ;;
+  }
+
+  dimension: scenario {
+    type: string
+    sql: ${TABLE}."SCENARIO" ;;
+  }
+
+  dimension: sold_in_channel_name {
+    type: string
+    sql: ${TABLE}."SOLD_IN_CHANNEL_NAME" ;;
+  }
+
+  dimension: sold_in_source_channel_name {
+    type: string
+    sql: ${TABLE}."SOLD_IN_SOURCE_CHANNEL_NAME" ;;
+  }
+
+  dimension: subscriber_has_email_flag {
+    type: string
+    sql: ${TABLE}."SUBSCRIBER_HAS_EMAIL_FLAG" ;;
+  }
+
+  dimension: subsnapfact_addsqty {
+    type: number
+    sql: ${TABLE}."SUBSNAPFACT_ADDSQTY" ;;
+  }
+
+  dimension: subsnapfact_cancelsqty {
+    type: number
+    sql: ${TABLE}."SUBSNAPFACT_CANCELSQTY" ;;
+  }
+
+  dimension: subsnapfact_closingbase {
+    type: number
+    sql: ${TABLE}."SUBSNAPFACT_CLOSINGBASE" ;;
+  }
+
+  dimension: subsnapfact_movemenfromqty {
+    type: number
+    sql: ${TABLE}."SUBSNAPFACT_MOVEMENFROMQTY" ;;
+  }
+
+  dimension: subsnapfact_movementoqty {
+    type: number
+    sql: ${TABLE}."SUBSNAPFACT_MOVEMENTOQTY" ;;
+  }
+
+  dimension: subsnapfact_openingbase {
+    type: number
+    sql: ${TABLE}."SUBSNAPFACT_OPENINGBASE" ;;
+  }
+
+  dimension: switchacquisition {
+    type: number
+    sql: ${TABLE}."SWITCHACQUISITION" ;;
+  }
+
+  dimension: switchcancellation {
+    type: number
+    sql: ${TABLE}."SWITCHCANCELLATION" ;;
+  }
+
+  dimension: table_union_source {
+    type: string
+    sql: ${TABLE}."TABLE_UNION_SOURCE" ;;
+  }
+
+  dimension: totalacquisition {
+    type: number
+    sql: ${TABLE}."TOTALACQUISITION" ;;
+  }
+
+  dimension: totalcancellation {
+    type: number
+    sql: ${TABLE}."TOTALCANCELLATION" ;;
+  }
+
+
+  measure: total_budgetaddsqty {
+    type: sum
+    sql: ${budgetaddsqty} ;;
+  }
+
+  measure: average_budgetaddsqty {
+    type: average
+    sql: ${budgetaddsqty} ;;
+  }
+
+  measure: count {
+    type: count
+    drill_fields: [detail*]
+  }
+
+  # -------------------------------------------------------------------------------------
+
+  # Custom Calculations
+
+  dimension: delivery_medium_and_subscriber_email_flag {
+    type: string
+    sql: ${delivery_medium_type} || ' ' || ${subscriber_has_email_flag} ;;
+  }
+
+  dimension: masthead {
+    type: string
+    sql: CASE
+          WHEN ${gl_publication_code} IN ('101', '100') OR ${masthead_code} = 'TA' THEN 'The Australian'
+          WHEN ${gl_publication_code} IN ('400', '401', '402') OR ${masthead_code} = 'CM' THEN 'Courier Mail'
+          WHEN ${gl_publication_code} IN ('110', '111', '116') OR ${masthead_code} = 'DT' THEN 'Daily Telegraph'
+          WHEN ${gl_publication_code} IN ('301', '302', '303') OR ${masthead_code} = 'HS' THEN 'Herald Sun'
+          WHEN ${gl_publication_code} IN ('500', '501', '560') OR ${masthead_code} = 'AA' THEN 'The Advertiser'
+          WHEN ${gl_publication_code} IN ('450', '460') OR ${masthead_code} = 'CP' THEN 'Cairns Post'
+          WHEN ${gl_publication_code} IN ('350', '351') OR ${masthead_code} = 'GA' THEN 'Geelong'
+          WHEN ${gl_publication_code} IN ('670', '685') OR ${masthead_code} = 'GC' THEN 'Gold Coast'
+          WHEN ${gl_publication_code} IN ('961', '962', '963') OR ${masthead_code} = 'NT' THEN 'NT News'
+          WHEN ${gl_publication_code} IN ('850', '851', '852') OR ${masthead_code} = 'TM' THEN 'The Mercury'
+          WHEN ${gl_publication_code} IN ('5053', '5253') OR ${masthead_code} = 'TC' THEN 'Toowoomba'
+          WHEN ${gl_publication_code} IN ('475', '490') OR ${masthead_code} = 'TB' THEN 'Townsville'
+          WHEN ${gl_publication_code} IN ('305', '307') OR ${masthead_code} = 'WT' THEN 'Weekly Times'
+          WHEN ${gl_publication_code} = '9001' OR ${masthead_code} = 'CS' THEN 'Code'
+          WHEN ${gl_publication_code} IN ('8821') OR ${masthead_code} = 'PU' THEN 'Punters'
+          WHEN ${gl_publication_code} IN ('8822') OR ${masthead_code} = 'RN' THEN 'Racenet'
+          WHEN ${gl_publication_code} = '9653' OR ${masthead_code} = 'SC' THEN 'Supercoach Plus'
+          WHEN ${gl_publication_code} = '9600' OR ${masthead_code} = 'TS' THEN 'Taste Online'
+          WHEN ${gl_publication_code} = '9003' OR ${masthead_code} = 'AP' THEN 'Apple Podcast: Crime X'
+          WHEN ${gl_publication_code} = '103' OR ${classification_level_2_description} = 'The Oz' THEN 'The Oz'
+          WHEN ${gl_publication_code} = '9000' OR ${masthead_code} = 'NW' THEN 'news.com.au'
+          WHEN ${gl_publication_code} = '121' THEN 'Others'
+          WHEN ${gl_publication_code} = '9002' OR ${masthead_code} = 'BG' THEN 'Brain Games'
+          WHEN ${gl_publication_code} IN ('9504', '9514', '9556', '9558', '9560', '9603', '9623') THEN 'Others'
+          WHEN ${gl_publication_code} = '9644' THEN 'Suddenly'
+          WHEN ${gl_publication_code} = '9903' THEN 'News Corporate'
+          WHEN ${gl_publication_code} = 'Group Newspaper Management - Digital' THEN 'Group Newspaper Management - Digital'
+          ELSE NULL
+        END ;;
+  }
+
+  measure: current_week {
+    type: number
+    sql: CASE
+          WHEN (DAYNAME(CURDATE()) = 'Monday'
+                OR DAYNAME(CURDATE()) = 'Sunday'
+                OR DAYNAME(CURDATE()) = 'Tuesday')
+          THEN DATEDIFF(WEEK, '2024-07-03', CURDATE()) - 1
+          ELSE (DATEDIFF(WEEK, '2024-07-03', CURDATE())) * 7 + 5
+        END ;;
+  }
+
+  measure: max_year {
+    type: number
+    sql: MAX(CASE
+          WHEN ${closingbase} > 0 THEN ${fy_year}
+          ELSE NULL
+        END) ;;
+  }
+
+  dimension: masthead_pillar {
+    type: string
+    sql: CASE
+          WHEN ${gl_publication_code} IN ('101', '100') OR ${masthead_code} = 'TA' THEN 'The Australian and Prestige'
+          WHEN ${gl_publication_code} IN ('9556', '9558', '9560', '9603', '9623', '5136') THEN 'The Australian and Prestige'
+          WHEN ${gl_publication_code} = '9600' OR ${masthead_code} = 'TS' OR ${gl_publication_code} = '9514' THEN 'Free & Lifestyle'
+          WHEN ${gl_publication_code} IN ('8821', 'Punters.com.au') OR ${masthead_code} = 'PU' THEN 'Commercial Content'
+          WHEN ${gl_publication_code} IN ('8822') OR ${masthead_code} = 'RN' THEN 'Commercial Content'
+          WHEN ${gl_publication_code} IN ('110', '111', '116') OR ${masthead_code} = 'DT' THEN 'States & Community'
+          WHEN ${gl_publication_code} = '121' THEN 'States & Community'
+          WHEN ${gl_publication_code} IN ('301', '302', '303') OR ${masthead_code} = 'HS' THEN 'States & Community'
+          WHEN ${gl_publication_code} IN ('305', '307') OR ${masthead_code} = 'WT' THEN 'States & Community'
+          WHEN ${gl_publication_code} IN ('350', '351') OR ${masthead_code} = 'GA' THEN 'States & Community'
+          WHEN ${gl_publication_code} IN ('400', '401', '402') OR ${masthead_code} = 'CM' THEN 'States & Community'
+          WHEN ${gl_publication_code} IN ('450', '460') OR ${masthead_code} = 'CP' THEN 'States & Community'
+          WHEN ${gl_publication_code} IN ('475', '490') OR ${masthead_code} = 'TB' THEN 'States & Community'
+          WHEN ${gl_publication_code} IN ('500', '501', '560') OR ${masthead_code} = 'AA' THEN 'States & Community'
+          WHEN ${gl_publication_code} IN ('670', '685') OR ${masthead_code} = 'GC' THEN 'States & Community'
+          WHEN ${gl_publication_code} IN ('850', '851', '852') OR ${masthead_code} = 'TM' THEN 'States & Community'
+          WHEN ${gl_publication_code} IN ('961', '962', '963') OR ${masthead_code} = 'NT' THEN 'States & Community'
+          WHEN ${gl_publication_code} IN ('5053', '5253') OR ${masthead_code} = 'TC' THEN 'States & Community'
+          WHEN ${gl_publication_code} = '9001' OR ${masthead_code} = 'CS' THEN 'States & Community'
+          WHEN ${gl_publication_code} = '9003' OR ${masthead_code} = 'AP' THEN 'States & Community'
+          WHEN ${gl_publication_code} = '9504' OR ${gl_publication_code} = '9653' OR ${masthead_code} = 'SC' THEN 'States & Community'
+          WHEN ${gl_publication_code} = '103' OR ${classification_level_2_description} = 'The Oz' THEN 'To Be Excluded'
+          WHEN ${gl_publication_code} = '9000' OR ${masthead_code} = 'NW' THEN 'To Be Excluded'
+          WHEN ${gl_publication_code} = '9002' OR ${masthead_code} = 'BG' THEN 'To Be Excluded'
+          WHEN ${gl_publication_code} = '9644' THEN 'To Be Excluded'
+          WHEN ${gl_publication_code} = '9903' THEN 'To Be Excluded'
+          WHEN ${gl_publication_code} = 'Group Newspaper Management - Digital' THEN 'To Be Excluded'
+          WHEN ${gl_publication_code} = '180' OR ${gl_publication_code} = 'Group Newspaper Management' THEN 'To Be Excluded'
+          ELSE NULL
+        END ;;
+  }
+
+  dimension: delivery_medium_and_print_schedule {
+    type: string
+    sql: CASE
+          WHEN ${classification_level_2_description} = 'Essentials' THEN 'Essentials'
+          WHEN ${delivery_medium_type} = 'Digital' THEN ${delivery_medium_type}
+          WHEN UPPER(${rate_plan_group_name}) = 'DIGITAL ONLY' THEN 'Digital'
+          WHEN ${scenario} != 'Estimate' AND ${rate_plan_group_name} = '7 days & Other bundle' THEN 'Bundle 7 Day'
+          WHEN ${scenario} != 'Estimate' AND ${rate_plan_group_name} = 'Weekend Bundle' THEN 'Bundle Weekend'
+          WHEN ${scenario} != 'Estimate' AND ${rate_plan_group_name} = 'Unspecified Digital Sub' THEN 'Digital'
+          ELSE ${delivery_medium_type} || ' ' || ${delivery_schedule_group}
+        END ;;
+  }
+
+  dimension: product {
+    type: string
+    sql: CASE
+          WHEN ${table_union_source} = 'nfmanualhist' AND ${rate_plan_group_name} = 'Corporate' THEN 'Corporate excluding IP'
+          WHEN ${table_union_source} = 'nfmanualhist' AND ${rate_plan_group_name} = 'IP Access' THEN 'Corporate IP'
+          WHEN ${table_union_source} = 'nfmanualhist' AND ${rate_plan_group_name} = 'Supercoach' THEN 'Supercoach Plus'
+          WHEN ${table_union_source} = 'nfmanualhist' AND ${rate_plan_group_name} = 'Magazines' THEN 'Others'
+          WHEN ${table_union_source} = 'nfmanualhist' THEN ${rate_plan_group_name}
+          WHEN ${customer_segment} IN ('Campus', 'Corporate excluding IP', 'Corporate IP', 'Education') THEN ${customer_segment}
+          WHEN ${category_name} IN ('Campus', 'Corporate excluding IP', 'Corporate IP', 'Education') THEN ${category_name}
+          WHEN ${delivery_schedule_group} = 'Deep Niche Publications' THEN ${masthead}
+          WHEN ${dw_billing_system_code} = 'WINE' THEN 'Wine Club'
+          WHEN ${classification_level_2_description} = 'Essentials' THEN ${classification_level_2_description}
+          WHEN ${classification_level_1_description} IN ('Offplatform - Paid', 'Offplatform - Free') THEN '3rd Party & Others'
+          WHEN ${customer_segment} = 'General Consumer' AND ${delivery_medium_type} = 'Bundle' THEN ${delivery_medium_and_print_schedule}
+          WHEN ${customer_segment} = 'General Consumer' AND ${delivery_medium_type} = 'Digital' THEN ${delivery_medium_type}
+          WHEN ${table_union_source} = 'subsnapfact' AND ${customer_segment} = 'General Consumer' AND CONTAINS(${rate_plan_group_name},'7') THEN 'Bundle 7 Day'
+          WHEN ${table_union_source} = 'subsnapfact' AND ${customer_segment} = 'General Consumer' AND CONTAINS(UPPER(${rate_plan_group_name}),'WEEKEND') THEN 'Bundle Weekend'
+          WHEN ${table_union_source} = 'subsnapfact' AND ${customer_segment} = 'General Consumer' AND CONTAINS(UPPER(${rate_plan_group_name}),'DIGITAL') THEN 'Digital'
+          WHEN ${table_union_source} = 'subsnapfact' AND ${category_name} IN ('Corporate/B2b','Corporate') THEN 'Corporate excluding IP'
+          WHEN ${table_union_source} = 'subsnapfact' AND ${category_name} = '3rd Party Platform' THEN '3rd Party & Others'
+          WHEN ${table_union_source} = 'subsnapfact' AND ${category_name} = 'Consumer' AND CONTAINS(UPPER(${rate_plan_group_name}),'DIGITAL') THEN 'Digital'
+          WHEN ${scenario} = 'True Up Adjustment' AND ${category_name} IN ('Apple Store', 'Apple Audio', 'Apple Podcast', 'Press Reader', 'Subscribe with Google (SWG)', 'Google Play') THEN '3rd Party & Others'
+          WHEN ${scenario} = 'True Up Adjustment' AND ${category_name} IN ('Consumer', 'Other') AND ${rate_plan_group_name} = 'Unspecified Digital Sub' THEN 'Digital'
+          WHEN ${scenario} = 'True Up Adjustment' AND ${category_name} = 'Corporate/B2B' THEN 'Corporate excluding IP'
+          WHEN ${scenario} = 'True Up Adjustment' AND ${category_name} = 'The Wine Club' THEN 'Wine Club'
+          WHEN ${table_union_source} = 'subsnapfact' AND ${category_name} IN ('Apple Podcasts', 'Apple Audio') THEN 'Apple Podcast: Crime X'
+          WHEN ${table_union_source} = 'subsnapfact' AND ${rate_plan_group_name} = '7 days & Other bundle' THEN 'Bundle 7 Day'
+          WHEN ${scenario} IN ('Budget', 'Forecast', 'FY25 Budget June') AND ${category_name} = 'News Essentials' THEN 'Essentials'
+          WHEN ${scenario} IN ('Budget', 'Forecast', 'FY25 Budget June') AND ${category_name} = 'Other' AND ${gl_publication_code} = '101' THEN 'Wine Club'
+          WHEN ${scenario} IN ('Budget', 'Forecast', 'FY25 Budget June') AND ${category_name} = '3rd Party Platform' THEN '3rd Party & Others'
+          WHEN ${scenario} IN ('Budget', 'Forecast', 'FY25 Budget June') AND ${category_name} = 'Consumer' AND ${rate_plan_group_name} = '7 days & Other bundle' THEN 'Bundle 7 Day'
+          WHEN ${scenario} IN ('Budget', 'Forecast', 'FY25 Budget June') AND ${category_name} = 'Consumer' AND ${rate_plan_group_name} = 'Weekend Bundle' THEN 'Bundle Weekend'
+          WHEN ${scenario} IN ('Budget', 'Forecast', 'FY25 Budget June') AND ${category_name} = 'Consumer' AND ${rate_plan_group_name} = 'Digital only' THEN 'Digital'
+          WHEN ${scenario} IN ('Budget', 'Forecast', 'FY25 Budget June') AND ${rate_plan_group_name} = 'Unspec Product Type' THEN 'Digital'
+          WHEN ${scenario} IN ('Budget', 'Forecast', 'FY25 Budget June') AND ${category_name} = 'Other' THEN 'Digital'
+          WHEN ${table_union_source} IN ('budgetforecast_netacq', 'budgetforecast_netcan', 'budgetforecast_grosscan') AND ${rate_plan_group_name} = 'DIGITAL' THEN 'Digital'
+          WHEN ${table_union_source} IN ('budgetforecast_netacq', 'budgetforecast_netcan', 'budgetforecast_grosscan') THEN ${rate_plan_group_name}
+          ELSE 'CHECK'
+        END ;;
+  }
+
+  dimension: use_current_week {
+    type: number
+    sql: CASE
+          WHEN ${fisc_week} = 0 THEN ${current_week}
+          ELSE ${fisc_week}
+        END ;;
+  }
+
+  measure: 1_reported_closing_base {
+    type: number
+    sql: CASE
+          WHEN ${table_union_source} IN ('bmasnap_close', 'SC - CODE Manual APLS', 'SC Manual APLS') THEN ${closingbase}
+          ELSE NULL
+        END ;;
+  }
+
+  measure: 01_selected_week {
+    type: number
+    sql: CASE
+          WHEN ${fisc_week} = 0 THEN ${current_week}
+          ELSE ${fisc_week}
+        END ;;
+  }
+
+  dimension: 02_selected_week_string {
+    type: string
+    sql: CASE
+          WHEN LENGTH(TO_STRING(${selected_week})) < 2 THEN '0' || TO_STRING(${selected_week})
+          ELSE TO_STRING(${selected_week})
+        END ;;
+  }
+
+  measure: 03_fiscal_month_id {
+    type: number
+    sql: CAST(TO_STRING(${fy_year}) || CASE
+          WHEN ${fy_month_of_year} < 10 THEN '0' || TO_STRING(${fy_month_of_year})
+          ELSE TO_STRING(${fy_month_of_year})
+        END AS INT) ;;
+  }
+
+  measure: 04_month_based_on_fiscal_week_id {
+    type: number
+    sql: CAST(CASE
+          WHEN ${02_selected_week_string} = RIGHT(TO_STRING(${fiscal_week_id}), 2) THEN RIGHT(TO_STRING(${03_fiscal_month_id}), 2)
+          ELSE NULL
+        END AS INT) ;;
+  }
+
+  measure: 05_selected_month {
+    type: number
+    sql: MIN(${04_month_based_on_fiscal_week_id}) ;;
+  }
+
+  dimension: benchmark_name {
+    type: string
+    sql: CASE
+         WHEN ${benchmark_selector} = 1 THEN 'vs YOY'
+         WHEN ${benchmark_selector} = 2 THEN 'vs BUD'
+         WHEN ${benchmark_selector} = 3 THEN 'vs FCT'
+       END ;;
+  }
+
+  measure: 1_reported_opening_base {
+    type: number
+    sql: CASE
+         WHEN ${table_union_source} = 'bmasnap_open' THEN ${openingbase}
+       END ;;
+  }
+
+  measure: 1_reported_net_acquisitions {
+    type: number
+    sql: CASE
+         WHEN ${table_union_source} IN ('bmasnap_move', 'Taste Manual APLS', 'Taste Manual GPLA', 'Taste Manual PRES', 'SC - CODE Manual APLS', 'SC Manual APLS')
+         THEN ${netacquisition}
+       END ;;
+  }
+
+  measure: 1_reported_gross_acquisitions {
+    type: number
+    sql: CASE
+         WHEN ${table_union_source} IN ('bmasnap_move', 'Taste Manual APLS', 'Taste Manual GPLA', 'Taste Manual PRES', 'SC - CODE Manual APLS', 'SC Manual APLS')
+         THEN ${totalacquisition}
+       END ;;
+  }
+
+  measure: 1_acquisition_budget_metric {
+    type: number
+    sql: CASE
+         WHEN ${metric_selector} = 1 THEN ${budgetaddsqty}
+         WHEN ${metric_selector} = 2 THEN ${budgetnetaddsqty}
+       END ;;
+  }
+
+  measure: 2_acquisition_metric {
+    type: number
+    sql: CASE
+         WHEN ${metric_selector} = 1 THEN ${reported_gross_acquisitions}
+         WHEN ${metric_selector} = 2 THEN ${reported_net_acquisitions}
+       END ;;
+  }
+
+  measure: 06_fiscal_quarter_id {
+    type: number
+    sql: INT(CONCAT(${fy_year}, '0', ${fy_quarter_of_year})) ;;
+  }
+
+  measure: 07_quarter_based_on_fiscal_week_id {
+    type: number
+    sql: INT(
+          CASE
+            WHEN ${02_selected_week_string} = RIGHT(CAST(${fiscal_week_id} AS STRING), 2)
+            THEN RIGHT(CAST(${06_fiscal_quarter_id} AS STRING), 2)
+          END
+        ) ;;
+  }
+
+  measure: 08_selected_quarter {
+    type: number
+    sql: MIN(${07_quarter_based_on_fiscal_week_id}) ;;
+    #drill_fields: [07_quarter_based_on_fiscal_week_id]
+  }
+
+  measure: 1_acquisition_forecast_metric {
+    type: number
+    sql:
+    CASE
+      WHEN ${Metric_Selector} = 1 THEN ${Forecastaddsqty}
+      WHEN ${Metric_Selector} = 2 THEN ${Forecastnetaddsqty}
+    END ;;
+  }
+
+  measure: 1_reported_gross_cancellations {
+    type: number
+    sql:
+    CASE
+      WHEN ${Table_Union_Source} = 'bmasnap_move' THEN ${Totalcancellation}
+    END ;;
+  }
+
+  measure: 1_reported_net_cancellations {
+    type: number
+    sql:
+    CASE
+      WHEN ${Table_Union_Source} IN ('bmasnap_move', 'exclsionnetcancels') THEN ${NetCancellation_incl_Excl}
+    END ;;
+  }
+
+  measure: 2_actualised_acquisition_forecast {
+    type: number
+    sql:
+    CASE
+      WHEN ${Fy_Week_Of_Year} <= 13 THEN ${2_Acquisition_Metric}
+      ELSE ${1_Acquisition_Forecast_Metric}
+    END ;;
+  }
+
+  measure: net_cancellation_incl_excl {
+    type: number
+    sql: ${Netcancellation} - ${Exclusionreasoncancellation} ;;
+  }
+
+  measure: 2_closing_base_selected_period {
+    type: number
+    sql: CASE
+         WHEN ${Fy_Year} = ${Year}
+              AND ${Fy_Week_Of_Year} = ${Use_Current_Week}
+         THEN ${1_Reported_Closing_Base}
+       END ;;
+  }
+
+  dimension: 0_selected_period_filter {
+    type: yesno
+    sql: CASE
+         -- WTD
+         WHEN ${Period_Selector} = 1
+              AND ${01_Selected_Week} = ${Fy_Week_Of_Year}
+              AND (${Year} = ${Fy_Year} OR ${Year} - 1 = ${Fy_Year})
+         THEN YES
+
+        -- MTD
+        WHEN ${Period_Selector} = 2
+        AND ${05_Selected_Month} = ${Fy_Month_Of_Year}
+        AND ${Fy_Week_Of_Year} <= ${01_Selected_Week}
+        AND (${Year} = ${Fy_Year} OR ${Year} - 1 = ${Fy_Year})
+        THEN YES
+
+        -- QTD
+        WHEN ${Period_Selector} = 3
+        AND ${08_Selected_Quarter} <= ${Fy_Quarter_Of_Year}
+        AND ${Fy_Week_Of_Year} <= ${01_Selected_Week}
+        AND (${Year} = ${Fy_Year} OR ${Year} - 1 = ${Fy_Year})
+        THEN YES
+
+        -- YTD
+        WHEN ${Period_Selector} = 4
+        AND ${Fy_Week_Of_Year} <= ${Use_Current_Week}
+        AND (${Year} = ${Fy_Year} OR ${Year} - 1 = ${Fy_Year})
+        THEN YES
+
+        ELSE NO
+        END ;;
+  }
+
+  measure: 1_cancellations_budget_metric {
+    type: number
+    sql: CASE
+         WHEN ${Metric_Selector} = 1 THEN ${Budgetcancelsqty}
+         WHEN ${Metric_Selector} = 2 THEN ${Budgetnetcancelsqty}
+         ELSE NULL
+       END ;;
+  }
+
+  measure: 2_cancellations_metric {
+    type: number
+    sql: CASE
+         WHEN ${Metric_Selector} = 1 THEN ${1_Reported_Gross_Cancellations}
+         WHEN ${Metric_Selector} = 2 THEN ${1_Reported_Net_Cancellations}
+         ELSE NULL
+       END ;;
+  }
+
+  measure: 1_cancellations_forecast_metric {
+    type: number
+    sql: CASE
+         WHEN ${metric_selector} = 1 THEN ${forecastcancelsqty}
+         WHEN ${metric_selector} = 2 THEN ${forecastnetcancelsqty}
+         ELSE NULL
+       END ;;
+  }
+
+  measure: first_week_for_current_year {
+    type: number
+    sql: MIN(
+         CASE
+           WHEN ${year} = ${fy_year} AND ${fy_week_of_year} <= ${fisc_week}
+           THEN ${fy_week_of_year}
+           ELSE NULL
+         END
+       ) ;;
+  }
+
+  measure: 2_actualised_cancellation_forecast {
+    type: number
+    sql: CASE
+         WHEN ${fy_week_of_year} <= 13 THEN ${cancellations_metric_2}
+         ELSE ${cancellations_forecast_metric_1}
+       END ;;
+  }
+
+  measure: 2_closing_base_yoy {
+    type: number
+    sql: CASE
+         WHEN ${fy_year} = ${year} - 1
+         AND ${fy_week_of_year} = ${use_current_week}
+         THEN ${reported_closing_base_1}
+       END ;;
+  }
+
+  measure: 1_reported_revenue {
+    type: number
+    sql: CASE
+         WHEN ${fy_year} <= 2024 AND ${table_union_source} = 'nfmanualhist'
+         THEN ${nfearnedamount}
+         WHEN ${fy_year} > 2024 AND ${table_union_source} = 'subsnapfact'
+         THEN ${earnedamount}
+       END ;;
+  }
+
+  measure: fisrt_week_for_current_month {
+    type: number
+    sql: MIN(CASE
+             WHEN ${year} = ${fy_year}
+               AND ${fy_month_of_year} = ${selected_month}
+               AND ${fy_week_of_year} <= ${fisc_week}
+             THEN ${fy_week_of_year}
+           END) ;;
+  }
+
+  measure: first_week_for_current_quarter {
+    type: number
+    sql: MIN(CASE
+             WHEN ${year} = ${fy_year}
+               AND ${fy_quarter_of_year} = ${selected_quarter}
+               AND ${fy_week_of_year} <= ${fisc_week}
+             THEN ${fy_week_of_year}
+           END) ;;
+  }
+
+  measure: 3_acquisition_forecast {
+    type: number
+    sql: CASE
+         WHEN ${fy_year} = ${year}
+           AND ${select_period_filter} = TRUE
+         THEN ${actualised_acquisition_forecast}
+       END ;;
+  }
+
+  measure: 2_acquisition_budget {
+    type: number
+    sql: CASE
+         WHEN ${select_period_filter} = TRUE
+         THEN ${acquisition_budget_metric}
+       END ;;
+  }
+
+  measure: 1_actualised_forecasted_net_growth_ty {
+    type: number
+    sql: SUM(${acquisition_forecast}) - SUM(${cancellation_forecast}) ;;
+  }
+
+  measure: 1_net_growth_budget {
+    type: number
+    sql: SUM(${acquisition_budget}) - SUM(${cancellation_budget}) ;;
+  }
+
+  measure: 1_net_growth_yoy {
+    type: number
+    sql: (SUM(${closing_base_yoy}) - SUM(${opening_base_yoy})) ;;
+  }
+
+  dimension: 2_benchmark_net_growth {
+    type: string
+    sql:
+    CASE
+      WHEN ${benchmark_selector} = 1 THEN ${net_growth_yoy}
+      WHEN ${benchmark_selector} = 2 THEN ${net_growth_budget}
+      WHEN ${benchmark_selector} = 3 THEN ${actualised_forecasted_net_growth_ty}
+    END ;;
+  }
+
+  measure: 2_cancellation_budget {
+    type: number
+    sql:
+    CASE
+      WHEN ${select_period_filter} = true THEN ${cancellations_budget_metric}
+    END ;;
+  }
+
+  measure: 2_opening_base_yoy {
+    type: number
+    sql:
+    CASE
+      WHEN ${fy_year} = ${year}-1 AND ${previous_period_filter_op_only} = true THEN ${reported_opening_base}
+    END ;;
+  }
+
+  measure: 3_cancellation_forecast {
+    type: number
+    sql:
+    CASE
+      WHEN ${fy_year} = ${year} AND ${select_period_filter} = true THEN ${actualised_cancellation_forecast}
+    END ;;
+  }
+
+  measure: 2_actualised_closing_base_forecast {
+    type: number
+    sql:
+    CASE
+      WHEN ${fy_week_of_year} <= 13 THEN ${reported_closing_base}
+      ELSE ${forecast_closing_base}
+    END ;;
+  }
+
+  dimension: fy_week_month {
+    type: string
+    sql: CONCAT('FY ', ${year}, ' Week ', ${selected_week_string_header}, ' (', ${selected_month_name}, ')') ;;
+  }
+
+  dimension: month_name {
+    type: string
+    sql:
+    CASE
+      WHEN ${fy_month_of_year} = 1 THEN 'July'
+      WHEN ${fy_month_of_year} = 2 THEN 'August'
+      WHEN ${fy_month_of_year} = 3 THEN 'September'
+      WHEN ${fy_month_of_year} = 4 THEN 'October'
+      WHEN ${fy_month_of_year} = 5 THEN 'November'
+      WHEN ${fy_month_of_year} = 6 THEN 'December'
+      WHEN ${fy_month_of_year} = 7 THEN 'January'
+      WHEN ${fy_month_of_year} = 8 THEN 'February'
+      WHEN ${fy_month_of_year} = 9 THEN 'March'
+      WHEN ${fy_month_of_year} = 10 THEN 'April'
+      WHEN ${fy_month_of_year} = 11 THEN 'May'
+      WHEN ${fy_month_of_year} = 12 THEN 'June'
+    END ;;
+  }
+
+  dimension: selected_month_name {
+    type: string
+    sql: MAX(CASE WHEN ${selected_month} = ${fy_month_of_year} THEN ${month_name} END) ;;
+  }
+
+  dimension: selected_week_string_header {
+    type: string
+    sql:
+    CASE
+      WHEN ${fisc_week} = 0 THEN ${current_week}
+      ELSE ${fisc_week}
+    END ;;
+  }
+
+  measure: 2_actualised_revenue_forecast {
+    type: number
+    sql:
+    CASE
+      WHEN ${fy_year} = ${year} AND ${fy_week_of_year} <= 13 THEN ${reported_revenue}
+      ELSE ${forecast_budget_earned_amount}
+    END ;;
+  }
+
+  dimension: 0_selected_period_yoy_filter {
+    type: string
+    sql:
+    CASE
+      WHEN ${period_selector} = 1 THEN ${use_current_week} = ${fy_week_of_year} AND ${year}-1 = ${fy_year}
+      WHEN ${period_selector} = 2 THEN ${selected_month} = ${fy_month_of_year} AND ${fy_week_of_year} <= ${use_current_week} AND ${year}-1 = ${fy_year}
+      WHEN ${period_selector} = 3 THEN ${selected_quarter} <= ${fy_quarter_of_year} AND ${fy_week_of_year} <= ${use_current_week} AND ${year}-1 = ${fy_year}
+      WHEN ${period_selector} = 4 THEN ${fy_week_of_year} <= ${use_current_week} AND ${year}-1 = ${fy_year}
+    END ;;
+  }
+
+  dimension: first_week_for_current_selected_period {
+    type: string
+    sql:
+    CASE
+      WHEN ${period_selector} = 1 THEN ${use_current_week}
+      WHEN ${period_selector} = 2 THEN ${first_week_for_current_month}
+      WHEN ${period_selector} = 3 THEN ${first_week_for_current_quarter}
+      WHEN ${period_selector} = 4 THEN ${first_week_for_current_year}
+    END ;;
+  }
+
+  measure: 2_acquisition_budget_metric_ty {
+    type: number
+    sql:
+    CASE
+      WHEN ${fy_year} = ${year} AND ${fy_week_of_year} <= ${use_current_week} THEN ${acquisition_budget_metric}
+    END ;;
+  }
+
+  measure: 2_cancellations_budget_metric_ty {
+    type: number
+    sql:
+    CASE
+      WHEN ${fy_year} = ${year} AND ${fy_week_of_year} <= ${use_current_week} THEN ${cancellations_budget_metric}
+    END ;;
+  }
+
+  measure:2_opening_base_selected_period {
+    type: number
+    sql:
+    ZN(
+      CASE
+        WHEN ${fy_year} = ${year} AND ${fy_week_of_year} = ${first_week_for_current_selected_period} THEN ${reported_opening_base}
+      END
+    ) ;;
+  }
+
+  measure: 2_reported_closing_base_ly {
+    type: number
+    sql:
+    CASE
+      WHEN ${fy_year} = ${year}-1 THEN ${reported_closing_base}
+    END ;;
+  }
+
+  measure: 1_actualised_net_growth_forecast {
+    type: number
+    sql:
+    ZN(SUM(
+      CASE
+        WHEN ${fy_year} = ${year} AND ${fy_week_of_year} <= ${use_current_week} THEN ${actualised_cancellation_forecast}
+      END
+    )) - ZN(SUM(
+      CASE
+        WHEN ${fy_year} = ${year} AND ${fy_week_of_year} <= ${use_current_week} THEN ${actualised_acquisition_forecast}
+      END
+    )) ;;
+  }
+
+  measure: 1_net_growth_selected_period_wtd_only {
+    type: number
+    sql: SUM(${closing_base_selected_period}) - SUM(
+          CASE
+            WHEN ${fy_year} = ${year} AND ${fy_week_of_year} = ${use_current_week} THEN ${reported_opening_base}
+          END
+        ) ;;
+  }
+
+  measure: 1_net_growth_ty_budget {
+    type: number
+    sql: SUM(${acquisition_budget_metric_ty}) - SUM(${cancellations_budget_metric_ty}) ;;
+  }
+
+  measure: 1_net_growth_yoy_ly {
+    type: number
+    sql: SUM(${reported_closing_base_ly}) - SUM(${opening_base_yoy_ly}) ;;
+  }
+
+  dimension: 2_benchmark_net_growth_ty {
+    type: string
+    sql:
+    CASE
+      WHEN ${benchmark_selector} = 1 THEN ${net_growth_yoy_ly}
+      WHEN ${benchmark_selector} = 2 THEN ${net_growth_ty_budget}
+      WHEN ${benchmark_selector} = 3 THEN ${actualised_net_growth_forecast}
+    END ;;
+  }
+
+  measure: 2_net_growth_ty {
+    type: number
+    sql: SUM(
+          CASE
+            WHEN ${fy_year} = ${year} AND ${fy_week_of_year} <= ${use_current_week} THEN ${reported_closing_base}
+          END
+        ) - SUM(
+          CASE
+            WHEN ${fy_year} = ${year} AND ${fy_week_of_year} <= ${use_current_week} THEN ${reported_opening_base}
+          END
+        ) ;;
+  }
+
+  dimension: 2_opening_base_yoy_ly {
+    type: string
+    sql: CASE WHEN ${fy_year} = ${year}-1 THEN ${reported_opening_base} END ;;
+  }
+
+  measure: 3_net_growth_ty_vs_benchmark {
+    type: number
+    sql: ${net_growth_ty} - ${benchmark_net_growth_ty} ;;
+  }
+
+  measure: 3_net_growth_ty_vs_benchmark_percent {
+    type: number
+    sql: (${net_growth_ty} / ABS(${benchmark_net_growth_ty})) - 1 ;;
+  }
+
+  measure: 3_net_growth_vs_benchmark_percent_wtd {
+    type: number
+    sql: (${net_growth_selected_period_wtd} / ${benchmark_net_growth}) - 1 ;;
+  }
+
+  measure: n3_et_growth_vs_benchmark_wtd {
+    type: number
+    sql: ${net_growth_selected_period_wtd} - ${benchmark_net_growth} ;;
+  }
+
+  dimension: last_week_for_last_year {
+    type: string
+    sql: MAX(CASE WHEN ${year}-1 = ${fy_year} THEN ${fy_week_of_year} END) ;;
+  }
+
+  measure: max_no_of_week_for_current_year {
+    type: number
+    sql: COUNTD(
+          CASE
+            WHEN ${year} = ${fy_year} AND ${fy_week_of_year} <= ${fisc_week} THEN ${fy_week_of_year}
+          END
+        ) ;;
+  }
+
+  dimension: 4_net_growth_ty_vs_benchmark_green {
+    type: string
+    sql:
+    CASE
+      WHEN ${net_growth_ty_vs_benchmark} >= 0 THEN
+        '▲ ' || '' || STR(ABS(ROUND(${net_growth_ty_vs_benchmark} / 1000))) || 'k, ' ||
+        STR(ABS(ROUND(${net_growth_ty_vs_benchmark_percent} * 100))) || '%'
+    END ;;
+  }
+
+  dimension: 4_net_growth_ty_vs_benchmark_red {
+    type: string
+    sql:
+    CASE
+      WHEN ${net_growth_ty_vs_benchmark} < 0 THEN
+        '▼ ' || '(' || STR(ABS(ROUND(${net_growth_ty_vs_benchmark} / 1000))) || 'k, ' ||
+        STR(ABS(ROUND(${net_growth_ty_vs_benchmark_percent} * 100))) || '%)'
+    END ;;
+  }
+
+  dimension: 4_net_growth_vs_benchmark_green_wtd {
+    type: string
+    sql:
+    CASE
+      WHEN ${net_growth_vs_benchmark_wtd} >= 0 THEN
+        '▲ ' || '' || STR(ABS(ROUND(${net_growth_vs_benchmark_wtd} / 1000))) || 'k, ' ||
+        STR(ABS(ROUND(${net_growth_vs_benchmark_percent_wtd} * 100))) || '%'
+    END ;;
+  }
+
+  dimension: 4_net_growth_vs_benchmark_red_wtd {
+    type: string
+    sql:
+    CASE
+      WHEN ${net_growth_vs_benchmark_wtd} < 0 THEN
+        '▼ ' || '(' || STR(ABS(ROUND(${net_growth_vs_benchmark_wtd} / 1000))) || 'k, ' ||
+        STR(ABS(ROUND(${net_growth_vs_benchmark_percent_wtd} * 100))) || '%)'
+    END ;;
+  }
+
+  measure: 1_closing_base_budget {
+    type: number
+    sql:
+    CASE
+      WHEN ${fy_year} = ${year} AND ${fy_week_of_year} = ${use_current_week} THEN ${budget_closing_base}
+    END ;;
+  }
+
+  dimension: 10_previous_selected_month {
+    type: string
+    sql: CASE WHEN ${selected_month} = 1 THEN 12 ELSE ${selected_month} - 1 END ;;
+  }
+
+  dimension: 11_previous_selected_quarter {
+    type: string
+    sql: CASE WHEN ${selected_quarter} = 1 THEN 4 ELSE ${selected_quarter} - 1 END ;;
+  }
+
+  measure: 3_actualised_forecasted_closing_base_ty {
+    type: number
+    sql:
+    CASE
+      WHEN ${fy_year} = ${year} AND ${fy_week_of_year} = ${use_current_week} THEN ${actualised_closing_base_forecast}
+    END ;;
+  }
+
+  dimension: 4_benchmark_closing_base {
+    type: string
+    sql:
+    CASE
+      WHEN ${benchmark_selector} = 1 THEN ${closing_base_yoy}
+      WHEN ${benchmark_selector} = 2 THEN ${closing_base_budget}
+      WHEN ${benchmark_selector} = 3 THEN ${actualised_forecasted_closing_base_ty}
+    END ;;
+  }
+
+  measure: 5_closing_base_vs_benchmark {
+    type: number
+    sql: SUM(${closing_base_selected_period}) - SUM(${benchmark_closing_base}) ;;
+  }
+
+  dimension: last_week_for_last_month {
+    type: number
+    sql: MAX(CASE WHEN ${year} = ${fy_year} AND ${fy_month_of_year} = ${previous_selected_month} THEN ${fy_week_of_year} END) ;;
+  }
+
+  dimension: last_week_for_last_quarter {
+    type: number
+    sql: MAX(CASE WHEN ${year} = ${fy_year} AND ${fy_quarter_of_year} = ${previous_selected_quarter} THEN ${fy_week_of_year} END) ;;
+  }
+
+  dimension: last_year_name {
+    type: string
+    sql:
+    CASE
+      WHEN ${benchmark_selector} = 1 THEN NULL
+      WHEN ${period_selector} = 4 THEN NULL
+      ELSE ' vs LY'
+    END ;;
+  }
+
+  dimension: previous_period_name {
+    type: string
+    sql:
+    CASE
+      WHEN ${period_selector} = 1 THEN ' vs LW'
+      WHEN ${period_selector} = 2 THEN ' vs LM'
+      WHEN ${period_selector} = 3 THEN ' vs LQ'
+      WHEN ${period_selector} = 4 AND ${benchmark_selector} = 1 THEN NULL
+      WHEN ${period_selector} = 4 THEN ' vs LY'
+    END ;;
+  }
+
+  measure: max_no_of_week_for_current_month {
+    type: number
+    sql: COUNTD(CASE WHEN ${year} = ${fy_year} AND ${fy_month_of_year} = ${selected_month} AND ${fy_week_of_year} <= ${fisc_week} THEN ${fy_week_of_year} END) ;;
+  }
+
+  measure: max_no_of_week_for_current_quarter {
+    type: number
+    sql: COUNTD(CASE WHEN ${year} = ${fy_year} AND ${fy_quarter_of_year} = ${selected_quarter} AND ${fy_week_of_year} <= ${fisc_week} THEN ${fy_week_of_year} END) ;;
+  }
+
+  dimension: no_of_weeks_in_current_selected_period {
+    type: number
+    sql:
+    CASE
+      WHEN ${period_selector} = 1 THEN 1
+      WHEN ${period_selector} = 2 THEN SUM(${max_no_of_week_for_current_month})
+      WHEN ${period_selector} = 3 THEN SUM(${max_no_of_week_for_current_quarter})
+      WHEN ${period_selector} = 4 THEN SUM(${max_no_of_week_for_current_year})
+    END ;;
+  }
+
+  dimension: 0_selected_period_yoy_filter_for_cb {
+    type: yesno
+    sql:
+    CASE
+      WHEN ${period_selector} = 1 AND ${use_current_week} = ${fy_week_of_year} AND (${year} - 1) = ${fy_year} THEN TRUE
+      WHEN ${period_selector} = 2 AND ${selected_month} = ${fy_month_of_year} AND ${fy_week_of_year} = ${use_current_week} AND (${year} - 1) = ${fy_year} THEN TRUE
+      WHEN ${period_selector} = 3 AND ${selected_quarter} <= ${fy_quarter_of_year} AND ${fy_week_of_year} = ${use_current_week} AND (${year} - 1) = ${fy_year} THEN TRUE
+      WHEN ${period_selector} = 4 AND ${fy_week_of_year} = ${use_current_week} AND (${year} - 1) = ${fy_year} THEN TRUE
+      ELSE FALSE
+    END ;;
+  }
+
+  dimension: 0_selected_period_yoy_filter_for_op {
+    type: yesno
+    sql:
+    CASE
+      WHEN ${period_selector} = 1 AND ${first_week_for_current_selected_period} = ${fy_week_of_year} AND (${year} - 1) = ${fy_year} THEN TRUE
+      WHEN ${period_selector} = 2 AND ${selected_month} = ${fy_month_of_year} AND ${fy_week_of_year} = ${first_week_for_current_selected_period} AND (${year} - 1) = ${fy_year} THEN TRUE
+      WHEN ${period_selector} = 3 AND ${selected_quarter} <= ${fy_quarter_of_year} AND ${fy_week_of_year} = ${first_week_for_current_selected_period} AND (${year} - 1) = ${fy_year} THEN TRUE
+      WHEN ${period_selector} = 4 AND ${fy_week_of_year} = ${first_week_for_current_selected_period} AND (${year} - 1) = ${fy_year} THEN TRUE
+      ELSE FALSE
+    END ;;
+  }
+
+  measure: 1_arpu_yoy {
+    type: number
+    sql:
+    ( SUM(CASE WHEN ${fy_year} = ${year} - 1 AND ${selected_period_yoy_filter} = TRUE THEN ${reported_revenue} END) / ${arpu_period_divider}) /
+    ( ( SUM(CASE WHEN ${fy_year} = ${year} - 1 AND ${selected_period_yoy_filter_for_cb} = TRUE THEN ${reported_closing_base} END) + ZN(SUM(CASE WHEN ${fy_year} = ${year} - 1 AND ${selected_period_yoy_filter_for_op} = TRUE THEN ${reported_opening_base} END)) ) / 2) ;;
+  }
+
+  measure: 1_actualised_forecasted_closing_base_ty_average {
+    type: number
+    sql:
+    ( ( SUM(CASE WHEN ${fy_year} = ${year} AND ${fy_week_of_year} = ${use_current_week} THEN ${actualised_closing_base_forecast} END) +
+    SUM(CASE WHEN ${fy_year} = ${year} AND ${fy_week_of_year} = ${first_week_for_current_selected_period} THEN ${forecast_opening_base_replaced_with_budget} END) ) / 2 ) / ${no_of_weeks_in_current_selected_period} ;;
+  }
+
+  measure: 1_actualised_forecasted_revenue_ty_average {
+    type: number
+    sql: SUM(CASE WHEN ${fy_year} = ${year} AND ${fy_week_of_year} = ${use_current_week} THEN ${actualised_revenue_forecast} END) / ${no_of_weeks_in_current_selected_period} ;;
+  }
+
+  measure: 1_average_closing_base_selected_period {
+    type: number
+    sql: (SUM(${opening_base_selected_period}) + SUM(${closing_base_selected_period})) / 2 ;;
+  }
+
+  measure: 1_closing_base_budget_average {
+    type: number
+    sql:
+    ( SUM(CASE WHEN ${fy_year} = ${year} AND ${fy_week_of_year} = ${first_week_for_current_selected_period} THEN ${budget_opening_base} END) +
+    SUM(CASE WHEN ${fy_year} = ${year} AND ${fy_week_of_year} = ${use_current_week} THEN ${budget_closing_base} END) ) / 2 ;;
+  }
+
+  dimension: 1_forecast_opening_base_replaced_with_budget {
+    type: number
+    sql: CASE WHEN ${fy_week_of_year} <= 13 THEN ${reported_opening_base} ELSE ${budget_opening_base} END ;;
+  }
+
+  measure: 1_revenue_selected_period_average {
+    type: number
+    sql: ZN(SUM(CASE WHEN ${fy_year} = ${year} AND ${select_period_filter} = TRUE THEN ${reported_revenue} END)) / ${no_of_weeks_in_current_selected_period} ;;
+  }
+
+  measure: 1_revenue_budget_average {
+    type: number
+    sql: SUM(CASE WHEN ${fy_year} = ${year} AND ${select_period_filter} = TRUE THEN ${budget_earned_amount} END) / ${no_of_weeks_in_current_selected_period} ;;
+  }
+
+  measure: 2_arpu_selected_period {
+    type: number
+    sql: ZN(${revenue_selected_period_average}) / ZN(${average_closing_base_selected_period}) ;;
+  }
+
+  measure:2_actualised_forecasted_arpu_ty {
+    type: number
+    sql: ${actualised_forecasted_revenue_ty_average} / ${actualised_forecasted_closing_base_ty_average} ;;
+  }
+
+  dimension: 2_benchmark_arpu {
+    type: string
+    sql:
+    CASE
+      WHEN ${benchmark_selector} = 1 THEN ${arpu_yoy}
+      WHEN ${benchmark_selector} = 2 THEN ${budget_arpu}
+      WHEN ${benchmark_selector} = 3 THEN ${actualised_forecasted_arpu_ty}
+    END ;;
+  }
+
+  measure: 2_budget_arpu {
+    type: number
+    sql: ${revenue_budget_average} / ${closing_base_budget_average} ;;
+  }
+
+  measure: 2_revenue_selected_period {
+    type: number
+    sql: CASE WHEN ${fy_year} = ${year} AND ${select_period_filter} = TRUE THEN ${reported_revenue} END ;;
+  }
+
+  measure: 3_actualised_forecasted_revenue_ty {
+    type: number
+    sql: CASE WHEN ${fy_year} = ${year} AND ${select_period_filter} = TRUE THEN ${actualised_revenue_forecast} END ;;
+  }
+
+  dimension: arpu_period_divider {
+    type: number
+    sql:
+    CASE
+      WHEN ${period_selector} = 1 THEN 1
+      WHEN ${period_selector} = 2 THEN SUM(${max_no_of_week_for_current_month})
+      WHEN ${period_selector} = 3 THEN SUM(${max_no_of_week_for_current_quarter})
+      WHEN ${period_selector} = 4 THEN SUM(${max_no_of_week_for_current_year})
+    END ;;
+  }
+
+  dimension: header_benchmark {
+    type: string
+    sql:
+    CASE
+      WHEN ${benchmark_selector} = 1 THEN 'Year on Year View'
+      WHEN ${benchmark_selector} = 2 THEN 'Budget View'
+      WHEN ${benchmark_selector} = 3 THEN 'Forecast View'
+    END ;;
+  }
+
+  dimension: header_period {
+    type: string
+    sql:
+    CASE
+    WHEN ${period_selector} = 1 THEN 'Week to Date'
+    WHEN ${period_selector} = 2 THEN 'Month to Date'
+    WHEN ${period_selector} = 3 THEN 'Quarter to Date'
+    WHEN ${period_selector} = 4 THEN 'Year to Date'
+    END;;
+
+  }
+
+  dimension: 0_previous_period_filter_cb_only {
+    type: yesno
+    sql:
+    CASE
+      WHEN ${period_selector} = 1 AND ${selected_week} = 1 THEN ${fy_year} = ${year} - 1 AND ${fy_week_of_year} = ${last_week_for_last_year}
+      WHEN ${period_selector} = 1 THEN ${fy_year} = ${year} AND ${fy_week_of_year} = ${use_current_week} - 1
+      WHEN ${period_selector} = 2 AND ${selected_month} = 1 THEN ${fy_year} = ${year} - 1 AND ${fy_month_of_year} = 12 AND ${fy_week_of_year} = ${last_week_for_last_year}
+      WHEN ${period_selector} = 2 THEN ${fy_year} = ${year} AND ${fy_week_of_year} = ${last_week_for_last_month}
+      WHEN ${period_selector} = 3 AND ${selected_quarter} = 1 THEN ${fy_year} = ${year} - 1 AND ${fy_quarter_of_year} = 4 AND ${fy_week_of_year} = ${last_week_for_last_year}
+      WHEN ${period_selector} = 3 THEN ${fy_year} = ${year} AND ${fy_week_of_year} = ${last_week_for_last_quarter}
+      WHEN ${period_selector} = 4 THEN ${fy_year} = ${year} - 1 AND ${fy_week_of_year} = ${last_week_for_last_year}
+    END ;;
+  }
+
+  measure: 1_net_growth_selected_period {
+    type: number
+    sql: ZN(SUM(${closing_base_selected_period})) - ZN(SUM(${opening_base_selected_period})) ;;
+  }
+
+  dimension: 2_closing_base_selected_period_stly {
+    type: number
+    sql: CASE WHEN ${fy_year} = ${year} - 1 AND ${fy_week_of_year} = ${use_current_week} THEN ${reported_closing_base} END ;;
+  }
+
+  dimension: 2_closing_base_previous_period {
+    type: number
+    sql: CASE WHEN ${previous_period_filter_cb_only} THEN ${reported_closing_base} END ;;
+  }
+
+  measure: 2_revenue_budget {
+    type: number
+    sql: CASE WHEN ${fy_year} = ${year} AND ${select_period_filter} = TRUE THEN ${budget_earned_amount} END ;;
+  }
+
+  measure: 2_revenue_yoy {
+    type: number
+    sql: CASE WHEN ${fy_year} = ${year} - 1 AND ${selected_period_yoy_filter} = TRUE THEN ${reported_revenue} END ;;
+  }
+
+  measure: 3_net_growth_vs_benchmark {
+    type: number
+    sql: ${net_growth_selected_period} - ${benchmark_net_growth} ;;
+  }
+
+  dimension: 4_benchmark_revenue {
+    type: number
+    sql:
+    CASE
+      WHEN ${benchmark_selector} = 1 THEN ${revenue_yoy}
+      WHEN ${benchmark_selector} = 2 THEN ${revenue_budget}
+      WHEN ${benchmark_selector} = 3 THEN ${actualised_forecasted_revenue_ty}
+    END ;;
+  }
+
+  measure: 5_closing_base_vs_benchmark_percentage {
+    type: number
+    sql: (SUM(${closing_base_selected_period}) / SUM(${benchmark_closing_base})) - 1 ;;
+  }
+
+  dimension: 6_closing_base_vs_benchmark_green {
+    type: string
+    sql: CASE WHEN ${closing_base_vs_benchmark_percentage} >= 0 THEN '▲ ' + '' + STR(ABS(ROUND(${closing_base_vs_benchmark}/1000))) + 'k, ' + STR(ABS(ROUND(${closing_base_vs_benchmark_percentage}*100))) + '%' END ;;
+  }
+
+  dimension: 6_closing_base_vs_benchmark_red {
+    type: string
+    sql: CASE WHEN ${closing_base_vs_benchmark_percentage} < 0 THEN '▼ ' + '(' + STR(ABS(ROUND(${closing_base_vs_benchmark}/1000))) + 'k, ' + STR(ABS(ROUND(${closing_base_vs_benchmark_percentage}*100))) + '%)' END ;;
+  }
+
+  dimension: first_week_for_last_month {
+    type: number
+    sql: MIN(CASE WHEN ${year} = ${fy_year} AND ${fy_month_of_year} = ${previous_selected_month} THEN ${fy_week_of_year} END) ;;
+  }
+
+  dimension: first_week_for_last_quarter {
+    type: number
+    sql: MIN(CASE WHEN ${year} = ${fy_year} AND ${fy_quarter_of_year} = ${previous_selected_quarter} THEN ${fy_week_of_year} END) ;;
+  }
+
+  dimension: masthead_group_title {
+    type: string
+    sql:
+    CASE
+      WHEN COUNTD(${masthead}) = 4 AND ATTR(${masthead_group}) = 'Metros' THEN '| ' + ATTR(${masthead_group})
+      WHEN COUNTD(${masthead}) = 7 AND ATTR(${masthead_group}) = 'Regionals' THEN '| ' + ATTR(${masthead_group})
+      WHEN COUNTD(${masthead}) = 8 AND ATTR(${masthead_group}) = 'Deep Niche Publications' THEN '| ' + ATTR(${masthead_group})
+      WHEN COUNTD(${masthead}) > 12 AND COUNTD(${masthead}) < 19 AND ATTR(${masthead_pillar}) = 'States & Community' THEN '| ' + 'States & Communities'
+      WHEN COUNTD(${masthead}) = 2 AND ATTR(${masthead_pillar}) = 'The Australian and Prestige' THEN '| ' + ATTR(${masthead_pillar})
+      WHEN COUNTD(${masthead}) = 2 AND ATTR(${masthead_pillar}) = 'Commercial Content' THEN '| ' + ATTR(${masthead_pillar})
+      WHEN COUNTD(${masthead}) = 2 AND ATTR(${masthead_pillar}) = 'Free & Lifestyle' THEN '| ' + ATTR(${masthead_pillar})
+      ELSE ''
+    END ;;
+  }
+
+  dimension: masthead_title {
+    type: string
+    sql: CASE WHEN COUNTD(${masthead}) > 1 THEN ' ' ELSE '| ' + ATTR(${masthead}) END ;;
+  }
+
+  dimension: product_title {
+    type: string
+    sql: CASE WHEN COUNTD(${product}) > 1 THEN ' ' ELSEIF COUNTD(${product}) = 1 AND (ATTR(${segment_group}) <> ATTR(${product})) THEN '- ' + ATTR(${product}) ELSE ' ' END ;;
+  }
+
+  dimension: segment_title {
+    type: string
+    sql: CASE WHEN COUNTD(${segment_group}) > 1 THEN ' ' ELSE '| ' + ATTR(${segment_group}) END ;;
+  }
+
+  dimension: 0_previous_period_filter_rev_ng {
+    type: yesno
+    sql:
+    CASE
+      WHEN ${period_selector} = 1 AND ${selected_week} = 1 THEN ${fy_year} = ${year} - 1 AND ${fy_week_of_year} = ${last_week_for_last_year}
+      WHEN ${period_selector} = 1 THEN ${fy_year} = ${year} AND ${fy_week_of_year} = ${use_current_week} - 1
+      WHEN ${period_selector} = 2 AND ${selected_month} = 1 THEN ${fy_year} = ${year} - 1 AND ${fy_week_of_year} <= ${last_week_for_last_month} AND ${fy_week_of_year} >= ${first_week_for_last_month}
+      WHEN ${period_selector} = 2 THEN ${fy_year} = ${year} AND ${fy_week_of_year} <= ${last_week_for_last_month} AND ${fy_week_of_year} >= ${first_week_for_last_month}
+      WHEN ${period_selector} = 3 AND ${selected_quarter} = 1 THEN ${fy_year} = ${year} - 1 AND ${fy_week_of_year} <= ${last_week_for_last_quarter} AND ${fy_week_of_year} >= ${first_week_for_last_quarter}
+      WHEN ${period_selector} = 3 THEN ${fy_year} = ${year} AND ${fy_week_of_year} <= ${last_week_for_last_quarter} AND ${fy_week_of_year} >= ${first_week_for_last_quarter}
+      WHEN ${period_selector} = 4 THEN ${fy_year} = ${year} - 1 AND ${fy_week_of_year} <= ${use_current_week}
+    END ;;
+  }
+
+  dimension: 2_closing_base_ytd_stly {
+    type: number
+    sql: CASE WHEN ${fy_year} = ${year} - 1 AND ${fy_week_of_year} = ${use_current_week} THEN ${reported_closing_base} END ;;
+  }
+
+  dimension: 2_opening_base_selected_period_stly {
+    type: number
+    sql: ZN(CASE WHEN ${fy_year} = ${year} - 1 AND ${fy_week_of_year} = ${first_week_for_current_selected_period} THEN ${reported_opening_base} END) ;;
+  }
+
+  measure: 3_arpu_vs_benchmark {
+    type: number
+    sql: ${arpu_selected_period} - ${benchmark_arpu} ;;
+  }
+
+  measure: 3_arpu_vs_benchmark_percentage {
+    type: number
+    sql: (${arpu_selected_period} / ${benchmark_arpu}) - 1 ;;
+  }
+
+  measure: 3_acquisition_selected_period {
+    type: number
+    sql: CASE WHEN ${fy_year} = ${year} AND ${select_period_filter} = TRUE THEN ${acquisition_metric} END ;;
+  }
+
+  measure: 3_acquisition_yoy {
+    type: number
+    sql: CASE WHEN ${selected_period_yoy_filter} = TRUE THEN ${acquisition_metric} END ;;
+  }
+
+  measure: 3_net_growth_vs_benchmark_percentage {
+    type: number
+    sql: (${net_growth_selected_period} / ABS(${benchmark_net_growth})) - 1 ;;
+  }
+
+  dimension: 4_arpu_vs_benchmark_green {
+    type: string
+    sql: CASE WHEN ${arpu_vs_benchmark} >= 0 THEN '▲ $' + STR(ROUND(ABS(${arpu_vs_benchmark}), 2)) + ', ' + STR(ABS(ROUND(${arpu_vs_benchmark_percentage} * 100))) + '%' END ;;
+  }
+
+  dimension: 4_arpu_vs_benchmark_red {
+    type: string
+    sql: CASE WHEN ${arpu_vs_benchmark} < 0 THEN '▼ ($' + STR(ROUND(ABS(${arpu_vs_benchmark}), 2)) + ', ' + STR(ABS(ROUND(${arpu_vs_benchmark_percentage} * 100))) + '%)' END ;;
+  }
+
+  dimension: 4_benchmark_acquisition {
+    type: number
+    sql:
+    CASE
+      WHEN ${benchmark_selector} = 1 THEN ${acquisition_yoy}
+      WHEN ${benchmark_selector} = 2 THEN ${acquisition_budget}
+      WHEN ${benchmark_selector} = 3 THEN ${acquisition_forecast}
+    END ;;
+  }
+
+  dimension: 4_net_growth_vs_benchmark_green {
+    type: string
+    sql: CASE WHEN ${net_growth_vs_benchmark} >= 0 THEN '▲ ' + '' + STR(ABS(ROUND(${net_growth_vs_benchmark} / 1000))) + 'k, ' + STR(ABS(ROUND(${net_growth_vs_benchmark_percentage} * 100))) + '%' END ;;
+  }
+
+  dimension: 4_net_growth_vs_benchmark_red {
+    type: string
+    sql: CASE WHEN ${net_growth_vs_benchmark} < 0 THEN '▼ ' + '(' + STR(ABS(ROUND(${net_growth_vs_benchmark} / 1000))) + 'k, ' + STR(ABS(ROUND(${net_growth_vs_benchmark_percentage} * 100))) + '%)' END ;;
+  }
+
+  measure: 5_revenue_vs_benchmark {
+    type: number
+    sql: SUM(${revenue_selected_period}) - SUM(${benchmark_revenue}) ;;
+  }
+
+  dimension: 5_revenue_vs_benchmark_percentage {
+    type: number
+    sql: ( SUM(${revenue_selected_period}) / SUM(${benchmark_revenue}) ) - 1 ;;
+  }
+
+  dimension: 6_revenue_vs_benchmark_green {
+    type: string
+    sql: CASE WHEN ${revenue_vs_benchmark_percentage} >= 0 THEN '▲ ' + '' + (IF LEN(STR(ABS(ROUND(${revenue_vs_benchmark}/1000))))=4 THEN LEFT((STR(ABS(ROUND(${revenue_vs_benchmark}/1000)))),1) +','+ RIGHT((STR(ABS(ROUND(${revenue_vs_benchmark}/1000)))),3) ELSEIF LEN(STR(ABS(ROUND(${revenue_vs_benchmark}/1000))))=5 THEN LEFT((STR(ABS(ROUND(${revenue_vs_benchmark}/1000)))),2) +','+ RIGHT((STR(ABS(ROUND(${revenue_vs_benchmark}/1000)))),3) ELSE STR(ABS(ROUND(${revenue_vs_benchmark}/1000))) END) + ', ' + STR(ABS(ROUND(${revenue_vs_benchmark_percentage} * 100)))+'%' END ;;
+  }
+
+  dimension: 6_revenue_vs_benchmark_red {
+    type: string
+    sql: CASE WHEN ${revenue_vs_benchmark_percentage} < 0 THEN '▼ ' + '(' + (IF LEN(STR(ABS(ROUND(${revenue_vs_benchmark}/1000))))=4 THEN LEFT((STR(ABS(ROUND(${revenue_vs_benchmark}/1000)))),1) +','+ RIGHT((STR(ABS(ROUND(${revenue_vs_benchmark}/1000)))),3) ELSEIF LEN(STR(ABS(ROUND(${revenue_vs_benchmark}/1000))))=5 THEN LEFT((STR(ABS(ROUND(${revenue_vs_benchmark}/1000)))),2) +','+ RIGHT((STR(ABS(ROUND(${revenue_vs_benchmark}/1000)))),3) ELSE STR(ABS(ROUND(${revenue_vs_benchmark}/1000))) END) + ', ' + STR(ABS(ROUND(${revenue_vs_benchmark_percentage} * 100)))+'%)' END ;;
+  }
+
+  dimension: 2_closing_base_ytd {
+    type: number
+    sql: IF ${fy_year} = ${year} AND ${fy_week_of_year} = ${use_current_week} THEN ${reported_closing_base} END ;;
+  }
+
+  dimension: 3rd_party_filter {
+    type: string
+    sql: CASE WHEN ${dw_billing_system_code} = 'APLP' THEN 'APLP'
+            WHEN ${dw_billing_system_code} = 'APLS' THEN 'APLS'
+            WHEN ${dw_billing_system_code} IN ('GPLA', 'Google Play', 'SWG') THEN 'GPLA'
+            WHEN ${dw_billing_system_code} IN ('PRES', 'Press Reader') THEN 'PRES'
+            WHEN ${dw_billing_system_code} = 'WINE' THEN 'WINE'
+            WHEN ${dw_billing_system_code} IN ('THINK', 'THNK') THEN 'THINK'
+            WHEN ${dw_billing_system_code} = 'JDE' THEN 'JDE'
+            ELSE 'Budget'
+        END ;;
+  }
+
+  dimension: deep_niche_3rd_party_exclude {
+    type: string
+    sql: CASE WHEN ${dw_billing_system_code} = 'APLP' THEN 'APLP'
+            WHEN ${dw_billing_system_code} = 'APLS' THEN 'APLS'
+            WHEN ${dw_billing_system_code} IN ('GPLA', 'Google Play') THEN 'GPLA'
+            WHEN ${dw_billing_system_code} IN ('PRES', 'Press Reader') THEN 'PRES'
+            WHEN ${dw_billing_system_code} = 'WINE' THEN 'WINE'
+            WHEN ${dw_billing_system_code} IN ('THINK', 'THNK') THEN 'THINK'
+            WHEN ${dw_billing_system_code} = 'SWG' THEN 'SWG'
+            WHEN ${dw_billing_system_code} = 'JDE' THEN 'JDE'
+            ELSE 'Budget'
+        END ;;
+  }
+
+  dimension: 0_previous_period_filter_op_only {
+    type: string
+    sql: CASE WHEN ${period_selector} = 1 AND ${selected_week} = 1 THEN ${fy_year} = ${year}-1 AND ${fy_week_of_year} = ${last_week_for_last_year}
+            WHEN ${period_selector} = 1 THEN ${fy_year} = ${year} AND ${fy_week_of_year} = ${use_current_week}-1
+            WHEN ${period_selector} = 2 AND ${selected_month} = 1 THEN ${fy_year} = ${year}-1 AND ${fy_month_of_year} = 12 AND ${fy_week_of_year} = ${first_week_for_last_month}
+            WHEN ${period_selector} = 2 THEN ${fy_year} = ${year} AND ${fy_week_of_year} = ${first_week_for_last_month}
+            WHEN ${period_selector} = 3 AND ${selected_quarter} = 1 THEN ${fy_year} = ${year}-1 AND ${fy_quarter_of_year} = 4 AND ${fy_week_of_year} = ${first_week_for_last_quarter}
+            WHEN ${period_selector} = 3 THEN ${fy_year} = ${year} AND ${fy_week_of_year} = ${first_week_for_last_quarter}
+            WHEN ${period_selector} = 4 THEN ${fy_year} = ${year}-1 AND ${fy_week_of_year} = ${first_week_for_last_year}
+        END ;;
+  }
+
+  dimension: 1_arpu_budget_ytd {
+    type: number
+    sql: (SUM(IF ${fy_year} = ${year} AND ${fy_week_of_year} <= ${use_current_week} THEN ${budget_earned_amount} END) / SUM(${max_no_of_week_for_current_year})) /
+      ((SUM(IF ${fy_year} = ${year} AND ${fy_week_of_year} = ${first_week_for_current_year} THEN ${budget_opening_base} END) + SUM(IF ${fy_year} = ${year} AND ${fy_week_of_year} = ${use_current_week} THEN ${budget_closing_base} END)) / 2) ;;
+  }
+
+  dimension: 1_arpu_forecast_ytd {
+    type: number
+    sql: (SUM(IF ${fy_year} = ${year} AND ${fy_week_of_year} <= ${use_current_week} THEN ${forecast_budget_earned_amount} END) / SUM(${max_no_of_week_for_current_year})) /
+      ((SUM(IF ${fy_year} = ${year} AND ${fy_week_of_year} = ${first_week_for_current_year} THEN ${forecast_opening_base} END) + SUM(IF ${fy_year} = ${year} AND ${fy_week_of_year} = ${use_current_week} THEN ${forecast_closing_base} END)) / 2) ;;
+  }
+
+  dimension: 1_arpu_yoy_ytd {
+    type: number
+    sql: (SUM(IF ${fy_year} = ${year}-1 AND ${fy_week_of_year} <= ${use_current_week} THEN ${reported_revenue} END) / ${use_current_week}) /
+      ((SUM(IF ${fy_year} = ${year}-1 AND ${fy_week_of_year} = ${last_week_for_last_year} THEN ${reported_closing_base} END) + ZN(SUM(IF ${fy_year} = ${year}-1 AND ${fy_week_of_year} = ${use_current_week} THEN ${reported_opening_base} END))) / 2) ;;
+  }
+
+  dimension: 1_arpuytd {
+    type: number
+    sql: (SUM(IF ${fy_year} = ${year} AND ${fy_week_of_year} <= ${use_current_week} THEN ${reported_revenue} END) / ${use_current_week}) /
+      ((ZN(SUM(IF ${fy_year} = ${year} AND ${fy_week_of_year} = ${use_current_week} THEN ${reported_closing_base} END)) + ZN(SUM(IF ${fy_year} = ${year} AND ${fy_week_of_year} = ${first_week_for_current_year} THEN ${reported_opening_base} END))) / 2) ;;
+  }
+
+  dimension: 1_arpuytd_stly {
+    type: number
+    sql: (SUM(IF ${fy_year} = ${year}-1 AND ${fy_week_of_year} <= ${use_current_week} THEN ${reported_revenue} END) / ${use_current_week}) /
+      ((ZN(SUM(IF ${fy_year} = ${year}-1 AND ${fy_week_of_year} = ${use_current_week} THEN ${reported_closing_base} END)) + ZN(SUM(IF ${fy_year} = ${year}-1 AND ${fy_week_of_year} = ${first_week_for_current_year} THEN ${reported_opening_base} END))) / 2) ;;
+  }
+
+  dimension: 1_actualised_net_growth_forecast_ytd {
+    type: number
+    sql: SUM(${actualised_closing_base_forecast}) - SUM(IF ${fy_year} = ${year} AND ${fy_week_of_year} = ${first_week_for_current_year} THEN ${actualised_opening_base_forecast} END) ;;
+  }
+
+  dimension: 1_net_growth_budget_ytd {
+    type: number
+    sql: SUM(IF ${fy_year} = ${year} AND ${fy_week_of_year} <= ${use_current_week} THEN ${acquisition_budget_metric} END) -
+      SUM(IF ${fy_year} = ${year} AND ${fy_week_of_year} <= ${use_current_week} THEN ${cancellations_budget_metric} END) ;;
+  }
+
+  dimension: 1_net_growth_previous_period {
+    type: number
+    sql: SUM(${closing_base_previous_period}) - SUM(${opening_base_previous_period}) ;;
+  }
+
+  dimension: 1_net_growth_selected_period_ytd {
+    type: number
+    sql: SUM(${closing_base_selected_period}) - SUM(IF ${fy_year} = ${year} AND ${fy_week_of_year} = ${first_week_for_current_year} THEN ${reported_opening_base} END) ;;
+  }
+
+  dimension: 1_net_growth_selected_period_ytd_stly {
+    type: number
+    sql: SUM(${closing_base_ytd_stly}) - SUM(IF ${fy_year} = ${year}-1 AND ${fy_week_of_year} = ${first_week_for_current_year} THEN ${reported_opening_base} END) ;;
+  }
+
+  dimension: 1_net_growth_selected_period_stly {
+    type: number
+    sql: ZN(SUM(${closing_base_selected_period_stly})) - ZN(SUM(${opening_base_selected_period_stly})) ;;
+  }
+
+  dimension: 1_net_growth_yoy_ytd {
+    type: number
+    sql: SUM(${closing_base_yoy}) - SUM(IF ${fy_year} = ${year}-1 AND ${fy_week_of_year} = ${first_week_for_current_year} THEN ${opening_base} END) ;;
+  }
+
+  dimension: 1_revenue_previous_period_average {
+    type: number
+    sql: SUM(IF ${previous_period_filter_cb_op_only} THEN ${reported_revenue} END) / ${no_of_weeks_in_last_selected_period} ;;
+  }
+
+  dimension: 1_revenue_selected_period_average_stly {
+    type: number
+    sql: ZN(SUM(IF ${fy_year} = ${year}-1 AND ${select_period_filter} = TRUE THEN ${reported_revenue} END)) / ${no_of_weeks_in_current_selected_period} ;;
+  }
+
+  dimension: 2_arpu_previous_period {
+    type: number
+    sql: ${revenue_previous_period_average} / SUM(${closing_base_previous_period}) ;;
+  }
+
+  dimension: 2_arpu_selected_period_stly {
+    type: number
+    sql: ZN(${revenue_selected_period_average_stly}) / ZN(${average_closing_base_selected_period_stly}) ;;
+  }
+
+  dimension: 2_arpu_vs_pp {
+    type: number
+    sql: ${arpu_selected_period} - ${arpu_previous_period} ;;
+  }
+
+  dimension: 2_arpu_vs_pp_percent {
+    type: number
+    sql: (${arpu_selected_period} / ${arpu_previous_period}) - 1 ;;
+  }
+
+  dimension: 2_arpu_vs_stly {
+    type: number
+    sql: ${arpu_selected_period} - ${arpu_selected_period_stly} ;;
+  }
+
+  dimension:2_arpu_vs_stly_percent {
+    type: number
+    sql: (${arpu_selected_period} / ${arpu_selected_period_stly}) - 1 ;;
+  }
+
+  dimension: 2_arpu_vs_stly_percent_ytd {
+    type: number
+    sql: (${arpu_ytd} / ${arpu_ytd_stly}) - 1 ;;
+  }
+
+  dimension: 2_arpu_vs_stly_ytd {
+    type: number
+    sql: ${arpu_ytd} - ${arpu_ytd_stly} ;;
+  }
+
+  dimension: 2_arpu_vs_yoy {
+    type: number
+    sql: ${arpu_selected_period} - ${arpu_yoy} ;;
+  }
+
+  dimension: 2_arpu_vs_yoy_percent {
+    type: number
+    sql: (${arpu_selected_period} / ${arpu_yoy}) - 1 ;;
+  }
+
+  dimension: 2_acquisition_budget_ytd {
+    type: number
+    sql: IF ${fy_week_of_year} <= ${use_current_week} AND ${year} = ${fy_year} THEN ${acquisition_budget_metric} END ;;
+  }
+
+  dimension: 2_actualised_opening_base_forecast {
+    type: number
+    sql: IF ${fy_week_of_year} <= 13 THEN ${reported_opening_base} ELSE ${forecast_opening_base} END ;;
+  }
+
+  dimension: 2_benchmark_arpu_ytd {
+    type: number
+    sql: CASE ${benchmark_selector}
+          WHEN 1 THEN ${arpu_yoy_ytd}
+          WHEN 2 THEN ${arpu_budget_ytd}
+          WHEN 3 THEN ${arpu_forecast_ytd}
+        END ;;
+  }
+
+  dimension: 2_benchmark_net_growth_ytd {
+    type: number
+    sql: CASE ${benchmark_selector}
+          WHEN 1 THEN ${net_growth_yoy_ytd}
+          WHEN 2 THEN ${net_growth_budget_ytd}
+          WHEN 3 THEN ${actualised_net_growth_forecast_ytd}
+        END ;;
+  }
+
+  dimension: 2_net_growth_vs_pp {
+    type: number
+    sql: ${net_growth_selected_period} - ${net_growth_previous_period} ;;
+  }
+
+  dimension: 2_net_growth_vs_pp_percent {
+    type: number
+    sql: (${net_growth_selected_period} / ${net_growth_previous_period}) - 1 ;;
+  }
+
+  dimension: 2_net_growth_vs_stly {
+    type: number
+    sql: ${net_growth_selected_period} - ${net_growth_selected_period_stly} ;;
+  }
+
+  dimension: 2_net_growth_vs_stly_percent {
+    type: number
+    sql: (${net_growth_selected_period} / ${net_growth_selected_period_stly}) - 1 ;;
+  }
+
+  dimension: 2_net_growth_vs_stly_ytd {
+    type: number
+    sql: ${net_growth_selected_period_ytd} - ${net_growth_selected_period_ytd_stly} ;;
+  }
+
+  dimension: 2_net_growth_vs_stly_ytd_percent {
+    type: number
+    sql: (${net_growth_selected_period_ytd} / ${net_growth_selected_period_ytd_stly}) - 1 ;;
+  }
+
+  dimension: 2_net_growth_vs_yoy {
+    type: number
+    sql: ${net_growth_selected_period} - ${net_growth_yoy} ;;
+  }
+
+  dimension: 2_net_growth_vs_yoy_percent {
+    type: number
+    sql: (${net_growth_selected_period} / ${net_growth_yoy}) - 1 ;;
+  }
+
+  dimension: 2_opening_base_previous_period {
+    type: number
+    sql: IF ${previous_period_filter_cb_op_only} THEN ${reported_opening_base} END ;;
+  }
+
+  dimension: 2_revenue_selected_period_stly {
+    type: number
+    sql: IF ${fy_year} = ${year}-1 AND ${select_period_filter} = TRUE THEN ${reported_revenue} END ;;
+  }
+
+  dimension: 2_revenue_budget_ytd {
+    type: number
+    sql: IF ${fy_week_of_year} <= ${use_current_week} AND ${fy_year} = ${year} THEN ${budget_earned_amount} END ;;
+  }
+
+  dimension: 2_revenue_previous_period {
+    type: number
+    sql: IF ${previous_period_filter_cb_op_only} THEN ${reported_revenue} END ;;
+  }
+
+  dimension: 2_revenue_yoy_ytd {
+    type: number
+    sql: IF ${fy_week_of_year} <= ${use_current_week} AND ${fy_year} = ${year}-1 THEN ${reported_revenue} END ;;
+  }
+
+  dimension: 2_revenue_ytd {
+    type: number
+    sql: IF ${fy_week_of_year} <= ${use_current_week} AND ${fy_year} = ${year} THEN ${reported_revenue} END ;;
+  }
+
+  dimension: 2_revenue_ytd_stly {
+    type: number
+    sql: IF ${fy_week_of_year} <= ${use_current_week} AND ${fy_year} = ${year}-1 THEN ${reported_revenue} END ;;
+  }
+
+  dimension: 3_arpu_var {
+    type: number
+    sql: ${arpu_selected_period} - ${benchmark_arpu} ;;
+  }
+
+  dimension: 3_arpu_vs_benchmark_percent_ytd {
+    type: number
+    sql: (${arpu_ytd} / ${benchmark_arpu_ytd}) - 1 ;;
+  }
+
+  dimension: 3_arpu_vs_benchmark_ytd {
+    type: number
+    sql: ${arpu_ytd} - ${benchmark_arpu_ytd} ;;
+  }
+
+  dimension: 3_arpu_vs_pp_green {
+    type: string
+    sql: IF ${benchmark_selector} = 1 AND ${period_selector} = 4 THEN NULL ELSEIF ${arpu_vs_pp} >= 0 THEN '▲ $' + STR(ROUND(ABS(${arpu_vs_pp}), 2)) + ', ' + STR(ABS(ROUND(${arpu_vs_pp_percent}*100)))+'%' END ;;
+  }
+
+  dimension: 3_arpu_vs_pp_red {
+    type: string
+    sql: IF ${benchmark_selector} = 1 AND ${period_selector} = 4 THEN NULL ELSEIF ${arpu_vs_pp} < 0 THEN '▼ ($' + STR(ROUND(ABS(${arpu_vs_pp}), 2)) + ', ' + STR(ABS(ROUND(${arpu_vs_pp_percent}*100)))+'%)' END ;;
+  }
+
+  dimension: 3_arpu_vs_stly_green {
+    type: string
+    sql: IF ${arpu_vs_stly} >= 0 THEN '▲ $' + STR(ROUND(ABS(${arpu_vs_stly}), 2)) + ', ' + STR(ABS(ROUND(${arpu_vs_stly_percent}*100)))+'%' END ;;
+  }
+
+  dimension: 3_arpu_vs_stly_red {
+    type: string
+    sql: IF ${arpu_vs_stly} < 0 THEN '▼ ($' + STR(ROUND(ABS(${arpu_vs_stly}), 2)) + ', ' + STR(ABS(ROUND(${arpu_vs_stly_percent}*100)))+'%)' END ;;
+  }
+
+  dimension: 3_arpu_vs_stly_ytd_green {
+    type: string
+    sql: IF ${arpu_vs_stly_ytd} >= 0 THEN '▲ $' + STR(ROUND(ABS(${arpu_vs_stly_ytd}), 2)) + ', ' + STR(ABS(ROUND(${arpu_vs_stly_percent_ytd}*100)))+'%' END ;;
+  }
+
+  dimension: 3_arpu_vs_stly_ytd_red {
+    type: string
+    sql: IF ${arpu_vs_stly_ytd} < 0 THEN '▼ ($' + STR(ROUND(ABS(${arpu_vs_stly_ytd}), 2)) + ', ' + STR(ABS(ROUND(${arpu_vs_stly_percent_ytd}*100)))+'%)' END ;;
+  }
+
+  dimension: 3_arpu_vs_yoy_green {
+    type: string
+    sql: IF ${benchmark_selector} = 1 THEN NULL ELSEIF ${period_selector} = 4 THEN NULL ELSEIF ${arpu_vs_yoy} >= 0 THEN '▲ $' + STR(ROUND(ABS(${arpu_vs_yoy}), 2)) + ', ' + STR(ABS(ROUND(${arpu_vs_yoy_percent}*100)))+'%' END ;;
+  }
+
+  dimension: 3_arpu_vs_yoy_red {
+    type: string
+    sql: IF ${benchmark_selector} = 1 THEN NULL ELSEIF ${period_selector} = 4 THEN NULL ELSEIF ${arpu_vs_yoy} < 0 THEN '▼ ($' + STR(ROUND(ABS(${arpu_vs_yoy}), 2)) + ', ' + STR(ABS(ROUND(${arpu_vs_yoy_percent}*100)))+'%)' END ;;
+  }
+
+  dimension: 3_acquisition_selected_period_ytd {
+    type: number
+    sql: IF ${fy_year} = ${year} AND ${fy_week_of_year} <= ${use_current_week} THEN ${acquisition_metric} END ;;
+  }
+
+  dimension: 3_acquisition_selected_period_ytd_stly {
+    type: number
+    sql: IF ${fy_year} = ${year}-1 AND ${fy_week_of_year} <= ${use_current_week} THEN ${acquisition_metric} END ;;
+  }
+
+  dimension: 3_acquisition_selected_period_stly {
+    type: number
+    sql: IF ${fy_year} = ${year}-1 AND ${select_period_filter} = TRUE THEN ${acquisition_metric} END ;;
+  }
+
+  dimension: 3_acquisition_forecast_ytd {
+    type: number
+    sql: IF ${fy_week_of_year} <= ${use_current_week} AND ${year} = ${fy_year} THEN ${actualised_acquisition_forecast} END ;;
+  }
+
+  dimension: 3_acquisition_yoy_ytd {
+    type: number
+    sql: IF ${fy_week_of_year} <= ${use_current_week} AND ${year} = ${fy_year} THEN ${acquisition_metric} END ;;
+  }
+
+  dimension: 3_actualised_revenue_forecast_ytd {
+    type: number
+    sql: IF ${fy_week_of_year} <= ${use_current_week} AND ${fy_year} = ${year} THEN ${actualised_revenue_forecast} END ;;
+  }
+
+  dimension: cancels_selected_period {
+    type: number
+    sql: IF ${fy_year} = ${year} AND ${select_period_filter} = TRUE THEN ${cancellations_metric} END ;;
+  }
+
+  dimension: 3_cancels_yoy {
+    type: number
+    sql: IF ${selected_period_yoy_filter} = TRUE THEN ${cancellations_metric} END ;;
+  }
+
+  dimension: 3_closing_base_vs_pp {
+    type: number
+    sql: SUM(${closing_base_selected_period}) - SUM(${closing_base_previous_period}) ;;
+  }
+
+  dimension: 3_closing_base_vs_pp_percent {
+    type: number
+    sql: (SUM(${closing_base_selected_period}) / SUM(${closing_base_previous_period})) - 1 ;;
+  }
+
+  dimension: 3_closing_base_vs_stly {
+    type: number
+    sql: SUM(${closing_base_selected_period}) - SUM(${closing_base_selected_period_stly}) ;;
+  }
+
+  dimension: 3_closing_base_vs_stly_percent {
+    type: number
+    sql: (SUM(${closing_base_selected_period}) / SUM(${closing_base_selected_period_stly})) - 1 ;;
+  }
+
+  dimension: 3_closing_base_vs_stly_percent_ytd {
+    type: number
+    sql: (SUM(${closing_base_ytd}) / SUM(${closing_base_ytd_stly})) - 1 ;;
+  }
+
+  dimension: 3_closing_base_vs_stly_ytd {
+    type: number
+    sql: SUM(${closing_base_ytd}) - SUM(${closing_base_ytd_stly}) ;;
+  }
+
+  dimension: 3_closing_base_vs_yoy {
+    type: number
+    sql: SUM(${closing_base_selected_period}) - SUM(${closing_base_yoy}) ;;
+  }
+
+  dimension: closing_base_vs_yoy_percent {
+    type: number
+    sql: (SUM(${closing_base_selected_period}) / SUM(${closing_base_yoy})) - 1 ;;
+  }
+
+  dimension: 3_net_growth_vs_benchmark_percent_ytd {
+    type: number
+    sql: (${net_growth_selected_period_ytd} / ${benchmark_net_growth_ytd}) - 1 ;;
+  }
+
+  dimension: 3_net_growth_vs_benchmark_ytd {
+    type: number
+    sql: ${net_growth_selected_period_ytd} - ${benchmark_net_growth_ytd} ;;
+  }
+
+  dimension: 3_net_growth_vs_pp_green {
+    type: string
+    sql: IF ${benchmark_selector} = 1 AND ${period_selector} = 4 THEN NULL ELSEIF ${net_growth_vs_pp} >= 0 THEN '▲ ' + '' + STR(ABS(ROUND(${net_growth_vs_pp}/1000))) + 'k, ' + STR(ABS(ROUND(${net_growth_vs_pp_percent}*100)))+'%' END ;;
+  }
+
+  dimension: 3_net_growth_vs_pp_red {
+    type: string
+    sql: IF ${benchmark_selector} = 1 AND ${period_selector} = 4 THEN NULL ELSEIF ${net_growth_vs_pp} < 0 THEN '▼ ' + '(' + STR(ABS(ROUND(${net_growth_vs_pp}/1000))) + 'k, ' + STR(ABS(ROUND(${net_growth_vs_pp_percent}*100)))+'%)' END ;;
+  }
+
+  dimension: 3_net_growth_vs_stly_green {
+    type: string
+    sql: IF ${net_growth_vs_stly} >= 0 THEN '▲ ' + '' + STR(ABS(ROUND(${net_growth_vs_stly}/1000))) + 'k, ' + STR(ABS(ROUND(${net_growth_vs_stly_percent}*100)))+'%' END ;;
+  }
+
+  dimension: 3_net_growth_vs_stly_red {
+    type: string
+    sql: IF ${net_growth_vs_stly} < 0 THEN '▼ ' + '(' + STR(ABS(ROUND(${net_growth_vs_stly}/1000))) + 'k, ' + STR(ABS(ROUND(${net_growth_vs_stly_percent}*100)))+'%)' END ;;
+  }
+
+  dimension: 3_net_growth_vs_stly_ytd_green {
+    type: string
+    sql: IF ${net_growth_vs_stly_ytd} >= 0 THEN '▲ ' + '' + STR(ABS(ROUND(${net_growth_vs_stly_ytd}/1000))) + 'k, ' + STR(ABS(ROUND(${net_growth_vs_stly_ytd_percent}*100)))+'%' END ;;
+  }
+
+  dimension: 3_net_growth_vs_stly_ytd_red {
+    type: string
+    sql: IF ${net_growth_vs_stly_ytd} < 0 THEN '▼ ' + '(' + STR(ABS(ROUND(${net_growth_vs_stly_ytd}/1000))) + 'k, ' + STR(ABS(ROUND(${net_growth_vs_stly_ytd_percent}*100)))+'%)' END ;;
+  }
+
+  dimension: 3_net_growth_vs_yoy_green {
+    type: string
+    sql: IF ${benchmark_selector} = 1 THEN NULL ELSEIF ${period_selector} = 4 THEN NULL ELSEIF ${net_growth_vs_yoy} >= 0 THEN '▲ ' + '' + STR(ABS(ROUND(${net_growth_vs_yoy}/1000))) + 'k, ' + STR(ABS(ROUND(${net_growth_vs_yoy_percent}*100)))+'%' END ;;
+  }
+
+  dimension: 3_net_growth_vs_yoy_red {
+    type: string
+    sql: IF ${benchmark_selector} = 1 THEN NULL ELSEIF ${period_selector} = 4 THEN NULL ELSEIF ${net_growth_vs_yoy} < 0 THEN '▼ ' + '(' + STR(ABS(ROUND(${net_growth_vs_yoy}/1000))) + 'k, ' + STR(ABS(ROUND(${net_growth_vs_yoy_percent}*100)))+'%)' END ;;
+  }
+
+  dimension: 3_revenue_vs_pp {
+    type: number
+    sql: SUM(${revenue_selected_period}) - SUM(${revenue_previous_period}) ;;
+  }
+
+  dimension: 3_revenue_vs_pp_percent {
+    type: number
+    sql: (SUM(${revenue_selected_period}) / SUM(${revenue_previous_period})) - 1 ;;
+  }
+
+  dimension: 3_revenue_vs_stly {
+    type: number
+    sql: SUM(${revenue_selected_period}) - SUM(${revenue_selected_period_stly}) ;;
+  }
+
+  dimension: 3_revenue_vs_stly_percent {
+    type: number
+    sql: (SUM(${revenue_selected_period}) / SUM(${revenue_selected_period_stly})) - 1 ;;
+  }
+
+  dimension: 3_revenue_vs_yoy {
+    type: number
+    sql: SUM(${revenue_selected_period}) - SUM(${revenue_yoy}) ;;
+  }
+
+  dimension: 3_revenue_vs_yoy_percent {
+    type: number
+    sql: (SUM(${revenue_selected_period}) / SUM(${revenue_yoy})) - 1 ;;
+  }
+
+  dimension: 3_revenue_ytd_vs_stly {
+    type: number
+    sql: SUM(${revenue_ytd}) - SUM(${revenue_ytd_stly}) ;;
+  }
+
+  dimension: 3_revenue_ytd_vs_stly_percent {
+    type: number
+    sql: (SUM(${revenue_ytd}) / SUM(${revenue_ytd_stly})) - 1 ;;
+  }
+
+  dimension: 3_arpu_vs_benchmark_green_ytd {
+    type: string
+    sql: IF ${arpu_vs_benchmark_ytd} >= 0 THEN '▲ $' + STR(ROUND(ABS(${arpu_vs_benchmark_ytd}), 2)) + ', ' + STR(ABS(ROUND(${arpu_vs_benchmark_percent_ytd}*100)))+'%' END ;;
+  }
+
+  dimension: 3_arpu_vs_benchmark_red_ytd {
+    type: string
+    sql: IF ${arpu_vs_benchmark_ytd} < 0 THEN '▼ ' + '($' + STR(ROUND(ABS(${arpu_vs_benchmark_ytd}), 2)) + ', ' + STR(ABS(ROUND(${arpu_vs_benchmark_percent_ytd}*100)))+'%)' END ;;
+  }
+
+  dimension: 4_acquisition_vs_stly {
+    type: number
+    sql: SUM(${acquisition_selected_period}) - SUM(${acquisition_selected_period_stly}) ;;
+  }
+
+  dimension: 4_acquisition_vs_stly_percent {
+    type: number
+    sql: (SUM(${acquisition_selected_period}) / SUM(${acquisition_selected_period_stly})) - 1 ;;
+  }
+
+  dimension: 4_acquisition_vs_stly_percent_ytd {
+    type: number
+    sql: (SUM(${acquisition_selected_period_ytd}) / SUM(${acquisition_selected_period_ytd_stly})) - 1 ;;
+  }
+
+  dimension: 4_acquisition_vs_stly_ytd {
+    type: number
+    sql: SUM(${acquisition_selected_period_ytd}) - SUM(${acquisition_selected_period_ytd_stly}) ;;
+  }
+
+  dimension: 4_benchmark_acquisition_ytd {
+    type: number
+    sql: CASE ${benchmark_selector} WHEN 1 THEN ${acquisition_yoy_ytd} WHEN 2 THEN ${acquisition_budget_ytd} WHEN 3 THEN ${acquisition_forecast_ytd} END ;;
+  }
+
+  dimension: 4_benchmark_cancellation {
+    type: number
+    sql: CASE ${benchmark_selector} WHEN 1 THEN ${cancels_yoy} WHEN 2 THEN ${cancellation_budget} WHEN 3 THEN ${cancellation_forecast} END ;;
+  }
+
+  dimension: 4_benchmark_revenue_ytd {
+    type: number
+    sql: CASE ${benchmark_selector} WHEN 1 THEN ${revenue_yoy_ytd} WHEN 2 THEN ${revenue_budget_ytd} WHEN 3 THEN ${actualised_revenue_forecast_ytd} END ;;
+  }
+
+  dimension: 4_closing_base_vs_pp_green {
+    type: string
+    sql: IF ${benchmark_selector} = 1 AND ${period_selector} = 4 THEN NULL ELSEIF ${closing_base_vs_pp} >= 0 THEN '▲ ' + '' + STR(ABS(ROUND(${closing_base_vs_pp}/1000))) + 'k, ' + STR(ABS(ROUND(${closing_base_vs_pp_percent}*100)))+'%' END ;;
+  }
+
+  dimension: 4_closing_base_vs_pp_red {
+    type: string
+    sql: IF ${benchmark_selector} = 1 AND ${period_selector} = 4 THEN NULL ELSEIF ${closing_base_vs_pp} < 0 THEN '▼ ' + '(' + STR(ABS(ROUND(${closing_base_vs_pp}/1000))) + 'k, ' + STR(ABS(ROUND(${closing_base_vs_pp_percent}*100)))+'%)' END ;;
+  }
+
+  dimension: 4_closing_base_vs_stly_green {
+    type: string
+    sql: IF ${closing_base_vs_stly} >= 0 THEN '▲ ' + '' + STR(ABS(ROUND(${closing_base_vs_stly}/1000))) + 'k, ' + STR(ABS(ROUND(${closing_base_vs_stly_percent}*100)))+'%' END ;;
+  }
+
+  dimension: 4_closing_base_vs_stly_green_ytd {
+    type: string
+    sql: IF ${closing_base_vs_stly_ytd} >= 0 THEN '▲ ' + '' + STR(ABS(ROUND(${closing_base_vs_stly_ytd}/1000))) + 'k, ' + STR(ABS(ROUND(${closing_base_vs_stly_percent_ytd}*100)))+'%' END ;;
+  }
+
+  dimension: 4_closing_base_vs_stly_red {
+    type: string
+    sql: IF ${closing_base_vs_stly} < 0 THEN '▼ ' + '(' + STR(ABS(ROUND(${closing_base_vs_stly}/1000))) + 'k, ' + STR(ABS(ROUND(${closing_base_vs_stly_percent}*100)))+'%)' END ;;
+  }
+
+  dimension: 4_closing_base_vs_stly_red_ytd {
+    type: string
+    sql: IF ${closing_base_vs_stly_ytd} < 0 THEN '▼ ' + '(' + STR(ABS(ROUND(${closing_base_vs_stly_ytd}/1000))) + 'k, ' + STR(ABS(ROUND(${closing_base_vs_stly_percent_ytd}*100)))+'%)' END ;;
+  }
+
+  dimension: 4_closing_base_vs_yoy_green {
+    type: string
+    sql: IF ${benchmark_selector} = 1 THEN NULL ELSEIF ${period_selector} = 4 THEN NULL ELSEIF ${closing_base_vs_yoy} >= 0 THEN '▲ ' + '' + STR(ABS(ROUND(${closing_base_vs_yoy}/1000))) + 'k, ' + STR(ABS(ROUND(${closing_base_vs_yoy_percent}*100)))+'%' END ;;
+  }
+
+  dimension: 4_closing_base_vs_yoy_red {
+    type: string
+    sql: IF ${benchmark_selector} = 1 THEN NULL ELSEIF ${period_selector} = 4 THEN NULL ELSEIF ${closing_base_vs_yoy} < 0 THEN '▼ ' + '(' + STR(ABS(ROUND(${closing_base_vs_yoy}/1000))) + 'k, ' + STR(ABS(ROUND(${closing_base_vs_yoy_percent}*100)))+'%)' END ;;
+  }
+
+  dimension: 4_net_growth_ty_vs_benchmark_green_ytd {
+    type: string
+    sql: IF ${net_growth_vs_benchmark_ytd} >= 0 THEN '▲ ' + '' + STR(ABS(ROUND(${net_growth_vs_benchmark_ytd}/1000))) + 'k, ' + STR(ABS(ROUND(${net_growth_vs_benchmark_percent_ytd}*100)))+'%' END ;;
+  }
+
+  dimension: 4_net_growth_ty_vs_benchmark_red_ytd {
+    type: string
+    sql: IF ${net_growth_vs_benchmark_ytd} < 0 THEN '▼ ' + '(' + STR(ABS(ROUND(${net_growth_vs_benchmark_ytd}/1000))) + 'k, ' + STR(ABS(ROUND(${net_growth_vs_benchmark_percent_ytd}*100)))+'%)' END ;;
+  }
+
+  dimension: 4_revenue_vs_pp_green {
+    type: string
+    sql: IF ${benchmark_selector} = 1 AND ${period_selector} = 4 THEN NULL ELSEIF ${revenue_vs_pp} >= 0 THEN '▲ ' + '' + (IF LEN(STR(ABS(ROUND(${revenue_vs_pp}/1000))))=4 THEN LEFT((STR(ABS(ROUND(${revenue_vs_pp}/1000)))),1) +','+ RIGHT((STR(ABS(ROUND(${revenue_vs_pp}/1000)))),3) ELSEIF LEN(STR(ABS(ROUND(${revenue_vs_pp}/1000))))=5 THEN LEFT((STR(ABS(ROUND(${revenue_vs_pp}/1000)))),2) +','+ RIGHT((STR(ABS(ROUND(${revenue_vs_pp}/1000)))),3) ELSE STR(ABS(ROUND(${revenue_vs_pp}/1000))) END) + ', ' + STR(ABS(ROUND(${revenue_vs_pp_percent}*100)))+'%' END ;;
+  }
+
+  dimension: 4_revenue_vs_pp_red {
+    type: string
+    sql: IF ${benchmark_selector} = 1 AND ${period_selector} = 4 THEN NULL ELSEIF ${revenue_vs_pp} < 0 THEN '▼ ' + '(' + (IF LEN(STR(ABS(ROUND(${revenue_vs_pp}/1000))))=4 THEN LEFT((STR(ABS(ROUND(${revenue_vs_pp}/1000)))),1) +','+ RIGHT((STR(ABS(ROUND(${revenue_vs_pp}/1000)))),3) ELSEIF LEN(STR(ABS(ROUND(${revenue_vs_pp}/1000))))=5 THEN LEFT((STR(ABS(ROUND(${revenue_vs_pp}/1000)))),2) +','+ RIGHT((STR(ABS(ROUND(${revenue_vs_pp}/1000)))),3) ELSE STR(ABS(ROUND(${revenue_vs_pp}/1000))) END) + ', ' + STR(ABS(ROUND(${revenue_vs_pp_percent}*100)))+'%)' END ;;
+  }
+
+  dimension: 4_revenue_vs_stly_green {
+    type: string
+    sql: IF ${revenue_vs_stly} >= 0 THEN '▲ ' + '' + (IF LEN(STR(ABS(ROUND(${revenue_vs_stly}/1000))))=4 THEN LEFT((STR(ABS(ROUND(${revenue_vs_stly}/1000)))),1) +','+ RIGHT((STR(ABS(ROUND(${revenue_vs_stly}/1000)))),3) ELSEIF LEN(STR(ABS(ROUND(${revenue_vs_stly}/1000))))=5 THEN LEFT((STR(ABS(ROUND(${revenue_vs_stly}/1000)))),2) +','+ RIGHT((STR(ABS(ROUND(${revenue_vs_stly}/1000)))),3) ELSE STR(ABS(ROUND(${revenue_vs_stly}/1000))) END) + ', ' + STR(ABS(ROUND(${revenue_vs_stly_percent}*100)))+'%' END ;;
+  }
+
+  dimension: 4_revenue_vs_stly_red {
+    type: string
+    sql: IF ${revenue_vs_stly} < 0 THEN '▼ ' + '(' + (IF LEN(STR(ABS(ROUND(${revenue_vs_stly}/1000))))=4 THEN LEFT((STR(ABS(ROUND(${revenue_vs_stly}/1000)))),1) +','+ RIGHT((STR(ABS(ROUND(${revenue_vs_stly}/1000)))),3) ELSEIF LEN(STR(ABS(ROUND(${revenue_vs_stly}/1000))))=5 THEN LEFT((STR(ABS(ROUND(${revenue_vs_stly}/1000)))),2) +','+ RIGHT((STR(ABS(ROUND(${revenue_vs_stly}/1000)))),3) ELSE STR(ABS(ROUND(${revenue_vs_stly}/1000))) END) + ', ' + STR(ABS(ROUND(${revenue_vs_stly_percent}*100)))+'%)' END ;;
+  }
+
+  dimension: 4_revenue_vs_stly_ytd_green {
+    type: string
+    sql: IF ${revenue_ytd_vs_stly} >= 0 THEN '▲ ' + '' + (IF LEN(STR(ABS(ROUND(${revenue_ytd_vs_stly}/1000))))=4 THEN LEFT((STR(ABS(ROUND(${revenue_ytd_vs_stly}/1000)))),1) +','+ RIGHT((STR(ABS(ROUND(${revenue_ytd_vs_stly}/1000)))),3) ELSEIF LEN(STR(ABS(ROUND(${revenue_ytd_vs_stly}/1000))))=5 THEN LEFT((STR(ABS(ROUND(${revenue_ytd_vs_stly}/1000)))),2) +','+ RIGHT((STR(ABS(ROUND(${revenue_ytd_vs_stly}/1000)))),3) ELSE STR(ABS(ROUND(${revenue_ytd_vs_stly}/1000))) END) + ', ' + STR(ABS(ROUND(${revenue_ytd_vs_stly_percent}*100)))+'%' END ;;
+  }
+
+  dimension: 4_revenue_vs_stly_ytd_red {
+    type: string
+    sql: IF ${revenue_ytd_vs_stly} < 0 THEN '▼ ' + '(' + (IF LEN(STR(ABS(ROUND(${revenue_ytd_vs_stly}/1000))))=4 THEN LEFT((STR(ABS(ROUND(${revenue_ytd_vs_stly}/1000)))),1) +','+ RIGHT((STR(ABS(ROUND(${revenue_ytd_vs_stly}/1000)))),3) ELSEIF LEN(STR(ABS(ROUND(${revenue_ytd_vs_stly}/1000))))=5 THEN LEFT((STR(ABS(ROUND(${revenue_ytd_vs_stly}/1000)))),2) +','+ RIGHT((STR(ABS(ROUND(${revenue_ytd_vs_stly}/1000)))),3) ELSE STR(ABS(ROUND(${revenue_ytd_vs_stly}/1000))) END) + ', ' + STR(ABS(ROUND(${revenue_ytd_vs_stly_percent}*100)))+'%)' END ;;
+  }
+
+  dimension: 4_revenue_vs_yoy_green {
+    type: string
+    sql: IF ${benchmark_selector} = 1 THEN NULL ELSEIF ${period_selector} = 4 THEN NULL ELSEIF ${revenue_vs_yoy} >= 0 THEN '▲ ' + '' + (IF LEN(STR(ABS(ROUND(${revenue_vs_yoy}/1000))))=4 THEN LEFT((STR(ABS(ROUND(${revenue_vs_yoy}/1000)))),1) +','+ RIGHT((STR(ABS(ROUND(${revenue_vs_yoy}/1000)))),3) ELSEIF LEN(STR(ABS(ROUND(${revenue_vs_yoy}/1000))))=5 THEN LEFT((STR(ABS(ROUND(${revenue_vs_yoy}/1000)))),2) +','+ RIGHT((STR(ABS(ROUND(${revenue_vs_yoy}/1000)))),3) ELSE STR(ABS(ROUND(${revenue_vs_yoy}/1000))) END) + ', ' + STR(ABS(ROUND(${revenue_vs_yoy_percent}*100)))+'%' END ;;
+  }
+
+  dimension: 4_revenue_vs_yoy_red {
+    type: string
+    sql: IF ${benchmark_selector} = 1 THEN NULL ELSEIF ${period_selector} = 4 THEN NULL ELSEIF ${revenue_vs_yoy} < 0 THEN '▼ ' + '(' + (IF LEN(STR(ABS(ROUND(${revenue_vs_yoy}/1000))))=4 THEN LEFT((STR(ABS(ROUND(${revenue_vs_yoy}/1000)))),1) +','+ RIGHT((STR(ABS(ROUND(${revenue_vs_yoy}/1000)))),3) ELSEIF LEN(STR(ABS(ROUND(${revenue_vs_yoy}/1000))))=5 THEN LEFT((STR(ABS(ROUND(${revenue_vs_yoy}/1000)))),2) +','+ RIGHT((STR(ABS(ROUND(${revenue_vs_yoy}/1000)))),3) ELSE STR(ABS(ROUND(${revenue_vs_yoy}/1000))) END) + ', ' + STR(ABS(ROUND(${revenue_vs_yoy_percent}*100)))+'%)' END ;;
+  }
+
+  dimension: 5_acquisition_var {
+    type: number
+    sql: SUM(${acquisition_selected_period}) - SUM(${benchmark_acquisition}) ;;
+  }
+
+  dimension: 5_acquisition_vs_benchmark {
+    type: number
+    sql: SUM(${acquisition_selected_period}) - SUM(${benchmark_acquisition}) ;;
+  }
+
+  dimension: 5_acquisition_vs_benchmark_percent {
+    type: percent
+    sql: ( SUM(${acquisition_selected_period}) / SUM(${benchmark_acquisition}) ) - 1 ;;
+  }
+
+  dimension: 5_acquisition_vs_benchmark_percent_ytd {
+    type: percent
+    sql: ( SUM(${acquisition_selected_period_ytd}) / SUM(${benchmark_acquisition_ytd}) ) - 1 ;;
+  }
+
+  dimension: 5_acquisition_vs_benchmark_ytd {
+    type: number
+    sql: SUM(${acquisition_selected_period_ytd}) - SUM(${benchmark_acquisition_ytd}) ;;
+  }
+
+  dimension: 5_acquisition_vs_stly_green {
+    type: string
+    sql: IF ${acquisition_vs_stly} >= 0 THEN '▲ ' + '' + STR(ABS(ROUND(${acquisition_vs_stly}/1000))) + 'k, ' + STR(ABS(ROUND(${acquisition_vs_stly_percent}*100)))+'%' END ;;
+  }
+
+  dimension: 5_acquisition_vs_stly_red {
+    type: string
+    sql: IF ${acquisition_vs_stly} < 0 THEN '▼ ' + '(' + STR(ABS(ROUND(${acquisition_vs_stly}/1000))) + 'k, ' + STR(ABS(ROUND(${acquisition_vs_stly_percent}*100)))+'%)' END ;;
+  }
+
+  dimension: 5_acquisition_vs_stly_ytd_green {
+    type: string
+    sql: IF ${acquisition_vs_stly_ytd} >= 0 THEN '▲ ' + '' + STR(ABS(ROUND(${acquisition_vs_stly_ytd}/1000))) + 'k, ' + STR(ABS(ROUND(${acquisition_vs_stly_percent_ytd}*100)))+'%' END ;;
+  }
+
+  dimension: 5_acquisition_vs_stly_ytd_red {
+    type: string
+    sql: IF ${acquisition_vs_stly_ytd} < 0 THEN '▼ ' + '(' + STR(ABS(ROUND(${acquisition_vs_stly_ytd}/1000))) + 'k, ' + STR(ABS(ROUND(${acquisition_vs_stly_percent_ytd}*100)))+'%)' END ;;
+  }
+
+  dimension: 5_cancellation_var {
+    type: number
+    sql: SUM(${cancels_selected_period}) - SUM(${benchmark_cancellation}) ;;
+  }
+
+  dimension: 5_revenue_var {
+    type: number
+    sql: SUM(${revenue_selected_period}) - SUM(${benchmark_revenue}) ;;
+  }
+
+  dimension: 5_revenue_vs_benchmark_percent_ytd {
+    type: percent
+    sql: ( SUM(${revenue_ytd}) / SUM(${benchmark_revenue_ytd}) ) - 1 ;;
+  }
+
+  dimension: 5_revenue_vs_benchmark_ytd {
+    type: number
+    sql: SUM(${revenue_ytd}) - SUM(${benchmark_revenue_ytd}) ;;
+  }
+
+  dimension: 6_acquisition_vs_benchmark_green {
+    type: string
+    sql: IF ${acquisition_vs_benchmark} >= 0 THEN '▲ ' + '' + STR(ABS(ROUND(${acquisition_vs_benchmark}/1000))) + 'k, ' + STR(ABS(ROUND(${acquisition_vs_benchmark_percent}*100)))+'%' END ;;
+  }
+
+  dimension: 6_acquisition_vs_benchmark_green_ytd {
+    type: string
+    sql: IF ${acquisition_vs_benchmark_ytd} >= 0 THEN '▲ ' + '' + STR(ABS(ROUND(${acquisition_vs_benchmark_ytd}/1000))) + 'k, ' + STR(ABS(ROUND(${acquisition_vs_benchmark_percent_ytd}*100)))+'%' END ;;
+  }
+
+  dimension: 6_acquisition_vs_benchmark_red {
+    type: string
+    sql: IF ${acquisition_vs_benchmark} < 0 THEN '▼ ' + '(' + STR(ABS(ROUND(${acquisition_vs_benchmark}/1000))) + 'k, ' + STR(ABS(ROUND(${acquisition_vs_benchmark_percent}*100)))+'%)' END ;;
+  }
+
+  dimension: 6_acquisition_vs_benchmark_red_ytd {
+    type: string
+    sql: IF ${acquisition_vs_benchmark_ytd} < 0 THEN '▼ ' + '(' + STR(ABS(ROUND(${acquisition_vs_benchmark_ytd}/1000))) + 'k, ' + STR(ABS(ROUND(${acquisition_vs_benchmark_percent_ytd}*100)))+'%)' END ;;
+  }
+
+  dimension: 6_revenue_vs_benchmark_green_ytd {
+    type: string
+    sql: IF ${revenue_vs_benchmark_ytd} >= 0 THEN '▲ ' + '' + (IF LEN(STR(ABS(ROUND(${revenue_vs_benchmark_ytd}/1000))))=4 THEN LEFT((STR(ABS(ROUND(${revenue_vs_benchmark_ytd}/1000)))),1) +','+ RIGHT((STR(ABS(ROUND(${revenue_vs_benchmark_ytd}/1000)))),3) ELSEIF LEN(STR(ABS(ROUND(${revenue_vs_benchmark_ytd}/1000))))=5 THEN LEFT((STR(ABS(ROUND(${revenue_vs_benchmark_ytd}/1000)))),2) +','+ RIGHT((STR(ABS(ROUND(${revenue_vs_benchmark_ytd}/1000)))),3) ELSE STR(ABS(ROUND(${revenue_vs_benchmark_ytd}/1000))) END) + ', ' + STR(ABS(ROUND(${revenue_vs_benchmark_percent_ytd}*100)))+'%' END ;;
+  }
+
+  dimension: 6_revenue_vs_benchmark_red_ytd {
+    type: string
+    sql: IF ${revenue_vs_benchmark_ytd} < 0 THEN '▼ ' + '(' + (IF LEN(STR(ABS(ROUND(${revenue_vs_benchmark_ytd}/1000))))=4 THEN LEFT((STR(ABS(ROUND(${revenue_vs_benchmark_ytd}/1000)))),1) +','+ RIGHT((STR(ABS(ROUND(${revenue_vs_benchmark_ytd}/1000)))),3) ELSEIF LEN(STR(ABS(ROUND(${revenue_vs_benchmark_ytd}/1000))))=5 THEN LEFT((STR(ABS(ROUND(${revenue_vs_benchmark_ytd}/1000)))),2) +','+ RIGHT((STR(ABS(ROUND(${revenue_vs_benchmark_ytd}/1000)))),3) ELSE STR(ABS(ROUND(${revenue_vs_benchmark_ytd}/1000))) END) + ', ' + STR(ABS(ROUND(${revenue_vs_benchmark_percent_ytd}*100)))+'%)' END ;;
+  }
+
+  dimension: first_week_for_last_year {
+    type: number
+    sql: MIN(CASE WHEN ${fy_year} = ${date_year} - 1 THEN ${fy_week_of_year} END);;
+  }
+
+  dimension: max_weeks_for_last_month {
+    type: number
+    sql: COUNT_DISTINCT(CASE WHEN ${fy_year} = ${date_year} AND ${fy_month_of_year} = ${selected_month} THEN ${fy_week_of_year} END);;
+  }
+
+  dimension: max_weeks_for_last_quarter {
+    type: number
+    sql: COUNT_DISTINCT(CASE WHEN ${fy_year} = ${date_year} AND ${fy_quarter_of_year} = ${selected_quarter} THEN ${fy_week_of_year} END);;
+  }
+
+  dimension: max_weeks_for_last_year {
+    type: number
+    sql: COUNT_DISTINCT(CASE WHEN ${fy_year} = ${date_year} - 1 AND ${fy_week_of_year} <= ${fisc_week} THEN ${fy_week_of_year} END);;
+  }
+
+  dimension: weeks_in_last_selected_period {
+    type: number
+    sql: CASE ${period_selector}
+      WHEN 1 THEN 1
+      WHEN 2 THEN SUM(${max_weeks_for_last_month})
+      WHEN 3 THEN SUM(${max_weeks_for_last_quarter})
+      WHEN 4 THEN SUM(${max_weeks_for_last_year})
+      END;;
+  }
+
+  dimension: year_month {
+    type: string
+    sql: CONCAT(CAST(${fy_year} AS STRING), LPAD(CAST(${fy_week_of_year} AS STRING), 2, '0'));;
+  }
+
+  measure: 1_arpu_yoy_copy {
+    type: number
+    sql: (SUM(CASE WHEN ${fy_year} = ${date_year} - 1 AND ${selected_period_yoy_filter} = TRUE THEN ${reported_revenue} END)) /
+         ((SUM(CASE WHEN ${fy_year} = ${year} - 1 AND ${selected_period_yoy_filter} = TRUE THEN ${reported_closing_base} END) +
+          COALESCE(SUM(CASE WHEN ${fy_year} = ${year} - 1 AND ${selected_period_yoy_filter} = TRUE THEN ${reported_opening_base} END), 0)) / 2);;
+  }
+
+  measure: 1_closing_base_budget_ty_for_summary {
+    type: number
+    sql: CASE WHEN ${fy_year} = ${date_year} THEN ${budget_closing_base} END;;
+  }
+
+  measure: 1_net_growth {
+    type: number
+    sql: SUM(${reported_closing_base}) - SUM(${reported_opening_base});;
+  }
+
+  dimension: 1_reported_closing_base_for_subsnapfact {
+    type: number
+    sql: CASE WHEN ${table_union_source} IN ('subsnapfact') THEN ${subsnapfact_closing_base} END;;
+  }
+
+  dimension: twelve_month_filter {
+    type: yesno
+    sql: (${fy_year} = ${year} AND ${fy_week_of_year} <= ${use_current_week}) OR
+      (${fy_year} = ${year} - 1 AND ${fy_week_of_year} > ${use_current_week});;
+  }
+
+  measure: 2_acquisition_forecast_metric_ty {
+    type: number
+    sql: CASE WHEN ${fy_year} = ${date_year} THEN ${acquisition_forecast_metric} END;;
+  }
+
+  measure: 2_cancellations_forecast_metric_ty {
+    type: number
+    sql: CASE WHEN ${fy_year} = ${date_year} THEN ${cancellations_forecast_metric} END;;
+  }
+
+  measure: 2_reported_closing_base_ty {
+    type: number
+    sql: CASE WHEN ${fy_year} = ${date_year} THEN ${reported_closing_base} END;;
+  }
+
+  measure: 2_reported_revenue_ly {
+    type: number
+    sql: CASE WHEN ${fy_year} = ${date_year} - 1 THEN ${reported_revenue} END;;
+  }
+
+  measure: 2_reported_revenue_ty {
+    type: number
+    sql: CASE WHEN ${fy_year} = ${date_year} THEN ${reported_revenue} END;;
+  }
+
+  measure: 2_revenue_budget_ty {
+    type: number
+    sql: CASE WHEN ${fy_year} = ${date_year} THEN ${budget_earned_amount} END;;
+  }
+
+  measure: 3_acquisition_metric_ly {
+    type: number
+    sql: CASE WHEN ${fy_year} = ${date_year} - 1 THEN ${acquisition_metric} END;;
+  }
+
+  measure: 3_acquisition_metric_ty {
+    type: number
+    sql: CASE WHEN ${fy_year} = ${date_year} THEN ${acquisition_metric} END;;
+  }
+
+  measure: 3_cancellations_metric_ly {
+    type: number
+    sql: CASE WHEN ${fy_year} = ${date_year} - 1 THEN ${cancellations_metric} END;;
+  }
+
+  measure: 3_cancellations_metric_ty {
+    type: number
+    sql: CASE WHEN ${fy_year} = ${date_year} THEN ${cancellations_metric} END;;
+  }
+
+  dimension: adds_poitive {
+    type: number
+    sql: ${acquisition_metric};;
+  }
+
+  dimension: cancels_negative {
+    type: number
+    sql: -${cancellations_metric};;
+  }
+
+  dimension: class_level_2_grouped {
+    type: string
+    sql: CASE
+      WHEN ${classification_level_2_description} = 'Campus Activation' THEN 'Campus Sub'
+      WHEN ${classification_level_2_description} IN ('Bundles', 'DPE only', 'Digital', 'Mind Games', 'Press Reader', 'Print-only', 'Wine Club') THEN 'Consumer'
+      WHEN ${classification_level_2_description} IN ('Corporate Activation', 'Corporate Enterprise Activation', 'Corporate Volume Activation', 'Corporate Enterprise Activation - Amex') THEN 'Corporate'
+      WHEN ${classification_level_2_description} = 'Corporate Enterprise Activation - Qantas' THEN 'Corporate Enterprise Activation - Qantas'
+      WHEN ${classification_level_2_description} = 'Essentials' THEN 'Essentials'
+      WHEN ${classification_level_2_description} = 'IP Access' THEN 'IP Access'
+      WHEN ${classification_level_2_description} IN ('Teachers Bundle', 'University Bundle', 'Teachers Digital', 'University Digital') THEN 'Education'
+      END;;
+  }
+
+  dimension: masthead_group_title_copy {
+    type: string
+    sql: CASE
+      WHEN COUNT_DISTINCT(${masthead}) > 12 AND COUNT_DISTINCT(${masthead}) < 19 AND ${masthead_pillar} = 'States & Community' THEN 'States & Communities'
+      WHEN COUNT_DISTINCT(${masthead}) = 2 AND ${masthead_pillar} IN ('The Australian and Prestige', 'Commercial Content', 'Free & Lifestyle') THEN ${masthead_pillar}
+      WHEN COUNT_DISTINCT(${masthead}) = 20 THEN 'All Mastheads'
+      ELSE 'All Mastheads'
+      END;;
+  }
+
+  dimension: masthead_summary_title {
+    type: string
+    sql: CASE WHEN ${masthead_group_title_copy} = '' THEN 'All Mastheads' ELSE ${masthead_group_title_copy} END;;
+  }
+
+  measure: summary_benchmark {
+    type: number
+    sql: CASE ${benchmark_selector}
+      WHEN 1 THEN ${summary_yoy_ly}
+      WHEN 2 THEN ${summary_budget}
+      WHEN 3 THEN ${summary_forecast}
+      END;;
+  }
+
+  measure: summary_budget {
+    type: number
+    sql: CASE ${summary_selector}
+      WHEN 1 THEN SUM(${closing_base_budget_ty_for_summary})
+      WHEN 2 THEN SUM(${acquisition_budget_metric_ty})
+      WHEN 3 THEN SUM(${cancellations_budget_metric_ty})
+      WHEN 4 THEN SUM(${revenue_budget_ty})
+      WHEN 5 THEN SUM(${revenue_budget_ty}) / SUM(${closing_base_budget_ty_for_summary})
+      END;;
+  }
+
+  measure: summary_forecast {
+    type: number
+    sql: CASE ${summary_selector}
+      WHEN 1 THEN SUM(${actualised_closing_base_forecast})
+      WHEN 2 THEN SUM(${acquisition_forecast_metric_ty})
+      WHEN 3 THEN SUM(${cancellations_forecast_metric_ty})
+      WHEN 4 THEN SUM(${actualised_revenue_forecast})
+      WHEN 5 THEN SUM(${actualised_revenue_forecast}) / SUM(${actualised_closing_base_forecast})
+      END;;
+  }
+
+  measure: summary_metric {
+    type: number
+    sql: CASE ${summary_selector}
+      WHEN 1 THEN SUM(${reported_closing_base_ty})
+      WHEN 2 THEN SUM(${acquisition_metric_ty})
+      WHEN 3 THEN SUM(${cancellations_metric_ty})
+      WHEN 4 THEN SUM(${reported_revenue_ty})
+      WHEN 5 THEN SUM(${reported_revenue_ty}) / SUM(${reported_closing_base_ty})
+      END;;
+  }
+
+  measure: summary_yoy_ly {
+    type: number
+    sql: CASE ${summary_selector}
+      WHEN 1 THEN SUM(${reported_closing_base_ly})
+      WHEN 2 THEN SUM(${acquisition_metric_ly})
+      WHEN 3 THEN SUM(${cancellations_metric_ly})
+      WHEN 4 THEN SUM(${reported_revenue_ly})
+      WHEN 5 THEN SUM(${reported_revenue_ly}) / SUM(${reported_closing_base_ly})
+      END;;
+  }
+
+  dimension: week_year_copy {
+    type: string
+    sql: CASE WHEN ${fy_week_of_year} < 10 THEN '0' + CAST(${fy_week_of_year} AS STRING) ELSE CAST(${fy_week_of_year} AS STRING) END;;
+  }
+
+  dimension: year_week {
+    type: string
+    sql: CAST(${fy_year} AS STRING) + (CASE WHEN ${fy_week_of_year} < 10 THEN '0' + CAST(${fy_week_of_year} AS STRING) ELSE CAST(${fy_week_of_year} AS STRING) END);;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  # ----- Sets of fields for drilling ------
+  set: detail {
+    fields: [
+  frontbook_backbook_category_name,
+  offer_category_group_name,
+  offer_category_name,
+  sold_in_channel_name,
+  category_name,
+  sold_in_source_channel_name,
+  l11_publication_name,
+  rate_plan_group_name
+  ]
+  }
+
+}
